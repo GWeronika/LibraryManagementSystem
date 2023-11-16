@@ -16,7 +16,7 @@ public class LibrarySysApplication {
     @RestController
     public static class ReceiveDataController {
         @PostMapping("/receiveData")
-        public String receiveData(@RequestBody String name) {
+        public String receiveData(@RequestBody String name) {   //reveive data które jest w JavaScript
             System.out.println("Odebrano imię: " + name);
 
             return "Imię odebrane na serwerze: " + name;
