@@ -3,42 +3,41 @@
 
 <head>
     <meta charset = "utf-8">		<!-- określenie jakie znaki będą używane -->
-    <title>MeetinZielonki</title>			<!-- to co pojawi się na zakładce -->
+    <title>GetName</title>			<!-- to co pojawi się na zakładce -->
     <meta name = "description" content = "Zielonki to wieś położona w Małopolsce. Jej atrakcyjność podkreśla bezpośrednie sąsiedztwo z Krakowem i oddalonym o niecałe 15 km terenem Ojcowskiego Parku Narodowego"/>			      <!-- opis pojawiający się przed włączeniem strony -->
     <meta name = "keywords" content = "Zielonki, wieś, "/>			<!-- słowa klucze -->
     <meta name = "author" content = "Weronika Gaweł"/>			<!-- autor -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 </head>
 
 <body>
+    <form id="myForm">
+        <label for="name">Imię:</label>
+        <input type="text" id="name" name="name">
+        <button type="button" onclick="sendData()">Wyślij</button>
+    </form>
 
-<div id = "container">          <!-- cała strona -->
-</div>
+    <script>
+        function sendData() {
+            var name = document.getElementById("name").value;
 
-<div id = "logo">           <!-- blok logo -->
-    <a href = "index.html"><img src = "\static\images\wydz.png"></a>          <!-- umieszczenie grafiki -->
-</div>
+            var xhreq = new XMLHttpRequest();
 
-<div id = "topbar"></div>           <!-- pasek między menu i zawartością -->
+            xhreq.open("POST", "http://localhost:8081/receiveData", true);
+            xhreq.setRequestHeader("Content-Type", "application/json");
 
-<div id = "right"></div>            <!-- margines od prawej -->
+            var data = JSON.stringify({ "name": name });
 
-<div id = "content">            <!-- blok zawartości -->
+            xhreq.onreadystatechange = function() {
+                if (xhreq.readyState === 4 && xhreq.status === 200) {
+                    console.log("Odebrano imię na serwerze: " + name);
+                }
+            };
 
-    <em>Krakowiaczek jeden miał konikόw siedem, <br/>           <!-- to co pojawia się na stronie głównej -->
-        pojechał na wojnę, został mu się jeden. <br/>
-        Siedem lat wojował, szabli nie wyjmował, szabla zardzewiała... <br/>
-        <p> a nasz dzielny Krakowiaczek osiedlił się w Zielonkach</em>              <!-- "em" służy pochyleniu tekstu -->
-
-    <br/><br/>
-
-    Zielonki to wieś położona w północnej części Małopolski. Jej atrakcyjność podkreśla bezpośrednie sąsiedztwo z Krakowem i oddalonym o niecałe 15 km terenem Ojcowskiego Parku Narodowego. <br/> W skład Gminy Zielonki oprócz Zielonek należą także Batowice, Bibice, Bosutów-Boleń, Brzozówka, Dziekanowice, Garlica Duchowna, Garlica Murowana, Garliczka, Grębynice, Januszowice, Korzkiew, Osiedle Łokietka, Owczary, Pękowice, Przybysławice, Trojanowice, Węgrzce i Wola Zachariaszowska. <br/><br/> Więcej informacji na temat Gminy Zielonki          <!-- treść pod obrazkiem -->
-    <a href = "https://zielonki.pl/" target = "_blank" title = "Strona główna Gminy Zielonki"> tutaj </a>           <!-- dodanie linka do innej strony -->
-</div>
-
-<div id = "footer">             <!-- blok footer -->
-    Zielonki
-</div>
-
+            xhreq.send(data);
+        }
+    </script>
 </body>
+
 </html>
