@@ -1,10 +1,27 @@
 package com.library.librarysys.users;
 
-public class Reader {   //main panel of the reader
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter @Setter
+public class Reader extends LoggedUser {   //main panel of the reader
     private int readerID;
-    private String firstname;
-    private String lastname;
 
-    //had to model it first
+    @Getter @Setter
+    public class LibraryCard {
+        private String number;
+        private String addBookToOrder() {
+            return "No implementation";
+        }
+    }
 
+    protected String orderBook() {
+        return "No implementation";
+    }
+    protected String viewLoan() {
+        return "No implementation";
+    }
+    protected String prolong() {
+        return "No implementation";
+    }
 }
