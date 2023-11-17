@@ -11,6 +11,7 @@ public abstract class LoggedUser extends User {
     @Setter private String phoneNum;
 
     public String changeEmail() {
+        //having an account (loggedUser has), set email
         return "No implementation";
     }
     public String changePassword() {
