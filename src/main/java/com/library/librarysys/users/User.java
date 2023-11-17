@@ -2,13 +2,13 @@ package com.library.librarysys.users;
 
 //guest support will be here soon
 public class User {
-    protected String createAccount() {
+    public String createAccount() {
         return "No implementation";
     }
-    protected String searchForLibraryBranch() {
+    public String searchForLibraryBranch() {
         return "No implementation";
     }
-    protected String browseResources() {
+    public String browseResources() {
         return "No implementation";
     }
 }

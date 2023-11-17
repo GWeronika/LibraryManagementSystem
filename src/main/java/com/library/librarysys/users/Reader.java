@@ -15,13 +15,13 @@ public class Reader extends LoggedUser {   //main panel of the reader
         }
     }
 
-    protected String orderBook() {
+    public String orderBook() {
         return "No implementation";
     }
-    protected String viewLoan() {
+    public String viewLoan() {
         return "No implementation";
     }
-    protected String prolong() {
+    public String prolong() {
         return "No implementation";
     }
 }

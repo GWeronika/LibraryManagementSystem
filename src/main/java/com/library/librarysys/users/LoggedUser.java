@@ -10,10 +10,10 @@ public abstract class LoggedUser extends User {
     @Setter private String address;
     @Setter private String phoneNum;
 
-    protected String changeEmail() {
+    public String changeEmail() {
         return "No implementation";
     }
-    protected String changePassword() {
+    public String changePassword() {
         return "No implementation";
     }
 }
