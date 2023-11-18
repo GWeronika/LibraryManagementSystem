@@ -1,40 +1,122 @@
 <!DOCTYPE html>
-<html lang = "pl">      <!-- ustawienie języka strony -->
+<html lang = "pl">
 
 <head>
-    <meta charset = "utf-8">		<!-- określenie jakie znaki będą używane -->
-    <title>GetName</title>			<!-- to co pojawi się na zakładce -->
-    <meta name = "description" content = "Zielonki to wieś położona w Małopolsce. Jej atrakcyjność podkreśla bezpośrednie sąsiedztwo z Krakowem i oddalonym o niecałe 15 km terenem Ojcowskiego Parku Narodowego"/>			      <!-- opis pojawiający się przed włączeniem strony -->
-    <meta name = "keywords" content = "Zielonki, wieś, "/>			<!-- słowa klucze -->
-    <meta name = "author" content = "Weronika Gaweł"/>			<!-- autor -->
+    <meta charset = "utf-8">
+    <title>Library Network - Start</title>
+    <meta name = "description" content = "Searching for books and e-books in the library. Find, reserve and borrow a book at the library. Discover the library."/>			      <!-- opis pojawiający się przed włączeniem strony -->
+    <meta name = "keywords" content = "library, books, ebooks,librarian, cataloguing, online catalog, online catalog search, book loan,
+                                        reader, reading promotion, ordering a book, bestsellers"/>
+    <meta name = "author" content = "Weronika Gaweł, Hanna Harkusha"/>
 
+    <link rel = "stylesheet" href = "/css/styles.css"/>
 </head>
 
 <body>
-    <form id="myForm">
-        <label for="name">Imię:</label>
-        <input type="text" id="name" name="name">
-        <button type="button" onclick="sendData()">Wyślij</button>
-    </form>
+    <header id = "header" class = "" role = "banner">
+        <div id = "topbar" class = "head">
+            <div id = "topbar-left" class = "headLeft"></div>
+            <div id = "topbar-right" class = "headRight"></div>
+        </div>
+        <div id = "logobar" class = "head">
+            <div id = "logobar-left" class = "headLeft">
+                <a href = "index.html">
+                    <img src="/images/round_logo.png" alt = "logo">
+                </a>
+            </div>
+            <div id = "logobar-right" class = "headRight">
+                <form id="myForm">-->
+                    <label for = "search">Wyszukaj pozycję:</label>
+                    <input type = "text" id = "search" name = "search">
+                    <button type = "button" onclick = "searchData()">Szukaj</button>
+                </form>
+            </div>
+        </div>
+        <div id = "navibar" class = "head">
+            <ol>
+                <li><a class = "option">Start</a>
+                    <a href = "index.html"></a>
+                </li>
+                <li><a class = "option">Aktualności</a>
+                    <ul>
+                        <li><a href = "">Nadchodzące wydarzenia</a></li>    <!-- add reference to the option -->
+                        <li><a href = "">Wszystkie wydarzenia</a></li>      <!-- add reference to the option -->
+                        <li><a href = "">Komunikaty</a></li>                <!-- add reference to the option -->
+                    </ul>
+                </li>
+                <li><a class = "option">Filie Biblioteczne</a>
+                    <ul>
+                        <li><a href = "">Filia Wierzba</a></li>             <!-- add reference to the option -->
+                        <li><a href = "">Filia Dąb</a></li>                 <!-- add reference to the option -->
+                        <li><a href = "">Filia Sosna</a></li>               <!-- add reference to the option -->
+                        <li><a href = "">Filia Jesion</a></li>              <!-- add reference to the option -->
+                        <li><a href = "">Filia Topola</a></li>              <!-- add reference to the option -->
+                    </ul>
+                </li>
+                <li><a class = "option">Nowości</a>
+                    <a href = ""></a>                                       <!-- add reference to the option -->
+                </li>
+                <li><a class = "option">Kontakt</a>
+                    <a href = ""></a>                                       <!-- add reference to the option -->
+                </li>
+            </ol>
+            <div style = "clear:both;"></div>
+        </div>
+    </header>
+    <section id = "inset" class = "">
+        <div id = "backgroundImg" class = "backImg">
+            <img src = "/images/olBooks.png" alt = "inset">
+        </div>
+    </section>
+    <section id = "buttons" class = "head">
+        <div class = "button">
+            <h3>Zaloguj się
+                <a href = "">Okno logowania</a>                             <!-- add reference to the option -->
+            </h3>
+        </div>
+        <div class = "button">
+            <h3>Zarejestruj się
+                <a href = "">Okno rejestracji</a>                           <!-- add reference to the option -->
+            </h3>
+        </div>
+    </section>
+<!--    <div id = 'container'></div>-->
+
+<!--    <div id = "topbar">-->
+<!--        <img src = "/images/round_logo.png" alt="" class = "logo">-->
+<!--        <h1>Sieć bibliotek</h1>-->
+<!--        <form id="myForm">-->
+<!--            <label for = "search">Wyszukaj pozycję:</label>-->
+<!--            <input type = "text" id = "search" name = "name">-->
+<!--            <button type = "button" onclick = "searchData()">Szukaj</button>-->
+<!--        </form>-->
+<!--    </div>-->
+
+<!--    <div id = "inset" class = "inset">-->
+<!--        <img src = "/images/olBooks.png" alt="">-->
+<!--        <h1>Czytaj, marz, odkrywaj: Biblioteka Twoich wspomnień</h1>-->
+<!--    </div>-->
+
+
 
     <script>
-        function sendData() {   //javaScript
-            var name = document.getElementById("name").value;
+        function searchData() {   //JavaScript
+            var search = document.getElementById("search").value;
 
-            var xhreq = new XMLHttpRequest();
+            var req = new XMLHttpRequest();
 
-            xhreq.open("POST", "http://localhost:8081/receiveData", true);
-            xhreq.setRequestHeader("Content-Type", "application/json");
+            req.open("POST", "http://localhost:8081/receiveData", true);
+            req.setRequestHeader("Content-Type", "application/json");
 
-            var data = JSON.stringify({ "name": name });
+            var data = JSON.stringify({ "search": search });
 
-            xhreq.onreadystatechange = function() {
-                if (xhreq.readyState === 4 && xhreq.status === 200) {
-                    console.log("Odebrano imię na serwerze: " + name);
+            req.onreadystatechange = function() {
+                if (req.readyState === 4 && req.status === 200) {
+                    console.log("Szukane: " + search);
                 }
             };
 
-            xhreq.send(data);
+            req.send(data);
         }
     </script>
 </body>

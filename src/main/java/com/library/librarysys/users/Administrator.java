@@ -22,7 +22,7 @@ public class Administrator extends LoggedUser {
         return "No implementation";
     }
     public String deleteAccount() {
-        //delete the account and the reader from the db
+        //delete the account and the reader/employee from the db
         return "No implementation";
     }
 }
