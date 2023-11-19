@@ -6,7 +6,152 @@ body {
 	margin: 0;
 }
 
+.head {
+	padding-right: 15px;
+	padding-left: 15px;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 1170px;
+}
 
+/*		topbar		*/
+#topbar {
+	background-image: url("/static/images/blueSuede-long.png");
+	color: #ffffff;
+	font-size: 11px;
+	line-height: 39px;
+	border-bottom: 1px solid #ffffff;
+	box-sizing: border-box;
+}
+#topbar-left {
+	height: 1px;
+	background-color: white;
+}
+#topbar-right {
+	 height: 1px;
+	 background-color: white;
+ }
+.topbar-image {
+	width: 100%;
+	max-height: 39px;
+	background-image: url("static/images/blueSuede-long.png");
+	background-size: contain;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+/*		logobar		*/
+#logobar {
+	background-color: #B49883;
+	color: black;
+	font-size: 20px;
+	box-sizing: border-box;
+	border-bottom: 1px solid #ffffff;
+}
+.headLeft, .headRight, .headCenter {
+	display: inline-block;
+	width: auto;
+	height: 200px;
+	box-sizing: border-box;
+	vertical-align: top;
+	text-align: center;
+	margin: 5px;
+}
+.headCenter {
+	color: black;
+	font-size: 40px;
+}
+.logo {
+	width: 100%;
+	max-height: 200px;
+	background-size: contain;
+}
+#myForm {
+	display: flex;
+	align-items: center;
+}
+.lg-right-bottom {
+	position: absolute;
+	bottom: 453px;
+	width: 23%;
+	text-align: center;
+	background-color: #333;
+	color: white;
+	padding: 10px;
+}
+
+/*		navibar		*/
+#navibar {
+	background-image: url("../images/blueSuede.png");
+	background-size: cover;
+	padding: 10px;
+}
+#navibar ol {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+#navibar li {
+	display: inline-block;
+	margin-right: 10px;
+	position: relative;
+}
+#navibar a {
+	color: white;
+	text-decoration: none;
+	padding: 5px 10px;
+	display: block;
+}
+#navibar a.option:hover {
+	background-color: rgba(0, 0, 0, 0.5);
+}
+#navibar ul {
+	display: none;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	padding: 10px;
+}
+#navibar li:hover ul {
+	display: block;
+}
+.navibar-img {
+	background-image: url("../images/blueSuede.png");
+	height: 50px;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
+}
+.navibar-text {
+	text-align: center;
+	position: absolute;
+	top: 45%;
+	left: 47%;
+	transform: translate(-50%, -50%);
+	color: white;
+}
+
+#backgroundImg {
+	margin-top: 7px;
+}
+.backImg {
+	background-image: url("../images/olBooks.png");
+	height: 500px;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
+}
+.inText {
+	text-align: center;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: white;
+}
 
 /*#topbar {*/
 /*	width: 100%;*/

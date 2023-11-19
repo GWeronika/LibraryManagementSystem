@@ -15,10 +15,8 @@
 <body>
 <div id = "wholepage">
     <header id = "header" class = "" role = "banner">
-        <div id = "topbar" class = "head">
-            <img class = "topbar-image" src="/images/blueSuede.png">
-            <div id = "topbar-left" class = "headLeft"></div>
-            <div id = "topbar-right" class = "headRight"></div>
+        <div id = "topbar" class = "">
+            <img class = "topbar-image" src="/images/blueSuede-long.png" alt = "logo">
         </div>
         <div id = "logobar" class = "head">
             <div id = "logobar-left" class = "headLeft">
@@ -30,47 +28,57 @@
                 <h2>Sieć bibliotek</h2>
             </div>
             <div id = "logobar-right" class = "headRight">
-                <form id="myForm">-->
-                    <label for = "search">Wyszukaj pozycję:</label>
-                    <input type = "text" id = "search" name = "search">
-                    <button type = "button" onclick = "searchData()">Szukaj</button>
-                </form>
+                <div class = "lg-right-bottom">
+                    <form id="myForm">
+                        <label for = "search">Wyszukaj pozycję:</label>
+                        <input type = "text" id = "search" name = "search">
+                        <button type = "button" onclick = "searchData()">Szukaj</button>
+                    </form>
+                </div>
             </div>
         </div>
-        <div id = "navibar" class = "head">
-            <ol>
-                <li><a class = "option">Start</a>
-                    <a href = "index.html"></a>
-                </li>
-                <li><a class = "option">Aktualności</a>
-                    <ul>
-                        <li><a href = "">Nadchodzące wydarzenia</a></li>    <!-- add reference to the option -->
-                        <li><a href = "">Wszystkie wydarzenia</a></li>      <!-- add reference to the option -->
-                        <li><a href = "">Komunikaty</a></li>                <!-- add reference to the option -->
-                    </ul>
-                </li>
-                <li><a class = "option">Filie Biblioteczne</a>
-                    <ul>
-                        <li><a href = "">Filia Wierzba</a></li>             <!-- add reference to the option -->
-                        <li><a href = "">Filia Dąb</a></li>                 <!-- add reference to the option -->
-                        <li><a href = "">Filia Sosna</a></li>               <!-- add reference to the option -->
-                        <li><a href = "">Filia Jesion</a></li>              <!-- add reference to the option -->
-                        <li><a href = "">Filia Topola</a></li>              <!-- add reference to the option -->
-                    </ul>
-                </li>
-                <li><a class = "option">Nowości</a>
-                    <a href = ""></a>                                       <!-- add reference to the option -->
-                </li>
-                <li><a class = "option">Kontakt</a>
-                    <a href = ""></a>                                       <!-- add reference to the option -->
-                </li>
-            </ol>
+        <div id = "navibar" class = "">
+            <div id = "naviImg" class = "navibar-img">
+                <div id = "naviText" class = "navibar-text">
+                    <ol>
+                        <li><a class = "option">Start</a>
+                            <a href = "index.html"></a>
+                        </li>
+                        <li><a class = "option">Aktualności</a>
+                            <ul>
+                                <li><a href = "">Nadchodzące wydarzenia</a></li>    <!-- add reference to the option -->
+                                <li><a href = "">Wszystkie wydarzenia</a></li>      <!-- add reference to the option -->
+                                <li><a href = "">Komunikaty</a></li>                <!-- add reference to the option -->
+                            </ul>
+                        </li>
+                        <li><a class = "option">Filie Biblioteczne</a>
+                            <ul>
+                                <li><a href = "">Filia Wierzba</a></li>             <!-- add reference to the option -->
+                                <li><a href = "">Filia Dąb</a></li>                 <!-- add reference to the option -->
+                                <li><a href = "">Filia Sosna</a></li>               <!-- add reference to the option -->
+                                <li><a href = "">Filia Jesion</a></li>              <!-- add reference to the option -->
+                                <li><a href = "">Filia Topola</a></li>              <!-- add reference to the option -->
+                            </ul>
+                        </li>
+                        <li><a class = "option">Nowości</a>
+                            <a href = ""></a>                                       <!-- add reference to the option -->
+                        </li>
+                        <li><a class = "option">Kontakt</a>
+                            <a href = ""></a>                                       <!-- add reference to the option -->
+                        </li>
+                    </ol>
+                </div>
+            </div>
             <div style = "clear:both;"></div>
         </div>
     </header>
     <section id = "inset" class = "">
         <div id = "backgroundImg" class = "backImg">
-            <img src = "/images/olBooks.png" alt = "inset">
+            <div id = "inset-text" class = "inText">
+                <h1 style="font-size:50px">Czytaj, marz, odkrywaj </h1>
+                <h3>Biblioteka Twoich wspomnień</h3>
+                <button>Odkryj</button>
+            </div>
         </div>
     </section>
     <section id = "buttons" class = "">
@@ -187,28 +195,11 @@
                 </p>
             </div>
             <div id = "bottombar-right" class = "headRight">
-                <a href = "#wholepage">up</a>
+                <a href = "#wholepage">^</a>
             </div>
         </div>
     </footer>
 </div>
-<!--    <div id = 'container'></div>-->
-
-<!--    <div id = "topbar">-->
-<!--        <img src = "/images/round_logo.png" alt="" class = "logo">-->
-<!--        <h1>Sieć bibliotek</h1>-->
-<!--        <form id="myForm">-->
-<!--            <label for = "search">Wyszukaj pozycję:</label>-->
-<!--            <input type = "text" id = "search" name = "name">-->
-<!--            <button type = "button" onclick = "searchData()">Szukaj</button>-->
-<!--        </form>-->
-<!--    </div>-->
-
-<!--    <div id = "inset" class = "inset">-->
-<!--        <img src = "/images/olBooks.png" alt="">-->
-<!--        <h1>Czytaj, marz, odkrywaj: Biblioteka Twoich wspomnień</h1>-->
-<!--    </div>-->
-
 
 
     <script>
