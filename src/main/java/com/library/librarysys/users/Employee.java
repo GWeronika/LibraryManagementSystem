@@ -1,13 +1,28 @@
 package com.library.librarysys.users;
 
+import com.library.librarysys.libcollection.Library;
 import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+
+@ToString
 @Getter
 public class Employee extends LoggedUser {
-    private int employeeID;
-    private enum position {     //additional positions may be added later
+    private final int employeeID;
+    @Setter private Position position;
+    @Setter private Library library;
+
+    public enum Position {     //additional positions may be added later
         MANAGER,
         LIBRARIAN
+    }
+
+    public Employee(String firstname, String lastname, String address, String phoneNum, int employeeID, Position position, Library library) {
+        super(firstname, lastname, address, phoneNum);
+        this.employeeID = employeeID;
+        this.position = position;
+        this.library = library;
     }
 
     public String orderNewBook() {

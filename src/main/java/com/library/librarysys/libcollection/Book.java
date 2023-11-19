@@ -1,7 +1,11 @@
 package com.library.librarysys.libcollection;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 
+@ToString
+@EqualsAndHashCode
 @Getter
 public class Book {
     private final int bookID;

@@ -1,6 +1,17 @@
 package com.library.librarysys.users;
 
+import lombok.Getter;
+import lombok.ToString;
+
+@ToString
+@Getter
 public class Administrator extends LoggedUser {
+    private final int adminID;
+
+    public Administrator(String firstname, String lastname, String address, String phoneNum, int adminID) {
+        super(firstname, lastname, address, phoneNum);
+        this.adminID = adminID;
+    }
 
     public String confirmEmployee() {
         //confirm that they are the employees, that they were hired

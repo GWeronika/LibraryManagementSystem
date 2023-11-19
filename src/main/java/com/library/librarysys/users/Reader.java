@@ -2,14 +2,23 @@ package com.library.librarysys.users;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
+@ToString
 @Getter @Setter
 public class Reader extends LoggedUser {   //main panel of the reader
-    private int readerID;
+    private final int readerID;
+    private final LibraryCard libraryCard;
 
     @Getter @Setter
     public class LibraryCard {
         private String number;
+    }
+
+    public Reader(String firstname, String lastname, String address, String phoneNum, int readerID, LibraryCard libraryCard) {
+        super(firstname, lastname, address, phoneNum);
+        this.readerID = readerID;
+        this.libraryCard = libraryCard;
     }
 
     public String orderBook() {
