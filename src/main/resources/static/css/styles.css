@@ -48,6 +48,7 @@ body {
 	font-size: 20px;
 	box-sizing: border-box;
 	border-bottom: 1px solid #ffffff;
+	height: 210px;
 }
 .headLeft, .headRight, .headCenter {
 	display: inline-block;
@@ -59,8 +60,9 @@ body {
 	margin: 5px;
 }
 .headCenter {
-	color: black;
+	color: white;
 	font-size: 40px;
+	margin-top: 20px;
 }
 .logo {
 	width: 100%;
@@ -73,19 +75,23 @@ body {
 }
 .lg-right-bottom {
 	position: absolute;
-	bottom: 453px;
+	top: 200px;
 	width: 23%;
 	text-align: center;
 	background-color: #333;
-	color: white;
 	padding: 10px;
+	color: white;
+}
+.lg-input {
+	margin-right: 5px;
+	margin-left: 10px;
 }
 
 /*		navibar		*/
 #navibar {
 	background-image: url("../images/blueSuede.png");
 	background-size: cover;
-	padding: 10px;
+	padding: 12px;
 }
 #navibar ol {
 	list-style: none;
@@ -127,7 +133,7 @@ body {
 .navibar-text {
 	text-align: center;
 	position: absolute;
-	top: 45%;
+	top: 60%;
 	left: 47%;
 	transform: translate(-50%, -50%);
 	color: white;
