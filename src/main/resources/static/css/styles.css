@@ -92,6 +92,8 @@ body {
 	background-image: url("../images/blueSuede.png");
 	background-size: cover;
 	padding: 12px;
+	position: relative;
+	z-index: 1;
 }
 #navibar ol {
 	list-style: none;
@@ -100,7 +102,7 @@ body {
 }
 #navibar li {
 	display: inline-block;
-	margin-right: 10px;
+	margin-right: 60px;
 	position: relative;
 }
 #navibar a {
@@ -118,9 +120,14 @@ body {
 	top: 100%;
 	left: 0;
 	padding: 10px;
+	z-index: 2;
 }
 #navibar li:hover ul {
 	display: block;
+	background-color: #333;
+}
+#navibar ul:hover li> a {
+	background-color: #B49883;
 }
 .navibar-img {
 	background-image: url("../images/blueSuede.png");
@@ -141,6 +148,9 @@ body {
 
 #backgroundImg {
 	margin-top: 7px;
+	height: 500px;
+	position: relative;
+	z-index: 1;
 }
 .backImg {
 	background-image: url("../images/olBooks.png");
