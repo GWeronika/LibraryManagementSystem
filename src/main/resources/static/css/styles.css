@@ -12,14 +12,11 @@ body {
 	margin-left: auto;
 	margin-right: auto;
 	max-width: 1170px;
+	background-color: white;
 }
 
 /*		topbar		*/
 #topbar {
-	background-image: url("/static/images/blueSuede-long.png");
-	color: #ffffff;
-	font-size: 11px;
-	line-height: 39px;
 	border-bottom: 1px solid #ffffff;
 	box-sizing: border-box;
 }
@@ -38,8 +35,6 @@ body {
 	background-color: #B49883;
 	color: black;
 	font-size: 20px;
-	box-sizing: border-box;
-	border-bottom: 1px solid #ffffff;
 	height: 210px;
 }
 .headLeft, .headRight, .headCenter {
@@ -81,6 +76,8 @@ body {
 	background-size: cover;
 	padding: 12px;
 	position: relative;
+	border: 1px solid #ffffff;
+	box-sizing: border-box;
 	z-index: 2;
 }
 #navibar ol {
@@ -202,4 +199,70 @@ body {
 }
 #inset button:hover {
 	color: #B49883;
+}
+
+/*		content		*/
+#content {
+	border: solid 9px #B49883;
+}
+.page-header {
+	text-align: center;
+	padding: 1px;
+	color: #152C47;
+}
+.infos {
+	padding: 2px;
+}
+.info {
+	display: flex;
+	border: solid 9px #B49883;
+	margin: 9px;
+}
+.info-image {
+	margin: 9px;
+}
+.info-content {
+	display: block;
+	text-decoration: none;
+	margin: 9px 20px 9px 20px;
+}
+.info-title a {
+	text-decoration: none;
+	color: #152C47;
+}
+.info-title a:hover {
+	text-decoration: underline;
+	color: #0B1626;
+}
+.info-creator {
+	font-size: 16px;
+}
+
+/*		footer		*/
+#footer {
+	border-top: 1px solid #ffffff;
+	box-sizing: border-box;
+}
+#bottombar {
+	background-image: url("../images/blueSuede.png");
+	color: white;
+	text-align: center;
+}
+#bottombar-right p {
+	color: white;
+	text-decoration: none;
+	margin-left: 20px;
+}
+.arrow, .circle {
+	font-size: 24px; /* Rozmiar fontu, dostosuj do potrzeb */
+	line-height: 1.2; /* Odległość między elementami */
+	display: block;
+	color: white;
+	text-decoration: none;
+	margin-left: 40px;
+	margin-top: 16px;
+}
+
+.circle {
+	margin-top: -1.2em; /* Przesunięcie kółka w górę o 1.2 em */
 }
