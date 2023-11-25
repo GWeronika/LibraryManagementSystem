@@ -39,8 +39,6 @@ body {
 }
 .headLeft, .headRight, .headCenter {
 	display: inline-block;
-	width: auto;
-	height: 200px;
 	box-sizing: border-box;
 	vertical-align: top;
 	text-align: center;
@@ -241,28 +239,53 @@ body {
 /*		footer		*/
 #footer {
 	border-top: 1px solid #ffffff;
-	box-sizing: border-box;
 }
 #bottombar {
 	background-image: url("../images/blueSuede.png");
 	color: white;
+	text-align: left;
+	display: block;
+}
+#bottombar-top {
+	display: flex;
+	align-items: center;
+	padding: 9px;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+.bottom-image {
+	width: 80px;
+	height: 80px;
+	margin-right: 10px;
+}
+.bottom-image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+.bottom-image a {
+
+}
+.bottom-text {
 	text-align: center;
+	margin-right: 30px;
+}
+.bottom-text a {
+	color: white;
+	text-decoration: none;
+}
+.bottom-text a:hover {
+	text-decoration: none;
+	color: #B49883;
+}
+#bottom-header {
+	margin-right: 150px;
+	padding-left: 170px;
+}
+#bottombar-left {
+	width: 70%;
 }
 #bottombar-right p {
 	color: white;
 	text-decoration: none;
-	margin-left: 20px;
-}
-.arrow, .circle {
-	font-size: 24px; /* Rozmiar fontu, dostosuj do potrzeb */
-	line-height: 1.2; /* Odległość między elementami */
-	display: block;
-	color: white;
-	text-decoration: none;
-	margin-left: 40px;
-	margin-top: 16px;
-}
-
-.circle {
-	margin-top: -1.2em; /* Przesunięcie kółka w górę o 1.2 em */
+	text-align: right;
 }
