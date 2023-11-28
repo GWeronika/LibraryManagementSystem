@@ -1,4 +1,4 @@
-//package com.library.librarysys;
+//package com.library.librarysys.controller;
 //
 //import org.springframework.stereotype.Controller;
 //import org.springframework.web.bind.annotation.GetMapping;
@@ -6,11 +6,10 @@
 //@Controller
 //public class HomeController {
 //
-//    @GetMapping("/")
+//    @GetMapping("/index")
 //    public String home() {
-//        return "index"; // nazwa szablonu html
+//        return "index";
 //    }
 //}
-
-
-//chyba nie bedzie potrzebne
+//
+//

@@ -17,12 +17,18 @@ public class Copy {
     private final Format format;
     private final String releaseYear;
     private final String language;
-    private String blurb;
+    @Setter private String blurb;
+    @Setter private Status status;
     @Setter private Library library;
 
     public enum Format {
         BOOK,
         EBOOK
+    }
+
+    public enum Status {
+        AVAILABLE,
+        UNAVAILABLE
     }
 
     public Copy(int copyID, Book book, String publisher, String ISBN, Format format, String releaseYear, String language, String blurb, Library library) {
@@ -34,6 +40,7 @@ public class Copy {
         this.releaseYear = releaseYear;
         this.language = language;
         this.blurb = blurb;
+        this.status = Status.AVAILABLE;
         this.library = library;
     }
     public Copy(int copyID, Book book, String publisher, String ISBN, Format format, String releaseYear, String language, Library library) {     //without blurb
@@ -44,6 +51,7 @@ public class Copy {
         this.format = format;
         this.releaseYear = releaseYear;
         this.language = language;
+        this.status = Status.AVAILABLE;
         this.library = library;
     }
 }

@@ -16,17 +16,21 @@ public class Library {
     private final int libraryID;
     @Setter private String location;
     @Setter private HashMap<String, HashMap<LocalTime, LocalTime>> openings = new HashMap<>();      //days of the week should be final keys but with the GUI this problem will be easier to deal with
+    @Setter private String phoneNum;
+    @Setter private String email;
     @Setter private Administrator administrator;
 
-    public Library(int libraryID, String location, HashMap<String, HashMap<LocalTime, LocalTime>> openings, Administrator administrator) {
+    public Library(int libraryID, String location, HashMap<String, HashMap<LocalTime, LocalTime>> openings, String phoneNum, String email, Administrator administrator) {
         this.libraryID = libraryID;
         this.location = location;
         initializeMap(openings);
+        this.phoneNum = phoneNum;
+        this.email = email;
         this.administrator = administrator;
     }
 
     private void initializeMap(HashMap<String, HashMap<LocalTime, LocalTime>> openings) {
-        final String[] daysOfWeek = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+        final String[] daysOfWeek = {"MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"};
         for (String day : daysOfWeek) {
             HashMap<LocalTime, LocalTime> dailyOpenings = new HashMap<>();
             if (openings.containsKey(day)) {
