@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Lis 29, 2023 at 08:56 PM
+-- Generation Time: Lis 30, 2023 at 10:36 AM
 -- Wersja serwera: 10.4.28-MariaDB
 -- Wersja PHP: 8.2.4
 
@@ -119,8 +119,8 @@ CREATE TABLE `copy` (
   `release_year` int(11) NOT NULL,
   `format` enum('BOOK','EBOOK') NOT NULL,
   `language` varchar(255) NOT NULL,
-  `blurb` text DEFAULT NULL,
-  `status` enum('AVAILABLE','UNAVAILABLE') NOT NULL,
+  `blurb` text DEFAULT 'Brak opisu',
+  `status` enum('AVAILABLE','UNAVAILABLE') NOT NULL DEFAULT 'AVAILABLE',
   `library_id` int(11) DEFAULT NULL,
   `book_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -171,7 +171,7 @@ CREATE TABLE `employee` (
   `last_name` varchar(255) NOT NULL,
   `address` varchar(255) NOT NULL,
   `phone_number` varchar(13) NOT NULL,
-  `position` enum('MANAGER','LIBRARIAN') NOT NULL,
+  `position` enum('MANAGER','LIBRARIAN') NOT NULL DEFAULT 'LIBRARIAN',
   `library_id` int(11) DEFAULT NULL,
   `account_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -181,16 +181,16 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`employee_id`, `first_name`, `last_name`, `address`, `phone_number`, `position`, `library_id`, `account_id`) VALUES
-(11, 'Jan', 'Kowalski', 'ul. Główna 123', '+48123456789', 'MANAGER', 1, 1),
-(12, 'Anna', 'Nowak', 'ul. Dębowa 456', '+48451545145', 'LIBRARIAN', 2, 2),
-(13, 'Robert', 'Jankowski', 'ul. Sosnowa 789', '+48789289489', 'LIBRARIAN', 3, 3),
-(14, 'Emilia', 'Wiśniewska', 'ul. Lipowa 101', '+48123948576', 'LIBRARIAN', 4, 4),
-(15, 'Michał', 'Brązowski', 'ul. Modrzewiowa 202', '+48987654444', 'MANAGER', 5, 5),
-(16, 'Amanda', 'Miler', 'ul. Brzozowa 303', '+48111222334', 'LIBRARIAN', 1, 6),
-(17, 'Daniel', 'Dawidowski', 'ul. Cedrowa 404', '+48444555667', 'LIBRARIAN', 2, 7),
-(18, 'Zofia', 'Pasińska', 'ul. Stumilowa 100', '+48777888900', 'MANAGER', 3, 8),
-(19, 'Rafał', 'Anderson', 'ul. Orzechowa 606', '+48123456790', 'LIBRARIAN', 4, 9),
-(20, 'Joanna', 'Tatrzańska', 'ul. Świerkowa 707', '+48987654322', 'LIBRARIAN', 5, 10);
+(1, 'Jan', 'Kowalski', 'ul. Główna 123', '+48123456789', 'MANAGER', 1, 1),
+(2, 'Anna', 'Nowak', 'ul. Dębowa 456', '+48451545145', 'LIBRARIAN', 2, 2),
+(3, 'Robert', 'Jankowski', 'ul. Sosnowa 789', '+48789289489', 'LIBRARIAN', 3, 3),
+(4, 'Emilia', 'Wiśniewska', 'ul. Lipowa 101', '+48123948576', 'LIBRARIAN', 4, 4),
+(5, 'Michał', 'Brązowski', 'ul. Modrzewiowa 202', '+48987654444', 'MANAGER', 5, 5),
+(6, 'Amanda', 'Miler', 'ul. Brzozowa 303', '+48111222334', 'LIBRARIAN', 1, 6),
+(7, 'Daniel', 'Dawidowski', 'ul. Cedrowa 404', '+48444555667', 'LIBRARIAN', 2, 7),
+(8, 'Zofia', 'Pasińska', 'ul. Stumilowa 100', '+48777888900', 'MANAGER', 3, 8),
+(9, 'Rafał', 'Anderson', 'ul. Orzechowa 606', '+48123456790', 'LIBRARIAN', 4, 9),
+(10, 'Joanna', 'Tatrzańska', 'ul. Świerkowa 707', '+48987654322', 'LIBRARIAN', 5, 10);
 
 -- --------------------------------------------------------
 
@@ -267,8 +267,8 @@ INSERT INTO `library_opening` (`library_opening_id`, `library_id`, `opening_id`)
 CREATE TABLE `loan` (
   `loan_id` int(11) NOT NULL,
   `loan_date` date NOT NULL,
-  `return_date` date NOT NULL,
-  `status` enum('ACTIVE','RETURNED','OVERDUE') NOT NULL,
+  `return_date` date NOT NULL DEFAULT (curdate() + interval 30 day),
+  `status` enum('ACTIVE','RETURNED','OVERDUE') NOT NULL DEFAULT 'ACTIVE',
   `employee_id` int(11) DEFAULT NULL,
   `copy_id` int(11) DEFAULT NULL,
   `reader_id` int(11) DEFAULT NULL
@@ -309,7 +309,7 @@ INSERT INTO `opening` (`opening_id`, `day`, `open_hour`, `close_hour`) VALUES
 CREATE TABLE `orders` (
   `order_id` int(11) NOT NULL,
   `order_date` date NOT NULL,
-  `status` enum('REMAINING','READY','CANCELLED') NOT NULL,
+  `status` enum('REMAINING','READY','CANCELLED') NOT NULL DEFAULT 'REMAINING',
   `reader_id` int(11) DEFAULT NULL,
   `copy_id` int(11) DEFAULT NULL,
   `employee_id` int(11) DEFAULT NULL
@@ -470,7 +470,7 @@ ALTER TABLE `copy`
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `library`
@@ -494,7 +494,7 @@ ALTER TABLE `loan`
 -- AUTO_INCREMENT for table `opening`
 --
 ALTER TABLE `opening`
-  MODIFY `opening_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `opening_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `orders`
