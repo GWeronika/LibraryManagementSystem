@@ -1,12 +1,12 @@
 package com.library.librarysys.account;
 
+import com.library.librarysys.dbconnection.libcollectiondb.OrderDAO;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import com.library.librarysys.libcollection.Copy;
 import com.library.librarysys.users.Reader;
-import com.library.librarysys.users.Employee;
 
 import java.time.LocalDate;
 
@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @EqualsAndHashCode
 @Getter
 public class Order {
-    private final int orderID;
+    @Setter private int orderID;
     private final Copy copy;
     private final LocalDate orderDate;
     @Setter private Status status;
@@ -25,16 +25,18 @@ public class Order {
         READY
     }
 
-    public Order(int orderID, Copy copy, LocalDate orderDate, Status status, Reader reader) {
-        this.orderID = orderID;
+    public Order(Copy copy, LocalDate orderDate, Status status, Reader reader) {
         this.copy = copy;
         this.orderDate = orderDate;
-        this.status = status;
+        this.status = Status.REMAINING;
         this.reader = reader;
     }
 
-    public String cancel() {
-        //delete the Order from db
-        return "No implementation";
+    public void addOrderDB(OrderDAO order) {
+        order.addOrderDB(this);
+    }
+
+    public void deleteOrderDB(OrderDAO order) {
+        order.deleteOrderDB(this);
     }
 }
