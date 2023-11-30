@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Lis 30, 2023 at 10:36 AM
+-- Generation Time: Lis 30, 2023 at 12:41 PM
 -- Wersja serwera: 10.4.28-MariaDB
 -- Wersja PHP: 8.2.4
 
@@ -274,6 +274,85 @@ CREATE TABLE `loan` (
   `reader_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `loan`
+--
+
+INSERT INTO `loan` (`loan_id`, `loan_date`, `return_date`, `status`, `employee_id`, `copy_id`, `reader_id`) VALUES
+(1, '2023-01-10', '2023-02-10', 'RETURNED', 6, 1, 1),
+(2, '2023-01-12', '2023-02-12', 'RETURNED', 3, 25, 3),
+(3, '2023-01-17', '2023-02-17', 'RETURNED', 6, 2, 22),
+(4, '2023-01-20', '2023-02-20', 'RETURNED', 2, 4, 5),
+(5, '2023-01-24', '2023-02-24', 'RETURNED', 7, 3, 8),
+(6, '2023-01-28', '2023-02-28', 'RETURNED', 3, 6, 17),
+(7, '2023-02-01', '2023-03-01', 'RETURNED', 4, 28, 16),
+(8, '2023-02-04', '2023-03-04', 'RETURNED', 9, 17, 2),
+(9, '2023-02-05', '2023-03-05', 'RETURNED', 10, 9, 23),
+(10, '2023-02-13', '2023-03-13', 'RETURNED', 9, 7, 20),
+(11, '2023-02-16', '2023-03-16', 'RETURNED', 4, 8, 4),
+(12, '2023-02-21', '2023-03-21', 'RETURNED', 6, 12, 19),
+(13, '2023-02-25', '2023-03-25', 'RETURNED', 9, 27, 16),
+(14, '2023-02-26', '2023-03-26', 'RETURNED', 2, 14, 5),
+(15, '2023-02-26', '2023-03-26', 'RETURNED', 3, 15, 1),
+(16, '2023-03-07', '2024-04-07', 'RETURNED', 3, 16, 22),
+(17, '2023-03-12', '2024-05-12', 'RETURNED', 4, 17, 13),
+(18, '2023-03-15', '2024-04-15', 'RETURNED', 9, 18, 6),
+(19, '2023-03-27', '2024-04-27', 'RETURNED', 10, 10, 11),
+(20, '2023-03-31', '2024-05-01', 'RETURNED', 7, 3, 18),
+(21, '2023-04-01', '2023-05-01', 'RETURNED', 6, 21, 12),
+(22, '2023-04-01', '2023-05-01', 'RETURNED', 6, 22, 7),
+(23, '2023-04-02', '2023-05-02', 'RETURNED', 10, 19, 17),
+(24, '2023-04-09', '2023-05-09', 'RETURNED', 2, 24, 16),
+(25, '2023-04-21', '2023-05-21', 'RETURNED', 3, 26, 7),
+(26, '2023-04-22', '2023-05-22', 'RETURNED', 7, 13, 1),
+(27, '2023-04-25', '2023-05-25', 'RETURNED', 6, 11, 3),
+(28, '2023-04-25', '2023-05-25', 'RETURNED', 7, 23, 19),
+(29, '2023-04-29', '2023-06-29', 'RETURNED', 6, 1, 20),
+(30, '2023-05-07', '2023-06-07', 'RETURNED', 6, 12, 8),
+(31, '2023-05-08', '2023-06-08', 'RETURNED', 3, 2, 5),
+(32, '2023-05-09', '2023-06-09', 'RETURNED', 7, 14, 14),
+(33, '2023-05-10', '2023-06-10', 'RETURNED', 6, 21, 10),
+(34, '2023-05-14', '2023-06-14', 'RETURNED', 9, 18, 15),
+(35, '2023-05-18', '2023-06-18', 'RETURNED', 10, 19, 9),
+(36, '2023-05-26', '2023-06-26', 'RETURNED', 2, 13, 13),
+(37, '2023-05-31', '2023-07-01', 'RETURNED', 6, 21, 21),
+(38, '2023-06-05', '2023-07-05', 'RETURNED', 4, 27, 22),
+(39, '2023-06-15', '2023-07-15', 'RETURNED', 7, 23, 23),
+(40, '2023-06-16', '2023-07-16', 'RETURNED', 2, 24, 9),
+(41, '2023-06-13', '2023-07-13', 'RETURNED', 3, 25, 15),
+(42, '2023-06-30', '2023-07-30', 'RETURNED', 9, 17, 11),
+(43, '2023-07-05', '2023-08-05', 'RETURNED', 10, 20, 22),
+(44, '2023-07-09', '2023-08-09', 'RETURNED', 10, 10, 21),
+(45, '2023-07-11', '2023-08-11', 'RETURNED', 6, 2, 14),
+(46, '2023-07-31', '2023-08-31', 'RETURNED', 4, 8, 19),
+(47, '2023-08-02', '2023-09-02', 'RETURNED', 9, 7, 20),
+(48, '2023-08-06', '2023-09-06', 'RETURNED', 2, 23, 13),
+(49, '2023-08-13', '2023-09-13', 'RETURNED', 7, 24, 2),
+(50, '2023-08-19', '2023-09-19', 'RETURNED', 3, 25, 4),
+(51, '2023-08-22', '2023-09-22', 'RETURNED', 6, 1, 5),
+(52, '2023-08-26', '2023-09-26', 'RETURNED', 6, 11, 15),
+(53, '2023-09-08', '2023-10-08', 'RETURNED', 2, 14, 17),
+(54, '2023-09-10', '2023-10-10', 'RETURNED', 4, 18, 12),
+(55, '2023-09-11', '2023-10-11', 'RETURNED', 3, 6, 4),
+(56, '2023-09-18', '2023-10-18', 'RETURNED', 3, 16, 7),
+(57, '2023-09-20', '2023-10-20', 'RETURNED', 6, 2, 18),
+(58, '2023-09-29', '2023-10-29', 'RETURNED', 3, 26, 23),
+(59, '2023-10-03', '2023-11-03', 'RETURNED', 3, 15, 10),
+(60, '2023-10-07', '2023-11-07', 'RETURNED', 9, 17, 5),
+(61, '2023-10-13', '2023-11-13', 'RETURNED', 4, 18, 20),
+(62, '2023-10-23', '2023-11-23', 'RETURNED', 10, 19, 16),
+(63, '2023-10-24', '2023-11-24', 'RETURNED', 4, 18, 6),
+(64, '2023-10-28', '2023-11-28', 'RETURNED', 6, 21, 12),
+(65, '2023-11-04', '2023-12-04', 'RETURNED', 6, 22, 18),
+(66, '2023-11-05', '2023-12-05', 'RETURNED', 2, 23, 23),
+(67, '2023-11-20', '2023-12-20', 'ACTIVE', 7, 3, 1),
+(68, '2023-11-28', '2023-12-28', 'ACTIVE', 3, 6, 3),
+(69, '2023-12-02', '2023-01-02', 'ACTIVE', 4, 8, 13),
+(70, '2023-12-02', '2023-01-02', 'ACTIVE', 6, 12, 23),
+(71, '2023-12-02', '2023-01-02', 'ACTIVE', 3, 15, 5),
+(72, '2023-12-02', '2023-01-02', 'ACTIVE', 10, 20, 18),
+(73, '2023-12-02', '2023-01-02', 'ACTIVE', 9, 27, 8);
+
 -- --------------------------------------------------------
 
 --
@@ -309,11 +388,36 @@ INSERT INTO `opening` (`opening_id`, `day`, `open_hour`, `close_hour`) VALUES
 CREATE TABLE `orders` (
   `order_id` int(11) NOT NULL,
   `order_date` date NOT NULL,
-  `status` enum('REMAINING','READY','CANCELLED') NOT NULL DEFAULT 'REMAINING',
+  `status` enum('REMAINING','READY') NOT NULL DEFAULT 'REMAINING',
   `reader_id` int(11) DEFAULT NULL,
-  `copy_id` int(11) DEFAULT NULL,
-  `employee_id` int(11) DEFAULT NULL
+  `copy_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`order_id`, `order_date`, `status`, `reader_id`, `copy_id`) VALUES
+(1, '2023-12-20', 'REMAINING', 1, 5),
+(2, '2023-12-20', 'READY', 2, 1),
+(3, '2023-12-21', 'REMAINING', 3, 20),
+(4, '2023-12-21', 'READY', 4, 10),
+(5, '2023-12-22', 'REMAINING', 5, 25),
+(6, '2023-12-22', 'REMAINING', 6, 3),
+(7, '2023-12-23', 'READY', 7, 18),
+(8, '2023-12-23', 'REMAINING', 8, 12),
+(9, '2023-12-24', 'READY', 9, 1),
+(10, '2023-12-24', 'REMAINING', 10, 22),
+(11, '2023-12-25', 'READY', 11, 8),
+(12, '2023-12-25', 'REMAINING', 12, 27),
+(13, '2023-12-26', 'REMAINING', 13, 14),
+(14, '2023-12-26', 'READY', 14, 7),
+(15, '2023-12-27', 'REMAINING', 15, 23),
+(16, '2023-12-27', 'READY', 16, 6),
+(17, '2023-12-28', 'REMAINING', 17, 16),
+(18, '2023-12-28', 'REMAINING', 18, 9),
+(19, '2023-12-29', 'READY', 19, 21),
+(20, '2023-12-29', 'REMAINING', 20, 2);
 
 -- --------------------------------------------------------
 
@@ -432,8 +536,7 @@ ALTER TABLE `opening`
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`order_id`),
   ADD KEY `reader_id` (`reader_id`),
-  ADD KEY `copy_id` (`copy_id`),
-  ADD KEY `employee_id` (`employee_id`);
+  ADD KEY `copy_id` (`copy_id`);
 
 --
 -- Indeksy dla tabeli `reader`
@@ -488,7 +591,7 @@ ALTER TABLE `library_opening`
 -- AUTO_INCREMENT for table `loan`
 --
 ALTER TABLE `loan`
-  MODIFY `loan_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `loan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- AUTO_INCREMENT for table `opening`
@@ -500,7 +603,7 @@ ALTER TABLE `opening`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `reader`
@@ -546,8 +649,7 @@ ALTER TABLE `loan`
 --
 ALTER TABLE `orders`
   ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`reader_id`) REFERENCES `reader` (`reader_id`),
-  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`copy_id`) REFERENCES `copy` (`copy_id`),
-  ADD CONSTRAINT `orders_ibfk_3` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`employee_id`);
+  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`copy_id`) REFERENCES `copy` (`copy_id`);
 
 --
 -- Constraints for table `reader`

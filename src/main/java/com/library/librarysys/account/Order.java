@@ -18,21 +18,18 @@ public class Order {
     private final Copy copy;
     private final LocalDate orderDate;
     @Setter private Status status;
-    private final Employee employee;
     private final Reader reader;
 
     public enum Status {
         REMAINING,
-        READY,
-        CANCELLED
+        READY
     }
 
-    public Order(int orderID, Copy copy, LocalDate orderDate, Status status, Employee employee, Reader reader) {
+    public Order(int orderID, Copy copy, LocalDate orderDate, Status status, Reader reader) {
         this.orderID = orderID;
         this.copy = copy;
         this.orderDate = orderDate;
         this.status = status;
-        this.employee = employee;
         this.reader = reader;
     }
 
