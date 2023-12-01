@@ -1,5 +1,6 @@
 package com.library.librarysys.users;
 
+import com.library.librarysys.account.Account;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -8,8 +9,8 @@ import lombok.ToString;
 public class Administrator extends LoggedUser {
     private final int adminID;
 
-    public Administrator(String firstname, String lastname, String address, String phoneNum, int adminID) {
-        super(firstname, lastname, address, phoneNum);
+    public Administrator(String firstname, String lastname, String address, String phoneNum, Account account, int adminID) {
+        super(firstname, lastname, address, phoneNum, account);
         this.adminID = adminID;
     }
 

@@ -1,5 +1,6 @@
 package com.library.librarysys.users;
 
+import com.library.librarysys.account.Account;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -11,12 +12,12 @@ public class Reader extends LoggedUser {   //main panel of the reader
     private final LibraryCard libraryCard;
 
     @Getter @Setter
-    public class LibraryCard {
+    public static class LibraryCard {
         private String number;
     }
 
-    public Reader(String firstname, String lastname, String address, String phoneNum, int readerID, LibraryCard libraryCard) {
-        super(firstname, lastname, address, phoneNum);
+    public Reader(String firstname, String lastname, String address, String phoneNum, Account account, int readerID, LibraryCard libraryCard) {
+        super(firstname, lastname, address, phoneNum, account);
         this.readerID = readerID;
         this.libraryCard = libraryCard;
     }

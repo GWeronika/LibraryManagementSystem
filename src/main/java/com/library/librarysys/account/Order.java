@@ -1,6 +1,7 @@
 package com.library.librarysys.account;
 
-import com.library.librarysys.dbconnection.libcollectiondb.OrderDAO;
+import com.library.librarysys.dbconnection.GenericDAO;
+import com.library.librarysys.interfaces.Identifiable;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,8 +14,8 @@ import java.time.LocalDate;
 @ToString
 @EqualsAndHashCode
 @Getter
-public class Order {
-    @Setter private int orderID;
+public class Order implements Identifiable {
+    private int orderID;
     private final Copy copy;
     private final LocalDate orderDate;
     @Setter private Status status;
@@ -25,18 +26,27 @@ public class Order {
         READY
     }
 
-    public Order(Copy copy, LocalDate orderDate, Status status, Reader reader) {
+    public Order(Copy copy, Reader reader) {
         this.copy = copy;
-        this.orderDate = orderDate;
+        this.orderDate = LocalDate.now();
         this.status = Status.REMAINING;
         this.reader = reader;
     }
 
-    public void addOrderDB(OrderDAO order) {
-        order.addOrderDB(this);
+    @Override
+    public void setID(int newID) {
+        this.orderID = newID;
     }
 
-    public void deleteOrderDB(OrderDAO order) {
-        order.deleteOrderDB(this);
+    public void addOrderToDB() {
+        GenericDAO<Order> orderDAO = new GenericDAO<>("orders");
+
+        String query = "INSERT INTO orders (order_date, status, reader_id, copy_id) VALUES (?, ?, ?, ?)";
+        orderDAO.addObjectToDB(this, query, java.sql.Date.valueOf(orderDate), status.name(), reader.getReaderID(), copy.getCopyID());
+    }
+
+    public void deleteOrderFromDB(int deleteID) {
+        GenericDAO<Order> orderDAO = new GenericDAO<>("orders");
+        orderDAO.deleteObjectFromDB(deleteID);
     }
 }

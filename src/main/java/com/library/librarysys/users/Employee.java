@@ -1,5 +1,6 @@
 package com.library.librarysys.users;
 
+import com.library.librarysys.account.Account;
 import com.library.librarysys.libcollection.Library;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,8 +19,8 @@ public class Employee extends LoggedUser {
         LIBRARIAN
     }
 
-    public Employee(String firstname, String lastname, String address, String phoneNum, int employeeID, Position position, Library library) {
-        super(firstname, lastname, address, phoneNum);
+    public Employee(String firstname, String lastname, String address, String phoneNum, Account account, int employeeID, Position position, Library library) {
+        super(firstname, lastname, address, phoneNum, account);
         this.employeeID = employeeID;
         this.position = position;
         this.library = library;
