@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.ResultSet;
 
 public class GenericDAO<T extends Identifiable> {
     private final String tableName;
@@ -56,6 +57,35 @@ public class GenericDAO<T extends Identifiable> {
             e.printStackTrace();
         }
     }
+
+    public void selectObjectFromDB() {              //selects all the rows
+        try (Connection connection = DBConnection.getConnection()) {
+            String query = "SELECT * FROM " + tableName;
+        } catch (SQLException e) {
+            System.out.println("Brak połączenia z bazą danych");
+            e.printStackTrace();
+        }
+    }
+
+    public void selectObjectFromDB(int filterID, Object... parameters) {           //selects by id
+        try (Connection connection = DBConnection.getConnection()) {
+            String query = "SELECT * FROM " + tableName + " WHERE " + tableName.toLowerCase() + "_id = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setInt(1, filterID);
+
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        int retrievedID = resultSet.getInt(tableName.toLowerCase() + "_id");
+                        //getting the rest of the columns dunno
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Brak połączenia z bazą danych");
+            e.printStackTrace();
+        }
+    }
+
 
     private void setParameters(PreparedStatement preparedStatement, Object... parameters) throws SQLException {
         for (int i = 0; i < parameters.length; i++) {

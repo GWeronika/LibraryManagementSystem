@@ -1,7 +1,6 @@
 package com.library.librarysys.users;
 
 import com.library.librarysys.account.Account;
-import com.library.librarysys.account.Order;
 import com.library.librarysys.dbconnection.GenericDAO;
 import com.library.librarysys.interfaces.Identifiable;
 import lombok.Getter;
@@ -45,7 +44,9 @@ public class Reader extends LoggedUser implements Identifiable {   //main panel 
     }
 
     public String orderBook() {
-        //"order" button, creating an order and adding it to the order table in the db
+        //here we should get info from the button that was just clicked
+//        Order newOrder = new Order(selectedCopy, this);
+//        newOrder.addOrderToDB();
         return "No implementation";
     }
     public String viewLoan() {
