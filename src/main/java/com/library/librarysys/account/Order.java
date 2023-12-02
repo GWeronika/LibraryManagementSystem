@@ -42,7 +42,7 @@ public class Order implements Identifiable {
         GenericDAO<Order> orderDAO = new GenericDAO<>("orders");
 
         String query = "INSERT INTO orders (order_date, status, reader_id, copy_id) VALUES (?, ?, ?, ?)";
-        orderDAO.addObjectToDB(this, query, java.sql.Date.valueOf(orderDate), status.name(), reader.getReaderID(), copy.getCopyID());
+        orderDAO.addObjectToDB(this, query, getOrderDate(), status.name(), reader.getReaderID(), copy.getCopyID());
     }
 
     public void deleteOrderFromDB(int deleteID) {

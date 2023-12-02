@@ -1,6 +1,9 @@
 package com.library.librarysys.libcollection;
 
 
+import com.library.librarysys.account.Order;
+import com.library.librarysys.dbconnection.GenericDAO;
+import com.library.librarysys.interfaces.Identifiable;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,8 +12,8 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @Getter
-public class Copy {
-    private final int copyID;
+public class Copy implements Identifiable {
+    private int copyID;
     private final Book book;
     private final String publisher;
     private final String ISBN;
@@ -53,5 +56,24 @@ public class Copy {
         this.language = language;
         this.status = Status.AVAILABLE;
         this.library = library;
+    }
+
+    @Override
+    public void setID(int newID) {
+        this.copyID = newID;
+    }
+
+    public void addCopyToDB() {
+        GenericDAO<Copy> copyDAO = new GenericDAO<>("copy");
+
+        String query = "INSERT INTO copy (publisher, isbn, release_year, format, language, " +
+                "blurb, status, library_id, book_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        copyDAO.addObjectToDB(this, query, getPublisher(), getISBN(), getReleaseYear(), getFormat(), getLanguage(),
+                getBlurb(), status.name(), library.getLibraryID(), book.getBookID());
+    }
+
+    public void deleteOrderFromDB(int deleteID) {
+        GenericDAO<Copy> copyDAO = new GenericDAO<>("copy");
+        copyDAO.deleteObjectFromDB(deleteID);
     }
 }

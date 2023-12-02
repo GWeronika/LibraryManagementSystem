@@ -1,14 +1,17 @@
 package com.library.librarysys.users;
 
 import com.library.librarysys.account.Account;
+import com.library.librarysys.account.Order;
+import com.library.librarysys.dbconnection.GenericDAO;
+import com.library.librarysys.interfaces.Identifiable;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 @ToString
 @Getter @Setter
-public class Reader extends LoggedUser {   //main panel of the reader
-    private final int readerID;
+public class Reader extends LoggedUser implements Identifiable {   //main panel of the reader
+    private int readerID;
     private final LibraryCard libraryCard;
 
     @Getter @Setter
@@ -20,6 +23,25 @@ public class Reader extends LoggedUser {   //main panel of the reader
         super(firstname, lastname, address, phoneNum, account);
         this.readerID = readerID;
         this.libraryCard = libraryCard;
+    }
+
+    @Override
+    public void setID(int newID) {
+        this.readerID = newID;
+    }
+
+    public void addReaderToDB() {
+        GenericDAO<Reader> readerDAO = new GenericDAO<>("reader");
+
+        String query = "INSERT INTO reader (first_name, last_name, address, phone_number, library_card_number, account_id) " +
+                "VALUES (?, ?, ?, ?)";
+        readerDAO.addObjectToDB(this, query, getFirstname(), getLastname(), getAddress(), getPhoneNum(),
+                getLibraryCard().getNumber(), super.getAccount().getAccountID());
+    }
+
+    public void deleteReaderFromDB(int deleteID) {
+        GenericDAO<Reader> readerDAO = new GenericDAO<>("reader");
+        readerDAO.deleteObjectFromDB(deleteID);
     }
 
     public String orderBook() {

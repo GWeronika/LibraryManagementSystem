@@ -1,6 +1,9 @@
 package com.library.librarysys.users;
 
 import com.library.librarysys.account.Account;
+import com.library.librarysys.account.Order;
+import com.library.librarysys.dbconnection.GenericDAO;
+import com.library.librarysys.interfaces.Identifiable;
 import com.library.librarysys.libcollection.Library;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,8 +12,8 @@ import lombok.ToString;
 
 @ToString
 @Getter
-public class Employee extends LoggedUser {
-    private final int employeeID;
+public class Employee extends LoggedUser implements Identifiable {
+    private int employeeID;
     @Setter private Position position;
     @Setter private Library library;
 
@@ -24,6 +27,25 @@ public class Employee extends LoggedUser {
         this.employeeID = employeeID;
         this.position = position;
         this.library = library;
+    }
+
+    @Override
+    public void setID(int newID) {
+        this.employeeID = newID;
+    }
+
+    public void addEmployeeToDB() {
+        GenericDAO<Employee> employeeDAO = new GenericDAO<>("employee");
+
+        String query = "INSERT INTO employee (first_name, last_name, address, phone_number, position, library_id, account_id)" +
+                " VALUES (?, ?, ?, ?, ?, ?, ?)";
+        employeeDAO.addObjectToDB(this, query, getFirstname(), getLastname(), getAddress(), getPhoneNum(), position.name()
+                , library.getLibraryID(), super.getAccount().getAccountID());
+    }
+
+    public void deleteEmployeeFromDB(int deleteID) {
+        GenericDAO<Employee> employeeDAO = new GenericDAO<>("employee");
+        employeeDAO.deleteObjectFromDB(deleteID);
     }
 
     public String orderNewBook() {

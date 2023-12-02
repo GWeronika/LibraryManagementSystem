@@ -1,13 +1,14 @@
 package com.library.librarysys.users;
 import com.library.librarysys.account.Account;
 
+import com.library.librarysys.interfaces.Identifiable;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 @ToString
 @Getter
-public abstract class LoggedUser extends User {
+public abstract class LoggedUser extends User implements Identifiable {
     private final String firstname;
     private final String lastname;
     @Setter private String address;
