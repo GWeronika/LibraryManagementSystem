@@ -4,4 +4,4 @@ Project involving the design and implementation of software for a library networ
 The full description will appear in the future :)
 
 The expected system layout is shown in the diagram below
-![librarySysModel](https://github.com/GWeronika/LibraryManagementSystem/assets/126601389/67c031cc-ecc5-4cc3-931d-cd0179168dd6)
+![librarySysModel](https://github.com/GWeronika/LibraryManagementSystem/assets/126601389/2c855284-91b2-4d1b-89b3-86c11386eb8c)
