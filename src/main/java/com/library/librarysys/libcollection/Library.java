@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.time.LocalTime;
 import java.util.HashMap;
 
 @ToString
@@ -15,29 +14,27 @@ import java.util.HashMap;
 public class Library {
     private final int libraryID;
     @Setter private String location;
-    @Setter private HashMap<String, HashMap<LocalTime, LocalTime>> openings = new HashMap<>();      //days of the week should be final keys but with the GUI this problem will be easier to deal with
     @Setter private String phoneNum;
     @Setter private String email;
     @Setter private Administrator administrator;
+    HashMap<String, Opening> openingsList;
 
-    public Library(int libraryID, String location, HashMap<String, HashMap<LocalTime, LocalTime>> openings, String phoneNum, String email, Administrator administrator) {
+    public Library(int libraryID, String location, String phoneNum, String email, Administrator administrator, Opening... openings) {
         this.libraryID = libraryID;
         this.location = location;
-        initializeMap(openings);
         this.phoneNum = phoneNum;
         this.email = email;
         this.administrator = administrator;
+        initializeOpening(openings);
     }
 
-    private void initializeMap(HashMap<String, HashMap<LocalTime, LocalTime>> openings) {
-        final String[] daysOfWeek = {"MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"};
-        for (String day : daysOfWeek) {
-            HashMap<LocalTime, LocalTime> dailyOpenings = new HashMap<>();
-            if (openings.containsKey(day)) {
-                HashMap<LocalTime, LocalTime> initialDailyOpenings = openings.get(day);
-                dailyOpenings.putAll(initialDailyOpenings);
+    private void initializeOpening(Opening... openings) {
+        for(Opening day : openings) {
+            String dayKey = String.valueOf(day.getDay());
+            if (openingsList.containsKey(dayKey)) {
+                System.out.println("Dzień " + dayKey + " już ma ustalone godziny. Czy chcesz je zmienić?");
             }
-            this.openings.put(day, dailyOpenings);
+            openingsList.put(String.valueOf(day.getDay()), day);        //HashMap ensures that there are no duplicates (two equal weekdays)
         }
     }
 }

@@ -29,10 +29,10 @@ public class GenericDAO<T extends Identifiable> {
                     }
                 }
 
-                System.out.println(object.getClass().getSimpleName() + " added to the database.");
+                System.out.println(object.getClass().getSimpleName() + " dodane do bazy danych.");
             }
         } catch (SQLException e) {
-            System.out.println("No connection to the db");
+            System.out.println("Brak połączenia z bazą danych");
             e.printStackTrace();
         }
     }
@@ -46,13 +46,13 @@ public class GenericDAO<T extends Identifiable> {
                 int affectedRows = preparedStatement.executeUpdate();
 
                 if (affectedRows > 0) {
-                    System.out.println(tableName + " deleted from the database.");
+                    System.out.println(tableName + " usunięte z bazy danych.");
                 } else {
-                    System.out.println(tableName + " with ID " + id + " not found in the database.");
+                    System.out.println(tableName + " z ID " + id + " nie odnaleziono w bazie danych.");
                 }
             }
         } catch (SQLException e) {
-            System.out.println("No connection to the db");
+            System.out.println("Brak połączenia z bazą danych");
             e.printStackTrace();
         }
     }
