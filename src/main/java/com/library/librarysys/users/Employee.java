@@ -1,8 +1,9 @@
 package com.library.librarysys.users;
 
 import com.library.librarysys.account.Account;
-import com.library.librarysys.account.Order;
+import com.library.librarysys.account.Loan;
 import com.library.librarysys.dbconnection.GenericDAO;
+import com.library.librarysys.dbconnection.connection.LoanDAO;
 import com.library.librarysys.interfaces.Identifiable;
 import com.library.librarysys.libcollection.Library;
 import lombok.Getter;
@@ -43,9 +44,14 @@ public class Employee extends LoggedUser implements Identifiable {
                 , library.getLibraryID(), super.getAccount().getAccountID());
     }
 
-    public void deleteEmployeeFromDB(int deleteID) {
-        GenericDAO<Employee> employeeDAO = new GenericDAO<>("employee");
-        employeeDAO.deleteObjectFromDB(deleteID);
+    //LOAN functions
+    public void showLoans() {
+        LoanDAO dao = new LoanDAO();
+        dao.selectLoansFromDB();
+    }
+    public void showLoans(Loan.Status status) {
+        LoanDAO dao = new LoanDAO();
+        dao.selectLoansFromDB(status);
     }
 
     public String orderNewBook() {

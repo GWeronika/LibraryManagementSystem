@@ -1,6 +1,7 @@
 package com.library.librarysys.users;
 
 import com.library.librarysys.account.Account;
+import com.library.librarysys.dbconnection.connection.EmployeeDAO;
 import com.library.librarysys.dbconnection.connection.ReaderDAO;
 import com.library.librarysys.interfaces.Identifiable;
 import lombok.Getter;
@@ -27,7 +28,7 @@ public class Administrator extends LoggedUser implements Identifiable {
         ReaderDAO dao = new ReaderDAO();
         dao.deleteReaderFromDB(readerID);
     }
-    public void showAllReaders() {
+    public void showReaders() {
         ReaderDAO dao = new ReaderDAO();
         dao.selectReaderFromDB();
     }
@@ -38,6 +39,28 @@ public class Administrator extends LoggedUser implements Identifiable {
     public void showReaders(int readerID) {
         ReaderDAO dao = new ReaderDAO();
         dao.selectReaderFromDB(readerID);
+    }
+
+    //EMPLOYEE functions
+    public void deleteEmployee(int employeeID) {
+        EmployeeDAO dao = new EmployeeDAO();
+        dao.deleteEmployeeFromDB(employeeID);
+    }
+    public void showEmployees() {
+        EmployeeDAO dao = new EmployeeDAO();
+        dao.selectEmployeeFromDB();
+    }
+    public void showEmployees(int employeeID) {
+        EmployeeDAO dao = new EmployeeDAO();
+        dao.selectEmployeeFromDB(employeeID);
+    }
+    public void showEmployees(String name) {
+        EmployeeDAO dao = new EmployeeDAO();
+        dao.selectEmployeeFromDB(name);
+    }
+    public void showEmployees(Employee.Position position) {
+        EmployeeDAO dao = new EmployeeDAO();
+        dao.selectEmployeeFromDB(position);
     }
 
 

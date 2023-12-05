@@ -49,9 +49,4 @@ public class Loan implements Identifiable {
         String query = "INSERT INTO loan (loan_date, return_date, status, employee_id, copy_id, reader_id) VALUES (?, ?, ?, ?, ?, ?)";
         loanDAO.addObjectToDB(this, query, getLoanDate(), getReturnDate(), status.name(), employee.getEmployeeID(), copy.getCopyID(), reader.getReaderID());
     }
-
-    public void deleteLoanFromDB(int deleteID) {
-        GenericDAO<Loan> loanDAO = new GenericDAO<>("loan");
-        loanDAO.deleteObjectFromDB(deleteID);
-    }
 }

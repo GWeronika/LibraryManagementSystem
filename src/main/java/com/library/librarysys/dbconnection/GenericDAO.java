@@ -1,6 +1,7 @@
 package com.library.librarysys.dbconnection;
 
 import com.library.librarysys.interfaces.Identifiable;
+import lombok.Getter;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
 
+@Getter
 public class GenericDAO<T extends Identifiable> {
     private final String tableName;
 
@@ -58,10 +60,15 @@ public class GenericDAO<T extends Identifiable> {
         }
     }
 
-    public void selectObjectFromDB(String tableName, String[] columns, String condition, Object... parameters) {
+    public void selectObjectFromDB(String tableName, String[] columns, String condition, String joinCondition, Object... parameters) {
         try (Connection connection = DBConnection.getConnection()) {
             String data = String.join(", ", columns);
             String query = "SELECT " + data + " FROM " + tableName;
+
+            if (joinCondition != null && !joinCondition.isEmpty()) {
+                query += " " + joinCondition;
+            }
+
             if (condition != null && !condition.isEmpty()) {
                 query += " WHERE " + condition;
             }
@@ -84,7 +91,6 @@ public class GenericDAO<T extends Identifiable> {
         }
     }
 
-
     private void setParameters(PreparedStatement preparedStatement, Object... parameters) throws SQLException {
         for (int i = 0; i < parameters.length; i++) {
             if (parameters[i] instanceof Integer) {
@@ -93,6 +99,8 @@ public class GenericDAO<T extends Identifiable> {
                 preparedStatement.setString(i + 1, (String) parameters[i]);
             } else if (parameters[i] instanceof java.sql.Date) {
                 preparedStatement.setDate(i + 1, (java.sql.Date) parameters[i]);
+            } else if (parameters[i] instanceof Enum<?>) {
+                preparedStatement.setString(i + 1, ((Enum<?>) parameters[i]).name());
             }
         }
     }

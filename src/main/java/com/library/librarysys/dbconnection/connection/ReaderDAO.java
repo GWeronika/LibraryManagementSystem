@@ -15,19 +15,19 @@ public class ReaderDAO extends GenericDAO<Reader> {
     //SELECT functions
     public void selectReaderFromDB() {
         String[] columns = {"first_name", "last_name", "address", "phone_number", "library_card_number"};
-        super.selectObjectFromDB("reader", columns, null);
+        super.selectObjectFromDB(getTableName(), columns, null, null);
     }
 
     public void selectReaderFromDB(int id) {      //search by id
         String[] columns = {"first_name", "last_name", "address", "phone_number", "library_card_number"};
         String condition = "reader_id = ?";
-        super.selectObjectFromDB("reader", columns, condition, id);
+        super.selectObjectFromDB(getTableName(), columns, condition, null, id);
     }
 
     public void selectReaderFromDB(String name) {      //search by firstname or lastname
         String[] columns = {"first_name", "last_name", "address", "phone_number", "library_card_number"};
         String condition = "first_name = ? OR last_name = ?";
-        super.selectObjectFromDB("reader", columns, condition, name, name);
+        super.selectObjectFromDB(getTableName(), columns, condition, name, name);
     }
 
 }
