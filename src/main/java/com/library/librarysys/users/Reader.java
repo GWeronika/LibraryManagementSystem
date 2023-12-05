@@ -43,6 +43,15 @@ public class Reader extends LoggedUser implements Identifiable {   //main panel 
         readerDAO.deleteObjectFromDB(deleteID);
     }
 
+    public void selectReaderFromDB() {      //some parameters
+        GenericDAO<Reader> dao = new GenericDAO<>("reader");
+        String[] columns = {"first_name", "last_name", "address", "phone_number", "library_card_number"};
+        dao.selectObjectFromDB("reader", columns, null);
+    }
+//        String[] columns = {"first_name", "last_name", "address"};
+//        String condition = "first_name = ?";
+//        dao.selectFromDB("book", columns, condition, "Adam");
+
     public String orderBook() {
         //here we should get info from the button that was just clicked
 //        Order newOrder = new Order(selectedCopy, this);

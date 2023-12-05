@@ -58,25 +58,23 @@ public class GenericDAO<T extends Identifiable> {
         }
     }
 
-    public void selectObjectFromDB() {              //selects all the rows
+    public void selectObjectFromDB(String tableName, String[] columns, String condition, Object... parameters) {
         try (Connection connection = DBConnection.getConnection()) {
-            String query = "SELECT * FROM " + tableName;
-        } catch (SQLException e) {
-            System.out.println("Brak połączenia z bazą danych");
-            e.printStackTrace();
-        }
-    }
+            String data = String.join(", ", columns);
+            String query = "SELECT " + data + " FROM " + tableName;
+            if (condition != null && !condition.isEmpty()) {
+                query += " WHERE " + condition;
+            }
 
-    public void selectObjectFromDB(int filterID, Object... parameters) {           //selects by id
-        try (Connection connection = DBConnection.getConnection()) {
-            String query = "SELECT * FROM " + tableName + " WHERE " + tableName.toLowerCase() + "_id = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setInt(1, filterID);
+                setParameters(preparedStatement, parameters);
 
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    if (resultSet.next()) {
-                        int retrievedID = resultSet.getInt(tableName.toLowerCase() + "_id");
-                        //getting the rest of the columns dunno
+                    while (resultSet.next()) {
+                        for (String column : columns) {
+                            System.out.print(resultSet.getString(column) + "\t");
+                        }
+                        System.out.println();
                     }
                 }
             }
@@ -98,4 +96,5 @@ public class GenericDAO<T extends Identifiable> {
             }
         }
     }
+
 }
