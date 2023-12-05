@@ -2,8 +2,10 @@ package com.library.librarysys.users;
 
 import com.library.librarysys.account.Account;
 import com.library.librarysys.account.Loan;
+import com.library.librarysys.account.Order;
 import com.library.librarysys.dbconnection.GenericDAO;
 import com.library.librarysys.dbconnection.connection.LoanDAO;
+import com.library.librarysys.dbconnection.connection.OrderDAO;
 import com.library.librarysys.interfaces.Identifiable;
 import com.library.librarysys.libcollection.Library;
 import lombok.Getter;
@@ -52,6 +54,20 @@ public class Employee extends LoggedUser implements Identifiable {
     public void showLoans(Loan.Status status) {
         LoanDAO dao = new LoanDAO();
         dao.selectLoansFromDB(status);
+    }
+
+    //ORDER functions
+    public void showOrders() {
+        OrderDAO dao = new OrderDAO();
+        dao.selectOrderFromDB();
+    }
+    public void showOrders(int orderID) {
+        OrderDAO dao = new OrderDAO();
+        dao.selectOrderFromDB(orderID);
+    }
+    public void showOrders(Order.Status status) {
+        OrderDAO dao = new OrderDAO();
+        dao.selectOrderFromDB(status);
     }
 
     public String orderNewBook() {

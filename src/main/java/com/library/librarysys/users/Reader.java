@@ -2,6 +2,7 @@ package com.library.librarysys.users;
 
 import com.library.librarysys.account.Account;
 import com.library.librarysys.dbconnection.GenericDAO;
+import com.library.librarysys.dbconnection.connection.OrderDAO;
 import com.library.librarysys.interfaces.Identifiable;
 import lombok.Getter;
 import lombok.Setter;
@@ -42,10 +43,13 @@ public class Reader extends LoggedUser implements Identifiable {   //main panel 
                 getLibraryCard().getNumber(), super.getAccount().getAccountID());
     }
 
+    public void cancelOrder(int orderID) {
+        OrderDAO dao = new OrderDAO();
+        dao.deleteOrderFromDB(orderID);
+    }
+
     public String orderBook() {
         //here we should get info from the button that was just clicked
-//        Order newOrder = new Order(selectedCopy, this);
-//        newOrder.addOrderToDB();
         return "No implementation";
     }
     public String viewLoan() {

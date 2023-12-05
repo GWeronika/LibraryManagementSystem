@@ -45,8 +45,4 @@ public class Order implements Identifiable {
         orderDAO.addObjectToDB(this, query, getOrderDate(), status.name(), reader.getReaderID(), copy.getCopyID());
     }
 
-    public void deleteOrderFromDB(int deleteID) {
-        GenericDAO<Order> orderDAO = new GenericDAO<>("orders");
-        orderDAO.deleteObjectFromDB(deleteID);
-    }
 }
