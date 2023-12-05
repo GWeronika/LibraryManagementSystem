@@ -16,9 +16,13 @@ public class Reader extends LoggedUser implements Identifiable {   //main panel 
     @Getter @Setter
     public static class LibraryCard {
         private String number;
+
+        public LibraryCard(String number) {
+            this.number = number;
+        }
     }
 
-    public Reader(String firstname, String lastname, String address, String phoneNum, Account account, int readerID, LibraryCard libraryCard) {
+    public Reader(int readerID, String firstname, String lastname, String address, String phoneNum, Account account, LibraryCard libraryCard) {
         super(firstname, lastname, address, phoneNum, account);
         this.readerID = readerID;
         this.libraryCard = libraryCard;
@@ -37,20 +41,6 @@ public class Reader extends LoggedUser implements Identifiable {   //main panel 
         readerDAO.addObjectToDB(this, query, getFirstname(), getLastname(), getAddress(), getPhoneNum(),
                 getLibraryCard().getNumber(), super.getAccount().getAccountID());
     }
-
-    public void deleteReaderFromDB(int deleteID) {
-        GenericDAO<Reader> readerDAO = new GenericDAO<>("reader");
-        readerDAO.deleteObjectFromDB(deleteID);
-    }
-
-    public void selectReaderFromDB() {      //some parameters
-        GenericDAO<Reader> dao = new GenericDAO<>("reader");
-        String[] columns = {"first_name", "last_name", "address", "phone_number", "library_card_number"};
-        dao.selectObjectFromDB("reader", columns, null);
-    }
-//        String[] columns = {"first_name", "last_name", "address"};
-//        String condition = "first_name = ?";
-//        dao.selectFromDB("book", columns, condition, "Adam");
 
     public String orderBook() {
         //here we should get info from the button that was just clicked
