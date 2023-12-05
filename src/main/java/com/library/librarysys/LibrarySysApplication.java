@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @SpringBootApplication
 public class LibrarySysApplication {
 
@@ -16,9 +18,9 @@ public class LibrarySysApplication {
     @RestController
     public static class ReceiveDataController {
         @PostMapping("/receiveData")
-        public String receiveData(@RequestBody String name) {   //receive data które jest w JavaScript
+        public String receiveData(@RequestBody Map<String, String> data) {
+            String name = data.get("name");
             System.out.println("Odebrano imię: " + name);
-
             return "Imię odebrane na serwerze: " + name;
         }
     }
