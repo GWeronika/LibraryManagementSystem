@@ -39,10 +39,4 @@ public class Opening implements Identifiable {
         String query = "INSERT INTO opening (day, open_hour, close_hour) VALUES (?, ?, ?)";
         openingDAO.addObjectToDB(this, query, day.name(), getOpenHour(), getCloseHour());
     }
-
-    public void deleteOpeningFromDB(int deleteID) {
-        GenericDAO<Opening> openingDAO = new GenericDAO<>("opening");
-        openingDAO.deleteObjectFromDB(deleteID);
-    }
-
 }

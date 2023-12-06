@@ -1,5 +1,6 @@
 package com.library.librarysys.libcollection;
 
+import com.library.librarysys.interfaces.Identifiable;
 import com.library.librarysys.users.Administrator;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -11,8 +12,8 @@ import java.util.HashMap;
 @ToString
 @EqualsAndHashCode
 @Getter
-public class Library {
-    private final int libraryID;
+public class Library implements Identifiable {
+    private int libraryID;
     @Setter private String location;
     @Setter private String phoneNum;
     @Setter private String email;
@@ -26,6 +27,11 @@ public class Library {
         this.email = email;
         this.administrator = administrator;
         initializeOpening(openings);
+    }
+
+    @Override
+    public void setID(int newID) {
+        this.libraryID = newID;
     }
 
     private void initializeOpening(Opening... openings) {
