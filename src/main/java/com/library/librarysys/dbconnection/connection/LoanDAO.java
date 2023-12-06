@@ -8,6 +8,12 @@ public class LoanDAO extends GenericDAO<Loan> {
         super("loan");
     }
 
+    public void addLoanToDB(Loan loan) {
+        String query = "INSERT INTO loan (loan_date, return_date, status, employee_id, copy_id, reader_id) VALUES (?, ?, ?, ?, ?, ?)";
+        super.addObjectToDB(loan, query, loan.getLoanDate(), loan.getReturnDate(), loan.getStatus().name(),
+                loan.getEmployee().getEmployeeID(), loan.getCopy().getCopyID(), loan.getReader().getReaderID());
+    }
+
     public void deleteLoanFromDB(int deleteID) {
         super.deleteObjectFromDB(deleteID);
     }

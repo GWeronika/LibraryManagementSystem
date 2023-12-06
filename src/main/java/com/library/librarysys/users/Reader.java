@@ -1,7 +1,6 @@
 package com.library.librarysys.users;
 
 import com.library.librarysys.account.Account;
-import com.library.librarysys.dbconnection.GenericDAO;
 import com.library.librarysys.dbconnection.connection.OrderDAO;
 import com.library.librarysys.interfaces.Identifiable;
 import lombok.Getter;
@@ -32,15 +31,6 @@ public class Reader extends LoggedUser implements Identifiable {   //main panel 
     @Override
     public void setID(int newID) {
         this.readerID = newID;
-    }
-
-    public void addReaderToDB() {
-        GenericDAO<Reader> readerDAO = new GenericDAO<>("reader");
-
-        String query = "INSERT INTO reader (first_name, last_name, address, phone_number, library_card_number, account_id) " +
-                "VALUES (?, ?, ?, ?)";
-        readerDAO.addObjectToDB(this, query, getFirstname(), getLastname(), getAddress(), getPhoneNum(),
-                getLibraryCard().getNumber(), super.getAccount().getAccountID());
     }
 
     public void cancelOrder(int orderID) {

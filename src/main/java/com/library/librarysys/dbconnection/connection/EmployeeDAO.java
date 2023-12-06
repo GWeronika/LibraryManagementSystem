@@ -8,6 +8,14 @@ public class EmployeeDAO extends GenericDAO<Employee> {
         super("employee");
     }
 
+    public void addEmployeeToDB(Employee employee) {
+        String query = "INSERT INTO employee (first_name, last_name, address, phone_number, position, library_id, account_id)" +
+                " VALUES (?, ?, ?, ?, ?, ?, ?)";
+        super.addObjectToDB(employee, query, employee.getFirstname(), employee.getLastname(), employee.getAddress(),
+                employee.getPhoneNum(), employee.getPosition().name(), employee.getLibrary().getLibraryID(),
+                employee.getAccount().getAccountID());
+    }
+
     public void deleteEmployeeFromDB(int deleteID) {
         super.deleteObjectFromDB(deleteID);
     }

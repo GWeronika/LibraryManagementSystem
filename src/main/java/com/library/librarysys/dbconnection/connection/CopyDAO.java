@@ -8,6 +8,14 @@ public class CopyDAO extends GenericDAO<Copy> {
         super("copy");
     }
 
+    public void addCopyToDB(Copy copy) {
+        String query = "INSERT INTO copy (publisher, isbn, release_year, format, language, " +
+                "blurb, status, library_id, book_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        super.addObjectToDB(copy, query, copy.getPublisher(), copy.getISBN(), copy.getReleaseYear(), copy.getFormat(),
+                copy.getLanguage(), copy.getBlurb(), copy.getStatus().name(), copy.getLibrary().getLibraryID(),
+                copy.getBook().getBookID());
+    }
+
     public void deleteCopyFromDB(int deleteID) {
         super.deleteObjectFromDB(deleteID);
     }
@@ -25,7 +33,7 @@ public class CopyDAO extends GenericDAO<Copy> {
     }
     public void selectCopyFromDB(String name) {
         String[] columns = {"book.title", "book.author", "publisher", "isbn", "release_year", "format", "language", "blurb", "status", "library.name"};
-        String condition = "book.title LIKE ? OR book.author LIKE ?";
+        String condition = "book.title LIKE ? OR book.author LIKE ? ";
         String join = "JOIN library ON library.library_id = copy.library_id JOIN book ON book.book_id = copy.book_id";
         String likeName = "%" + name + "%";
         super.selectObjectFromDB(getTableName(), columns, condition, join, likeName, likeName);

@@ -1,6 +1,5 @@
 package com.library.librarysys.account;
 
-import com.library.librarysys.dbconnection.GenericDAO;
 import com.library.librarysys.interfaces.Identifiable;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -37,12 +36,4 @@ public class Order implements Identifiable {
     public void setID(int newID) {
         this.orderID = newID;
     }
-
-    public void addOrderToDB() {
-        GenericDAO<Order> orderDAO = new GenericDAO<>("orders");
-
-        String query = "INSERT INTO orders (order_date, status, reader_id, copy_id) VALUES (?, ?, ?, ?)";
-        orderDAO.addObjectToDB(this, query, getOrderDate(), status.name(), reader.getReaderID(), copy.getCopyID());
-    }
-
 }

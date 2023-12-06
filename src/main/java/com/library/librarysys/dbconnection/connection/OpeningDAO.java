@@ -8,6 +8,11 @@ public class OpeningDAO extends GenericDAO<Opening> {
         super("opening");
     }
 
+    public void addOpeningToDB(Opening opening) {
+        String query = "INSERT INTO opening (day, open_hour, close_hour) VALUES (?, ?, ?)";
+        super.addObjectToDB(opening, query, opening.getDay().name(), opening.getOpenHour(), opening.getCloseHour());
+    }
+
     public void deleteOpeningFromDB(int deleteID) {
         super.deleteObjectFromDB(deleteID);
     }

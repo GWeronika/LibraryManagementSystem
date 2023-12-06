@@ -1,6 +1,7 @@
 package com.library.librarysys.users;
 
 import com.library.librarysys.account.Account;
+import com.library.librarysys.dbconnection.connection.AccountDAO;
 import com.library.librarysys.dbconnection.connection.EmployeeDAO;
 import com.library.librarysys.dbconnection.connection.ReaderDAO;
 import com.library.librarysys.interfaces.Identifiable;
@@ -64,9 +65,13 @@ public class Administrator extends LoggedUser implements Identifiable {
     }
 
 
-    public String confirmEmployee() {
-        //confirm that they are the employees, that they were hired
-        return "No implementation";
+    public String confirmEmployee(String firstName, String secondName) {
+        //button pressing support
+        Account account = new Account(0, firstName + "." + secondName + "@example.com",
+                firstName.toLowerCase() + "." + secondName.toLowerCase() + ".EMPLOYEE");
+        AccountDAO dao = new AccountDAO();
+        dao.addAccountToDB(account);
+        return "Half implemented";
     }
     public String confirmPurchase() {
         //you get the note from the librarian (this textbox in Employee class) and confirm that the library can acquire the book

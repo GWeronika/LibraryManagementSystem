@@ -1,6 +1,5 @@
 package com.library.librarysys.account;
 
-import com.library.librarysys.dbconnection.GenericDAO;
 import com.library.librarysys.interfaces.Identifiable;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -41,12 +40,5 @@ public class Loan implements Identifiable {
         this.status = Status.ACTIVE;
         this.reader = reader;
         this.employee = employee;
-    }
-
-    public void addLoanToDB() {
-        GenericDAO<Loan> loanDAO = new GenericDAO<>("loan");
-
-        String query = "INSERT INTO loan (loan_date, return_date, status, employee_id, copy_id, reader_id) VALUES (?, ?, ?, ?, ?, ?)";
-        loanDAO.addObjectToDB(this, query, getLoanDate(), getReturnDate(), status.name(), employee.getEmployeeID(), copy.getCopyID(), reader.getReaderID());
     }
 }

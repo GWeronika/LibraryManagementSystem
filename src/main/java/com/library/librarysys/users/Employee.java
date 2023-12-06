@@ -3,7 +3,6 @@ package com.library.librarysys.users;
 import com.library.librarysys.account.Account;
 import com.library.librarysys.account.Loan;
 import com.library.librarysys.account.Order;
-import com.library.librarysys.dbconnection.GenericDAO;
 import com.library.librarysys.dbconnection.connection.LoanDAO;
 import com.library.librarysys.dbconnection.connection.OrderDAO;
 import com.library.librarysys.interfaces.Identifiable;
@@ -37,14 +36,6 @@ public class Employee extends LoggedUser implements Identifiable {
         this.employeeID = newID;
     }
 
-    public void addEmployeeToDB() {
-        GenericDAO<Employee> employeeDAO = new GenericDAO<>("employee");
-
-        String query = "INSERT INTO employee (first_name, last_name, address, phone_number, position, library_id, account_id)" +
-                " VALUES (?, ?, ?, ?, ?, ?, ?)";
-        employeeDAO.addObjectToDB(this, query, getFirstname(), getLastname(), getAddress(), getPhoneNum(), position.name()
-                , library.getLibraryID(), super.getAccount().getAccountID());
-    }
 
     //LOAN functions
     public void showLoans() {
@@ -91,7 +82,7 @@ public class Employee extends LoggedUser implements Identifiable {
         return "No implementation";
     }
     public String accessToAnalysis() {
-        //you can see the books that were searched for but not found in the db (to buy it then)
+        //you can see the books that were searched for but not found in the db (to buy it later)
         return "No implementation";
     }
 }

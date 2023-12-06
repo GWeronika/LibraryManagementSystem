@@ -1,6 +1,5 @@
 package com.library.librarysys.libcollection;
 
-import com.library.librarysys.dbconnection.GenericDAO;
 import com.library.librarysys.interfaces.Identifiable;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -31,12 +30,5 @@ public class Opening implements Identifiable {
     @Override
     public void setID(int newID) {
         this.openingID = newID;
-    }
-
-    public void addOpeningToDB() {
-        GenericDAO<Opening> openingDAO = new GenericDAO<>("opening");
-
-        String query = "INSERT INTO opening (day, open_hour, close_hour) VALUES (?, ?, ?)";
-        openingDAO.addObjectToDB(this, query, day.name(), getOpenHour(), getCloseHour());
     }
 }
