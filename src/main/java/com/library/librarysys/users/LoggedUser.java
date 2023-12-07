@@ -1,6 +1,7 @@
 package com.library.librarysys.users;
 import com.library.librarysys.account.Account;
 
+import com.library.librarysys.dbconnection.connection.AccountDAO;
 import com.library.librarysys.interfaces.Identifiable;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +11,7 @@ import lombok.ToString;
 @Getter
 public abstract class LoggedUser extends User implements Identifiable {
     private final String firstname;
-    private final String lastname;
+    @Setter private String lastname;
     @Setter private String address;
     @Setter private String phoneNum;
     private final Account account;
@@ -23,11 +24,10 @@ public abstract class LoggedUser extends User implements Identifiable {
         this.account = account;
     }
 
-    public String changeEmail() {
-        //having an account (loggedUser has), set email
-        return "No implementation";
+    public void changePassword(String password) {
+        //responding to the button mechanism
+        AccountDAO dao = new AccountDAO();
+        dao.alterPasswordAccountInDB(this, password);
     }
-    public String changePassword() {
-        return "No implementation";
-    }
+
 }

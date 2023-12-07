@@ -14,14 +14,16 @@ import java.util.HashMap;
 @Getter
 public class Library implements Identifiable {
     private int libraryID;
+    private final String name;
     @Setter private String location;
     @Setter private String phoneNum;
     @Setter private String email;
     @Setter private Administrator administrator;
     HashMap<String, Opening> openingsList;
 
-    public Library(int libraryID, String location, String phoneNum, String email, Administrator administrator, Opening... openings) {
+    public Library(int libraryID, String name, String location, String phoneNum, String email, Administrator administrator, Opening... openings) {
         this.libraryID = libraryID;
+        this.name = name;
         this.location = location;
         this.phoneNum = phoneNum;
         this.email = email;

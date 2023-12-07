@@ -91,6 +91,34 @@ public class GenericDAO<T extends Identifiable> {
         }
     }
 
+    //UPDATE table JOIN table2 ON id SET table.column1 = value1 WHERE condition
+    public void alterObjectInDB(String tableName, String[] setClauses, String condition, String joinCondition, Object... parameters) {
+        try (Connection connection = DBConnection.getConnection()) {
+            String data = String.join(", ", setClauses);
+            StringBuilder query = new StringBuilder("UPDATE " + tableName);
+
+            if (joinCondition != null && !joinCondition.isEmpty()) {
+                query.append(" ").append(joinCondition);
+            }
+
+            query.append(" SET ").append(data);
+
+            if (condition != null && !condition.isEmpty()) {
+                query.append(" WHERE ").append(condition);
+            }
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query.toString())) {
+                setParameters(preparedStatement, parameters);
+
+                int affectedRows = preparedStatement.executeUpdate();
+                System.out.println("Liczba zmionionych wierszy: " + affectedRows);
+            }
+        } catch (SQLException e) {
+            System.out.println("Brak połączenia z bazą danych");
+            e.printStackTrace();
+        }
+    }
+
     private void setParameters(PreparedStatement preparedStatement, Object... parameters) throws SQLException {
         for (int i = 0; i < parameters.length; i++) {
             if (parameters[i] instanceof Integer) {
@@ -104,5 +132,5 @@ public class GenericDAO<T extends Identifiable> {
             }
         }
     }
-
 }
+

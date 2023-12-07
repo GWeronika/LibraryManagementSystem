@@ -1,6 +1,7 @@
 package com.library.librarysys.users;
 
 import com.library.librarysys.account.Account;
+import com.library.librarysys.dbconnection.connection.AccountDAO;
 import com.library.librarysys.dbconnection.connection.OrderDAO;
 import com.library.librarysys.interfaces.Identifiable;
 import lombok.Getter;
@@ -49,5 +50,11 @@ public class Reader extends LoggedUser implements Identifiable {   //main panel 
     public String prolong() {
         //changes the returnDate to returnDate+=30, later, including days off from work??
         return "No implementation";
+    }
+
+    public void changeEmail(String email) {
+        //responding to the button mechanism
+        AccountDAO dao = new AccountDAO();
+        dao.alterEmailAccountInDB(this, email);
     }
 }
