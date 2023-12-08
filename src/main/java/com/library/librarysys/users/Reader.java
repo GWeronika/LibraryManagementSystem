@@ -11,21 +11,44 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * A class representing a reader in the library system.
+ * Extends the LoggedUser class and implements the Identifiable and PersonalData,
+ */
 @ToString
 @Getter @Setter
 public class Reader extends LoggedUser implements Identifiable, PersonalData {
     private int readerID;
     private final LibraryCard libraryCard;
 
+/**
+ * Represents a library card used for library membership.
+ *
+ * <p>A library card is associated with a unique identification number.
+ * It is used to borrow and return library materials and access library services.
+ * Instances of this class are created with a specified card number.</p>
+ *
+ * <p>This class is an inner static class of the outer class where it is declared.</p>
+ */
     @Getter @Setter
     public static class LibraryCard {
         private String number;
-
         public LibraryCard(String number) {
             this.number = number;
         }
     }
 
+    /**
+     * Constructor for the Reader class.
+     *
+     * @param readerID integer number, reader id
+     * @param firstname string value, reader first name
+     * @param lastname string value, reader last name
+     * @param address string value, reader address
+     * @param phoneNum string value, reader phone number
+     * @param account reference to a reader account
+     * @param libraryCard library card with a unique number that the reader has
+     */
     public Reader(int readerID, String firstname, String lastname, String address, String phoneNum, Account account, LibraryCard libraryCard) {
         super(firstname, lastname, address, phoneNum, account);
         this.readerID = readerID;
@@ -37,6 +60,12 @@ public class Reader extends LoggedUser implements Identifiable, PersonalData {
         this.readerID = newID;
     }
 
+    /**
+     * removes the order with the given id from the database
+     *
+     * @param orderID id of the order that will be canceled
+     * @see OrderDAO
+     */
     public void cancelOrder(int orderID) {
         OrderDAO dao = new OrderDAO();
         dao.deleteOrderFromDB(orderID);
