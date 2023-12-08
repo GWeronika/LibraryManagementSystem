@@ -4,6 +4,7 @@ import com.library.librarysys.account.Loan;
 import com.library.librarysys.dbconnection.GenericDAO;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class LoanDAO extends GenericDAO<Loan> {
     public LoanDAO() {
@@ -38,6 +39,29 @@ public class LoanDAO extends GenericDAO<Loan> {
         super.selectObjectFromDB(getTableName(), columns, condition, join, status);
     }
 
+    public Loan getLoanByID(int loanID) {
+        List<Result> resultList = extractFromDB(loanID);
+        EmployeeDAO employeeDAO = new EmployeeDAO();
+        CopyDAO copyDAO = new CopyDAO();
+        ReaderDAO readerDAO = new ReaderDAO();
+        for (Result result : resultList) {
+            int resultLoanID = Integer.parseInt(result.getColumnValues().get("reader_id"));
+
+            if (resultLoanID == loanID) {
+                LocalDate loanDate = LocalDate.parse(result.getColumnValues().get("loan_date"));
+                LocalDate returnDate = LocalDate.parse(result.getColumnValues().get("return_date"));
+                Loan.Status status = Loan.Status.valueOf(result.getColumnValues().get("status"));
+                int employeeID = Integer.parseInt(result.getColumnValues().get("employee_id"));
+                int copyID = Integer.parseInt(result.getColumnValues().get("copy_id"));
+                int readerID = Integer.parseInt(result.getColumnValues().get("reader_id"));
+
+                return new Loan(resultLoanID, loanDate, returnDate, status, copyDAO.getCopyByID(copyID),
+                        readerDAO.getReaderByID(readerID), employeeDAO.getEmployeeByID(employeeID));
+            }
+        }
+        return null;
+    }
+
     public void alterReturnDateInDB(Loan loan, LocalDate returnDate) {
         String[] set = {"return_date = ".concat(String.valueOf(returnDate))};
         String condition = "loan_id = ?";
@@ -47,5 +71,11 @@ public class LoanDAO extends GenericDAO<Loan> {
         String[] set = {"status = ".concat(String.valueOf(status))};
         String condition = "loan_id = ?";
         super.alterObjectInDB(getTableName(), set, condition, loan.getLoanID());
+    }
+
+    private List<Result> extractFromDB(int id) {
+        String[] columns = {"loan_id", "loan_date", "return_date", "status", "employee_id", "copy_id", "reader_id"};
+        String condition = "loan_id = ?";
+        return super.extractObjectFromDB(getTableName(), columns, condition, null, id);
     }
 }

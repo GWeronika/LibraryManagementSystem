@@ -14,8 +14,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.List;
-
 
 @ToString
 @Getter
@@ -29,7 +27,7 @@ public class Employee extends LoggedUser implements Identifiable, PersonalData, 
         LIBRARIAN
     }
 
-    public Employee(String firstname, String lastname, String address, String phoneNum, Account account, int employeeID, Position position, Library library) {
+    public Employee(int employeeID, String firstname, String lastname, String address, String phoneNum, Account account, Position position, Library library) {
         super(firstname, lastname, address, phoneNum, account);
         this.employeeID = employeeID;
         this.position = position;
@@ -74,20 +72,7 @@ public class Employee extends LoggedUser implements Identifiable, PersonalData, 
         LoanDAO loanDAO = new LoanDAO();
         CopyDAO copyDAO = new CopyDAO();
         ReaderDAO readerDAO = new ReaderDAO();
-
-        List<Result> resultList = orderDAO.extractOrderFromDB(orderID);
-
-        for (Result result : resultList) {
-            int copyID = Integer.parseInt(result.getColumnValues().get("copy_id"));
-            int readerID = Integer.parseInt(result.getColumnValues().get("reader_id"));
-
-            Copy copy = copyDAO.getCopyById(copyID);
-//            Reader reader = readerDAO.getReaderById(readerID);
-
-//            Loan loan = new Loan(0, copy, reader, this);
-//            loanDAO.addLoanToDB(loan);
-        }
-        orderDAO.deleteOrderFromDB(orderID);
+        Order order = orderDAO.getOrderByID(orderID);
     }
 
     //COPY functions//////////////////////////////////////////////////////

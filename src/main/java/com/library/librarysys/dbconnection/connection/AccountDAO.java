@@ -5,6 +5,7 @@ import com.library.librarysys.dbconnection.GenericDAO;
 import com.library.librarysys.users.LoggedUser;
 import com.library.librarysys.users.Reader;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,6 +31,21 @@ public class AccountDAO extends GenericDAO<Account> {
 
     public void deleteAccountFromDB(int deleteID) {
         super.deleteObjectFromDB(deleteID);
+    }
+
+    public Account getAccountByID(int accountID) {
+        List<Result> resultList = extractFromDB(accountID);
+        for (Result result : resultList) {
+            int resultAccountID = Integer.parseInt(result.getColumnValues().get("account_id"));
+
+            if (resultAccountID == accountID) {
+                String email = result.getColumnValues().get("email");
+                String password = result.getColumnValues().get("password");
+
+                return new Account(resultAccountID, email, password);
+            }
+        }
+        return null;
     }
 
     /**
@@ -80,5 +96,10 @@ public class AccountDAO extends GenericDAO<Account> {
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
+    }
+    private List<Result> extractFromDB(int id) {
+        String[] columns = {"account_id", "email", "password"};
+        String condition = "account_id = ?";
+        return super.extractObjectFromDB(getTableName(), columns, condition, null, id);
     }
 }

@@ -48,7 +48,7 @@ public class CopyDAO extends GenericDAO<Copy> {
         super.selectObjectFromDB(getTableName(), columns, condition, join, format);
     }
 
-    public Copy getCopyById(int copyID) {
+    public Copy getCopyByID(int copyID) {
         List<Result> resultList = extractFromDB(copyID);
         BookDAO bookDAO = new BookDAO();
         LibraryDAO libraryDAO = new LibraryDAO();
@@ -65,8 +65,8 @@ public class CopyDAO extends GenericDAO<Copy> {
                 String blurb = result.getColumnValues().get("blurb");
                 int libraryID = Integer.parseInt(result.getColumnValues().get("library_id"));
 
-                return new Copy(copyID, bookDAO.getBookById(bookID), publisher, isbn, format, releaseYear, language, blurb,
-                        libraryDAO.getLibraryById(libraryID));
+                return new Copy(copyID, bookDAO.getBookByID(bookID), publisher, isbn, format, releaseYear, language, blurb,
+                        libraryDAO.getLibraryByID(libraryID));
             }
         }
         return null;
@@ -90,7 +90,7 @@ public class CopyDAO extends GenericDAO<Copy> {
 
     private List<Result> extractFromDB(int id) {
         String[] columns = {"copy_id", "publisher", "isbn", "release_year", "format", "language", "blurb", "status", "library_id", "book_id"};
-        String condition = "order_id = ?";
+        String condition = "copy_id = ?";
         return super.extractObjectFromDB(getTableName(), columns, condition, null, id);
     }
 }

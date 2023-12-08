@@ -19,7 +19,7 @@ public class BookDAO extends GenericDAO<Book> {
         super.deleteObjectFromDB(deleteID);
     }
 
-    public Book getBookById(int bookID) {
+    public Book getBookByID(int bookID) {
         List<Result> resultList = extractFromDB(bookID);
         for (Result result : resultList) {
             int resultCopyID = Integer.parseInt(result.getColumnValues().get("book_id"));

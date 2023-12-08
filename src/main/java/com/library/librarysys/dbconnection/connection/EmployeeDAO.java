@@ -4,6 +4,8 @@ import com.library.librarysys.dbconnection.GenericDAO;
 import com.library.librarysys.libcollection.Library;
 import com.library.librarysys.users.Employee;
 
+import java.util.List;
+
 public class EmployeeDAO extends GenericDAO<Employee> {
     public EmployeeDAO() {
         super("employee");
@@ -45,6 +47,29 @@ public class EmployeeDAO extends GenericDAO<Employee> {
         super.selectObjectFromDB(getTableName(), columns, condition, join, position);
     }
 
+    public Employee getEmployeeByID(int employeeID) {
+        List<Result> resultList = extractFromDB(employeeID);
+        AccountDAO accountDAO = new AccountDAO();
+        LibraryDAO libraryDAO = new LibraryDAO();
+        for (Result result : resultList) {
+            int resultEmployeeID = Integer.parseInt(result.getColumnValues().get("employee_id"));
+
+            if (resultEmployeeID == employeeID) {
+                String firstName = result.getColumnValues().get("first_name");
+                String lastName = result.getColumnValues().get("last_name");
+                String address = result.getColumnValues().get("address");
+                String phoneNumber = result.getColumnValues().get("phone_number");
+                Employee.Position position = Employee.Position.valueOf(result.getColumnValues().get("position"));
+                int libraryID = Integer.parseInt(result.getColumnValues().get("library_id"));
+                int accountID = Integer.parseInt(result.getColumnValues().get("account_id"));
+
+                return new Employee(resultEmployeeID, firstName, lastName, address, phoneNumber, accountDAO.getAccountByID(accountID),
+                        position, libraryDAO.getLibraryByID(libraryID));
+            }
+        }
+        return null;
+    }
+
     public void alterLastNameInDB(Employee employee, String lastName) {
         String[] set = {"last_name = ".concat(lastName)};
         String condition = "employee_id = ?";
@@ -70,4 +95,10 @@ public class EmployeeDAO extends GenericDAO<Employee> {
         super.alterObjectInDB(getTableName(), set, condition, employee.getEmployeeID());
     }
 
+    private List<Result> extractFromDB(int id) {
+        String[] columns = {"employee_id", "first_name", "last_name", "address", "phone_number", "position",
+                "library_id", "account_id"};
+        String condition = "employee_id = ?";
+        return super.extractObjectFromDB(getTableName(), columns, condition, null, id);
+    }
 }

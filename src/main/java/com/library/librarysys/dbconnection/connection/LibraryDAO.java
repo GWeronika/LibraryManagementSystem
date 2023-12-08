@@ -30,7 +30,7 @@ public class LibraryDAO extends GenericDAO<Library> {
         super.selectObjectFromDB(getTableName(), columns, condition, join, name, name);
     }
 
-    public Library getLibraryById(int libraryID) {
+    public Library getLibraryByID(int libraryID) {
         List<Result> resultList = extractFromDB(libraryID);
         Library library = null;
 

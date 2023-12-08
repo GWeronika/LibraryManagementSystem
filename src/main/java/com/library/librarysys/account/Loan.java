@@ -41,4 +41,13 @@ public class Loan implements Identifiable {
         this.reader = reader;
         this.employee = employee;
     }
+    public Loan(int loanID, LocalDate loanDate, LocalDate returnDate, Status status, Copy copy, Reader reader, Employee employee) {
+        this.loanID = loanID;
+        this.copy = copy;
+        this.loanDate = loanDate;
+        this.returnDate = returnDate;
+        this.status = status;
+        this.reader = reader;
+        this.employee = employee;
+    }
 }
