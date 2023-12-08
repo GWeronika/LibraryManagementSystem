@@ -2,6 +2,7 @@ package com.library.librarysys.dbconnection.connection;
 
 import com.library.librarysys.dbconnection.GenericDAO;
 import com.library.librarysys.libcollection.Copy;
+import com.library.librarysys.libcollection.Library;
 
 public class CopyDAO extends GenericDAO<Copy> {
     public CopyDAO() {
@@ -45,4 +46,19 @@ public class CopyDAO extends GenericDAO<Copy> {
         super.selectObjectFromDB(getTableName(), columns, condition, join, format);
     }
 
+    public void alterLibraryCopyInDB(Copy copy, Library library) {
+        String[] set = {"library_id = ".concat(String.valueOf(library.getLibraryID()))};
+        String condition = "copy_id = ?";
+        super.alterObjectInDB(getTableName(), set, condition, copy.getCopyID());
+    }
+    public void alterBlurbCopyInDB(Copy copy, String blurb) {
+        String[] set = {"blurb = ".concat(blurb)};
+        String condition = "copy_id = ?";
+        super.alterObjectInDB(getTableName(), set, condition, copy.getCopyID());
+    }
+    public void alterStatusCopyInDB(Copy copy, Copy.Status status) {
+        String[] set = {"library_id = ".concat(status.name())};
+        String condition = "copy_id = ?";
+        super.alterObjectInDB(getTableName(), set, condition, copy.getCopyID());
+    }
 }

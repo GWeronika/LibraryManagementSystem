@@ -1,6 +1,7 @@
 package com.library.librarysys.dbconnection.connection;
 
 import com.library.librarysys.dbconnection.GenericDAO;
+import com.library.librarysys.libcollection.Library;
 import com.library.librarysys.users.Employee;
 
 public class EmployeeDAO extends GenericDAO<Employee> {
@@ -43,4 +44,30 @@ public class EmployeeDAO extends GenericDAO<Employee> {
         String join = "JOIN library ON library.library_id = employee.library_id";
         super.selectObjectFromDB(getTableName(), columns, condition, join, position);
     }
+
+    public void alterLastNameInDB(Employee employee, String lastName) {
+        String[] set = {"last_name = ".concat(lastName)};
+        String condition = "employee_id = ?";
+        super.alterObjectInDB(getTableName(), set, condition, employee.getEmployeeID());
+    }
+    public void alterAddressInDB(Employee employee, String address) {
+        String[] set = {"address = ".concat(address)};
+        String condition = "employee_id = ?";
+        super.alterObjectInDB(getTableName(), set, condition, employee.getEmployeeID());
+    }
+    public void alterPhoneNumInDB(Employee employee, String number) {
+        String[] set = {"phone_number = ".concat(number)};
+        String condition = "employee_id = ?";
+        super.alterObjectInDB(getTableName(), set, condition, employee.getEmployeeID());
+    }
+    public void alterPositionInDB(Employee employee, Employee.Position position) {
+        String[] set = {"position = ".concat(String.valueOf(position))};
+        String condition = "employee_id = ?";
+        super.alterObjectInDB(getTableName(), set, condition, employee.getEmployeeID());
+    }public void alterLibraryInDB(Employee employee, Library library) {
+        String[] set = {"library_id = ".concat(String.valueOf(library))};
+        String condition = "employee_id = ?";
+        super.alterObjectInDB(getTableName(), set, condition, employee.getEmployeeID());
+    }
+
 }

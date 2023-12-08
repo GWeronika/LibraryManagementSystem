@@ -92,14 +92,10 @@ public class GenericDAO<T extends Identifiable> {
     }
 
     //UPDATE table JOIN table2 ON id SET table.column1 = value1 WHERE condition
-    public void alterObjectInDB(String tableName, String[] setClauses, String condition, String joinCondition, Object... parameters) {
+    public void alterObjectInDB(String tableName, String[] setClauses, String condition, Object... parameters) {
         try (Connection connection = DBConnection.getConnection()) {
             String data = String.join(", ", setClauses);
             StringBuilder query = new StringBuilder("UPDATE " + tableName);
-
-            if (joinCondition != null && !joinCondition.isEmpty()) {
-                query.append(" ").append(joinCondition);
-            }
 
             query.append(" SET ").append(data);
 

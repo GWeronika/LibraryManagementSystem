@@ -64,6 +64,11 @@ public class Administrator extends LoggedUser implements Identifiable {
         dao.selectEmployeeFromDB(position);
     }
 
+    public void changeEmployeePosition(Employee employee, Employee.Position position) {
+        EmployeeDAO dao = new EmployeeDAO();
+        dao.alterPositionInDB(employee, position);
+    }
+
 
     public String confirmEmployee(String firstName, String secondName) {
         //button pressing support

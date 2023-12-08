@@ -3,9 +3,12 @@ package com.library.librarysys.users;
 import com.library.librarysys.account.Account;
 import com.library.librarysys.account.Loan;
 import com.library.librarysys.account.Order;
+import com.library.librarysys.dbconnection.connection.CopyDAO;
+import com.library.librarysys.dbconnection.connection.EmployeeDAO;
 import com.library.librarysys.dbconnection.connection.LoanDAO;
 import com.library.librarysys.dbconnection.connection.OrderDAO;
 import com.library.librarysys.interfaces.Identifiable;
+import com.library.librarysys.libcollection.Copy;
 import com.library.librarysys.libcollection.Library;
 import lombok.Getter;
 import lombok.Setter;
@@ -59,6 +62,36 @@ public class Employee extends LoggedUser implements Identifiable {
     public void showOrders(Order.Status status) {
         OrderDAO dao = new OrderDAO();
         dao.selectOrderFromDB(status);
+    }
+
+    public void moveCopyToLibrary(Copy copy, Library library) {
+        CopyDAO dao = new CopyDAO();
+        dao.alterLibraryCopyInDB(copy, library);
+    }
+    public void changeCopyBlurb(Copy copy, String blurb) {
+        CopyDAO dao = new CopyDAO();
+        dao.alterBlurbCopyInDB(copy, blurb);
+    }
+    public void changeCopyStatus(Copy copy, Copy.Status status) {
+        CopyDAO dao = new CopyDAO();
+        dao.alterStatusCopyInDB(copy, status);
+    }
+
+    public void changeLastName(String lastName) {
+        EmployeeDAO dao = new EmployeeDAO();
+        dao.alterLastNameInDB(this, lastName);
+    }
+    public void changeAddress(String address) {
+        EmployeeDAO dao = new EmployeeDAO();
+        dao.alterAddressInDB(this, address);
+    }
+    public void changePhoneNumber(String number) {
+        EmployeeDAO dao = new EmployeeDAO();
+        dao.alterPhoneNumInDB(this, number);
+    }
+    public void changeLibrary(Library library) {
+        EmployeeDAO dao = new EmployeeDAO();
+        dao.alterLibraryInDB(this, library);
     }
 
     public String orderNewBook() {
