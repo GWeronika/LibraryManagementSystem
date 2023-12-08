@@ -63,9 +63,10 @@ public class CopyDAO extends GenericDAO<Copy> {
                 String releaseYear = result.getColumnValues().get("release_year");
                 String language = result.getColumnValues().get("language");
                 String blurb = result.getColumnValues().get("blurb");
+                Copy.Status status = Copy.Status.valueOf(result.getColumnValues().get("status"));
                 int libraryID = Integer.parseInt(result.getColumnValues().get("library_id"));
 
-                return new Copy(copyID, bookDAO.getBookByID(bookID), publisher, isbn, format, releaseYear, language, blurb,
+                return new Copy(copyID, bookDAO.getBookByID(bookID), publisher, isbn, format, releaseYear, language, blurb, status,
                         libraryDAO.getLibraryByID(libraryID));
             }
         }

@@ -31,7 +31,8 @@ public class Copy implements Identifiable {
         UNAVAILABLE
     }
 
-    public Copy(int copyID, Book book, String publisher, String ISBN, Format format, String releaseYear, String language, String blurb, Library library) {
+    public Copy(int copyID, Book book, String publisher, String ISBN, Format format, String releaseYear, String language,
+                String blurb, Status status, Library library) {
         this.copyID = copyID;
         this.book = book;
         this.publisher = publisher;
@@ -40,10 +41,11 @@ public class Copy implements Identifiable {
         this.releaseYear = releaseYear;
         this.language = language;
         this.blurb = blurb;
-        this.status = Status.AVAILABLE;
+        this.status = status;
         this.library = library;
     }
-    public Copy(int copyID, Book book, String publisher, String ISBN, Format format, String releaseYear, String language, Library library) {     //without blurb
+    public Copy(int copyID, Book book, String publisher, String ISBN, Format format, String releaseYear, String language,
+                Status status, Library library) {     //without blurb
         this.copyID = copyID;
         this.book = book;
         this.publisher = publisher;
@@ -51,7 +53,7 @@ public class Copy implements Identifiable {
         this.format = format;
         this.releaseYear = releaseYear;
         this.language = language;
-        this.status = Status.AVAILABLE;
+        this.status = status;
         this.library = library;
     }
 

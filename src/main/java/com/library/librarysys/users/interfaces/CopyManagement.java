@@ -7,7 +7,7 @@ public interface CopyManagement {
     void moveCopyToLibrary(Copy copy, Library library);
     void changeCopyBlurb(Copy copy, String blurb);
     void changeCopyStatus(Copy copy, Copy.Status status);
-    String addBookToResources();
+    void addBookToResources(Copy copy);
     void browseBooks();
     void browseBooks(int number);
     void browseBooks(String phrase);

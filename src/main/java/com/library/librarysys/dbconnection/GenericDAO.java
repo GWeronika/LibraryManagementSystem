@@ -109,7 +109,6 @@ public class GenericDAO<T extends Identifiable> {
         return resultList;
     }
 
-    //UPDATE table JOIN table2 ON id SET table.column1 = value1 WHERE condition
     public void alterObjectInDB(String tableName, String[] setClauses, String condition, Object... parameters) {
         try (Connection connection = DBConnection.getConnection()) {
             String data = String.join(", ", setClauses);
@@ -131,6 +130,47 @@ public class GenericDAO<T extends Identifiable> {
             System.out.println("Brak połączenia z bazą danych");
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Checks if a duplicate exists in a table for specified columns and values.
+     *
+     * @param tableName the name of the table in the database
+     * @param columns the columns for which uniqueness is checked
+     * @param values values to check
+     * @return id of the row with the duplicate, 0 if there is no duplicate or an error
+     */
+    public int checkDuplicate(String tableName, String[] columns, Object... values) {
+        StringBuilder queryBuilder = new StringBuilder("SELECT id FROM ");
+        queryBuilder.append(tableName).append(" WHERE ");
+
+        for (int i = 0; i < columns.length; i++) {
+            if (i > 0) {
+                queryBuilder.append(" AND ");
+            }
+            queryBuilder.append(columns[i]).append(" = ?");
+        }
+
+        String query = queryBuilder.toString();
+
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            for (int i = 0; i < values.length; i++) {
+                preparedStatement.setObject(i + 1, values[i]);
+            }
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("id");
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Brak połączenia z bazą danych");
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     private void setParameters(PreparedStatement preparedStatement, Object... parameters) throws SQLException {

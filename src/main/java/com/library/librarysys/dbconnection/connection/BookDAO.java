@@ -34,6 +34,11 @@ public class BookDAO extends GenericDAO<Book> {
         return null;
     }
 
+    public int checkDuplicate(String title, String author) {
+        String[] columns = {"title", "author"};
+        return super.checkDuplicate(getTableName(), columns, title, author);
+    }
+
     private List<Result> extractFromDB(int id) {
         String[] columns = {"book_id", "title", "author"};
         String condition = "book_id = ?";
