@@ -9,5 +9,5 @@ public interface LoanOrderManagement {
     void showOrders();
     void showOrders(int orderID);
     void showOrders(Order.Status status);
-    String orderToLoan();
+    void orderToLoan(int orderID);
 }

@@ -4,6 +4,8 @@ import com.library.librarysys.dbconnection.GenericDAO;
 import com.library.librarysys.libcollection.Copy;
 import com.library.librarysys.libcollection.Library;
 
+import java.util.List;
+
 public class CopyDAO extends GenericDAO<Copy> {
     public CopyDAO() {
         super("copy");
@@ -46,6 +48,30 @@ public class CopyDAO extends GenericDAO<Copy> {
         super.selectObjectFromDB(getTableName(), columns, condition, join, format);
     }
 
+    public Copy getCopyById(int copyID) {
+        List<Result> resultList = extractFromDB(copyID);
+        BookDAO bookDAO = new BookDAO();
+        LibraryDAO libraryDAO = new LibraryDAO();
+        for (Result result : resultList) {
+            int resultCopyID = Integer.parseInt(result.getColumnValues().get("copy_id"));
+
+            if (resultCopyID == copyID) {
+                String publisher = result.getColumnValues().get("publisher");
+                int bookID = Integer.parseInt(result.getColumnValues().get("book_id"));
+                String isbn = result.getColumnValues().get("isbn");
+                Copy.Format format = Copy.Format.valueOf(result.getColumnValues().get("format"));
+                String releaseYear = result.getColumnValues().get("release_year");
+                String language = result.getColumnValues().get("language");
+                String blurb = result.getColumnValues().get("blurb");
+                int libraryID = Integer.parseInt(result.getColumnValues().get("library_id"));
+
+                return new Copy(copyID, bookDAO.getBookById(bookID), publisher, isbn, format, releaseYear, language, blurb,
+                        libraryDAO.getLibraryById(libraryID));
+            }
+        }
+        return null;
+    }
+
     public void alterLibraryCopyInDB(Copy copy, Library library) {
         String[] set = {"library_id = ".concat(String.valueOf(library.getLibraryID()))};
         String condition = "copy_id = ?";
@@ -60,5 +86,11 @@ public class CopyDAO extends GenericDAO<Copy> {
         String[] set = {"status = ".concat(status.name())};
         String condition = "copy_id = ?";
         super.alterObjectInDB(getTableName(), set, condition, copy.getCopyID());
+    }
+
+    private List<Result> extractFromDB(int id) {
+        String[] columns = {"copy_id", "publisher", "isbn", "release_year", "format", "language", "blurb", "status", "library_id", "book_id"};
+        String condition = "order_id = ?";
+        return super.extractObjectFromDB(getTableName(), columns, condition, null, id);
     }
 }

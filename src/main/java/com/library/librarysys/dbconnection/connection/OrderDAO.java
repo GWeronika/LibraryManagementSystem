@@ -3,6 +3,8 @@ package com.library.librarysys.dbconnection.connection;
 import com.library.librarysys.account.Order;
 import com.library.librarysys.dbconnection.GenericDAO;
 
+import java.util.List;
+
 public class OrderDAO extends GenericDAO<Order> {
     public OrderDAO() {
         super("orders");
@@ -34,6 +36,12 @@ public class OrderDAO extends GenericDAO<Order> {
         String condition = "status = ?";
         String join = "JOIN copy ON orders.copy_id = copy.copy_id JOIN book ON book.book_id = copy.book_id";
         super.selectObjectFromDB(getTableName(), columns, condition, join, status);
+    }
+    public List<Result> extractOrderFromDB(int id) {
+        String[] columns = {"copy_id, reader_id"};
+        String condition = "order_id = ?";
+        String join = "JOIN copy ON orders.copy_id = copy.copy_id JOIN book ON book.book_id = copy.book_id";
+        return super.extractObjectFromDB(getTableName(), columns, condition, join, id);
     }
 
     public void alterStatusInDB(Order order, Order.Status status) {

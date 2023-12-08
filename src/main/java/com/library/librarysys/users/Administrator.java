@@ -81,6 +81,7 @@ public class Administrator extends LoggedUser implements Identifiable, EmployeeM
     public void changeEmployeePosition(Employee employee, Employee.Position position) {
         EmployeeDAO dao = new EmployeeDAO();
         dao.alterPositionInDB(employee, position);
+        employee.setPosition(position);
     }
     @Override
     public void confirmEmployee(String firstName, String secondName) {
@@ -95,16 +96,19 @@ public class Administrator extends LoggedUser implements Identifiable, EmployeeM
     public void changeLibraryLocation(Library library, String location) {
         LibraryDAO dao = new LibraryDAO();
         dao.alterLocationInDB(library, location);
+        library.setLocation(location);
     }
     @Override
     public void changeLibraryPhoneNum(Library library, String phoneNumber) {
         LibraryDAO dao = new LibraryDAO();
         dao.alterPhoneNumInDB(library, phoneNumber);
+        library.setPhoneNum(phoneNumber);
     }
     @Override
     public void changeLibraryEmail(Library library, String email) {
         LibraryDAO dao = new LibraryDAO();
         dao.alterEmailInDB(library, email);
+        library.setEmail(email);
     }
     @Override
     public String establishRules() {

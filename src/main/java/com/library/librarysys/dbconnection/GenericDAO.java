@@ -1,5 +1,6 @@
 package com.library.librarysys.dbconnection;
 
+import com.library.librarysys.dbconnection.connection.Result;
 import com.library.librarysys.interfaces.Identifiable;
 import lombok.Getter;
 
@@ -8,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 public class GenericDAO<T extends Identifiable> {
@@ -31,7 +34,6 @@ public class GenericDAO<T extends Identifiable> {
                         }
                     }
                 }
-
                 System.out.println(object.getClass().getSimpleName() + " dodane do bazy danych.");
             }
         } catch (SQLException e) {
@@ -62,16 +64,7 @@ public class GenericDAO<T extends Identifiable> {
 
     public void selectObjectFromDB(String tableName, String[] columns, String condition, String joinCondition, Object... parameters) {
         try (Connection connection = DBConnection.getConnection()) {
-            String data = String.join(", ", columns);
-            String query = "SELECT " + data + " FROM " + tableName;
-
-            if (joinCondition != null && !joinCondition.isEmpty()) {
-                query += " " + joinCondition;
-            }
-
-            if (condition != null && !condition.isEmpty()) {
-                query += " WHERE " + condition;
-            }
+            String query = prepareQuery(tableName, columns, condition, joinCondition);
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 setParameters(preparedStatement, parameters);
@@ -89,6 +82,31 @@ public class GenericDAO<T extends Identifiable> {
             System.out.println("Brak połączenia z bazą danych");
             e.printStackTrace();
         }
+    }
+
+    public List<Result> extractObjectFromDB(String tableName, String[] columns, String condition, String joinCondition, Object... parameters) {
+        List<Result> resultList = new ArrayList<>();
+        try (Connection connection = DBConnection.getConnection()) {
+            String query = prepareQuery(tableName, columns, condition, joinCondition);
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                setParameters(preparedStatement, parameters);
+
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        Result result = new Result();
+                        for (String column : columns) {
+                            result.addColumnValue(column, resultSet.getString(column));
+                        }
+                        resultList.add(result);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Brak połączenia z bazą danych");
+            e.printStackTrace();
+        }
+        return resultList;
     }
 
     //UPDATE table JOIN table2 ON id SET table.column1 = value1 WHERE condition
@@ -127,6 +145,20 @@ public class GenericDAO<T extends Identifiable> {
                 preparedStatement.setString(i + 1, ((Enum<?>) parameters[i]).name());
             }
         }
+    }
+
+    private String prepareQuery(String tableName, String[] columns, String condition, String joinCondition) {
+        String data = String.join(", ", columns);
+        String query = "SELECT " + data + " FROM " + tableName;
+
+        if (joinCondition != null && !joinCondition.isEmpty()) {
+            query += " " + joinCondition;
+        }
+
+        if (condition != null && !condition.isEmpty()) {
+            query += " WHERE " + condition;
+        }
+        return query;
     }
 }
 

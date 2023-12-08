@@ -2,6 +2,7 @@ package com.library.librarysys.users;
 
 import com.library.librarysys.account.Account;
 import com.library.librarysys.dbconnection.connection.AccountDAO;
+import com.library.librarysys.dbconnection.connection.LoanDAO;
 import com.library.librarysys.dbconnection.connection.OrderDAO;
 import com.library.librarysys.dbconnection.connection.ReaderDAO;
 import com.library.librarysys.interfaces.Identifiable;
@@ -41,13 +42,13 @@ public class Reader extends LoggedUser implements Identifiable, PersonalData {
         dao.deleteOrderFromDB(orderID);
     }
 
-    public String orderBook() {
+    public String orderBook() {     //id or Copy?
         //here we should get info from the button that was just clicked
         return "No implementation";
     }
-    public String viewLoan() {
-        //retrieves from the loans table only those rows that have the readerID of the reader who checks it (and maybe status as 'active' but could filter it)
-        return "No implementation";
+    public void viewLoan() {        //only loans from a specific reader
+        LoanDAO dao = new LoanDAO();
+        dao.selectLoansFromDB(this.readerID);
     }
     public String prolong() {
         //changes the returnDate to returnDate+=30, later, including days off from work??
@@ -55,22 +56,25 @@ public class Reader extends LoggedUser implements Identifiable, PersonalData {
     }
 
     public void changeEmail(String email) {
-        //responding to the button mechanism
         AccountDAO dao = new AccountDAO();
         dao.alterEmailAccountInDB(this, email);
+        super.getAccount().setEmail(email);
     }
 
     //PERSONAL DATA functions   ////////////////////////////////////////////
     public void changeLastName(String lastName) {
         ReaderDAO dao = new ReaderDAO();
         dao.alterLastNameInDB(this, lastName);
+        this.setLastname(lastName);
     }
     public void changeAddress(String address) {
         ReaderDAO dao = new ReaderDAO();
         dao.alterAddressInDB(this, address);
+        this.setAddress(address);
     }
     public void changePhoneNumber(String number) {
         ReaderDAO dao = new ReaderDAO();
         dao.alterPhoneNumInDB(this, number);
+        this.setPhoneNum(number);
     }
 }

@@ -3,10 +3,7 @@ package com.library.librarysys.users;
 import com.library.librarysys.account.Account;
 import com.library.librarysys.account.Loan;
 import com.library.librarysys.account.Order;
-import com.library.librarysys.dbconnection.connection.CopyDAO;
-import com.library.librarysys.dbconnection.connection.EmployeeDAO;
-import com.library.librarysys.dbconnection.connection.LoanDAO;
-import com.library.librarysys.dbconnection.connection.OrderDAO;
+import com.library.librarysys.dbconnection.connection.*;
 import com.library.librarysys.interfaces.Identifiable;
 import com.library.librarysys.libcollection.Copy;
 import com.library.librarysys.libcollection.Library;
@@ -16,6 +13,8 @@ import com.library.librarysys.users.interfaces.PersonalData;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.util.List;
 
 
 @ToString
@@ -70,9 +69,25 @@ public class Employee extends LoggedUser implements Identifiable, PersonalData, 
         dao.selectOrderFromDB(status);
     }
     @Override
-    public String orderToLoan() {
-        //delete from order table and add to the loan table in db, could use a trigger in sql
-        return "No implementation";
+    public void orderToLoan(int orderID) {
+        OrderDAO orderDAO = new OrderDAO();
+        LoanDAO loanDAO = new LoanDAO();
+        CopyDAO copyDAO = new CopyDAO();
+        ReaderDAO readerDAO = new ReaderDAO();
+
+        List<Result> resultList = orderDAO.extractOrderFromDB(orderID);
+
+        for (Result result : resultList) {
+            int copyID = Integer.parseInt(result.getColumnValues().get("copy_id"));
+            int readerID = Integer.parseInt(result.getColumnValues().get("reader_id"));
+
+            Copy copy = copyDAO.getCopyById(copyID);
+//            Reader reader = readerDAO.getReaderById(readerID);
+
+//            Loan loan = new Loan(0, copy, reader, this);
+//            loanDAO.addLoanToDB(loan);
+        }
+        orderDAO.deleteOrderFromDB(orderID);
     }
 
     //COPY functions//////////////////////////////////////////////////////
@@ -80,16 +95,19 @@ public class Employee extends LoggedUser implements Identifiable, PersonalData, 
     public void moveCopyToLibrary(Copy copy, Library library) {
         CopyDAO dao = new CopyDAO();
         dao.alterLibraryCopyInDB(copy, library);
+        copy.setLibrary(library);
     }
     @Override
     public void changeCopyBlurb(Copy copy, String blurb) {
         CopyDAO dao = new CopyDAO();
         dao.alterBlurbCopyInDB(copy, blurb);
+        copy.setBlurb(blurb);
     }
     @Override
     public void changeCopyStatus(Copy copy, Copy.Status status) {
         CopyDAO dao = new CopyDAO();
         dao.alterStatusCopyInDB(copy, status);
+        copy.setStatus(status);
     }
     @Override
     public String addBookToResources() {
@@ -102,20 +120,24 @@ public class Employee extends LoggedUser implements Identifiable, PersonalData, 
     public void changeLastName(String lastName) {
         EmployeeDAO dao = new EmployeeDAO();
         dao.alterLastNameInDB(this, lastName);
+        this.setLastname(lastName);
     }
     @Override
     public void changeAddress(String address) {
         EmployeeDAO dao = new EmployeeDAO();
         dao.alterAddressInDB(this, address);
+        this.setAddress(address);
     }
     @Override
     public void changePhoneNumber(String number) {
         EmployeeDAO dao = new EmployeeDAO();
         dao.alterPhoneNumInDB(this, number);
+        this.setPhoneNum(number);
     }
     public void changeLibrary(Library library) {
         EmployeeDAO dao = new EmployeeDAO();
         dao.alterLibraryInDB(this, library);
+        this.setLibrary(library);
     }
 
     public String confirmPayment() {
@@ -130,7 +152,7 @@ public class Employee extends LoggedUser implements Identifiable, PersonalData, 
         //you can see the books that were searched for but not found in the db (to buy it later)
         return "No implementation";
     }
-    public String orderNewBook() {
+    public String orderNewBook() {      //buy new book
         //still have no idea, maybe a window for entering a link or sth
         return "No implementation";
     }
