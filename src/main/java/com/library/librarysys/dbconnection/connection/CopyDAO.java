@@ -57,7 +57,7 @@ public class CopyDAO extends GenericDAO<Copy> {
         super.alterObjectInDB(getTableName(), set, condition, copy.getCopyID());
     }
     public void alterStatusCopyInDB(Copy copy, Copy.Status status) {
-        String[] set = {"library_id = ".concat(status.name())};
+        String[] set = {"status = ".concat(status.name())};
         String condition = "copy_id = ?";
         super.alterObjectInDB(getTableName(), set, condition, copy.getCopyID());
     }

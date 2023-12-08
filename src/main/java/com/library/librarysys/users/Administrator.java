@@ -3,8 +3,10 @@ package com.library.librarysys.users;
 import com.library.librarysys.account.Account;
 import com.library.librarysys.dbconnection.connection.AccountDAO;
 import com.library.librarysys.dbconnection.connection.EmployeeDAO;
+import com.library.librarysys.dbconnection.connection.LibraryDAO;
 import com.library.librarysys.dbconnection.connection.ReaderDAO;
 import com.library.librarysys.interfaces.Identifiable;
+import com.library.librarysys.libcollection.Library;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -67,6 +69,19 @@ public class Administrator extends LoggedUser implements Identifiable {
     public void changeEmployeePosition(Employee employee, Employee.Position position) {
         EmployeeDAO dao = new EmployeeDAO();
         dao.alterPositionInDB(employee, position);
+    }
+
+    public void changeLibraryLocation(Library library, String location) {
+        LibraryDAO dao = new LibraryDAO();
+        dao.alterLocationInDB(library, location);
+    }
+    public void changeLibraryPhoneNum(Library library, String phoneNumber) {
+        LibraryDAO dao = new LibraryDAO();
+        dao.alterPhoneNumInDB(library, phoneNumber);
+    }
+    public void changeLibraryEmail(Library library, String email) {
+        LibraryDAO dao = new LibraryDAO();
+        dao.alterEmailInDB(library, email);
     }
 
 

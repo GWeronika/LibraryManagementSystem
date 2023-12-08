@@ -35,4 +35,10 @@ public class OrderDAO extends GenericDAO<Order> {
         String join = "JOIN copy ON orders.copy_id = copy.copy_id JOIN book ON book.book_id = copy.book_id";
         super.selectObjectFromDB(getTableName(), columns, condition, join, status);
     }
+
+    public void alterStatusInDB(Order order, Order.Status status) {
+        String[] set = {"status = ".concat(status.name())};
+        String condition = "order_id = ?";
+        super.alterObjectInDB(getTableName(), set, condition, order.getOrderID());
+    }
 }

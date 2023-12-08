@@ -3,6 +3,8 @@ package com.library.librarysys.dbconnection.connection;
 import com.library.librarysys.account.Loan;
 import com.library.librarysys.dbconnection.GenericDAO;
 
+import java.time.LocalDate;
+
 public class LoanDAO extends GenericDAO<Loan> {
     public LoanDAO() {
         super("loan");
@@ -36,4 +38,14 @@ public class LoanDAO extends GenericDAO<Loan> {
         super.selectObjectFromDB(getTableName(), columns, condition, join, status);
     }
 
+    public void alterReturnDateInDB(Loan loan, LocalDate returnDate) {
+        String[] set = {"return_date = ".concat(String.valueOf(returnDate))};
+        String condition = "loan_id = ?";
+        super.alterObjectInDB(getTableName(), set, condition, loan.getLoanID());
+    }
+    public void alterStatusInDB(Loan loan, Loan.Status status) {
+        String[] set = {"status = ".concat(String.valueOf(status))};
+        String condition = "loan_id = ?";
+        super.alterObjectInDB(getTableName(), set, condition, loan.getLoanID());
+    }
 }

@@ -25,4 +25,20 @@ public class LibraryDAO extends GenericDAO<Library> {
         String condition = "name = ? OR location = ?";
         super.selectObjectFromDB(getTableName(), columns, condition, join, name, name);
     }
+
+    public void alterLocationInDB(Library library, String location) {
+        String[] set = {"location = ".concat(location)};
+        String condition = "library_id = ?";
+        super.alterObjectInDB(getTableName(), set, condition, library.getLibraryID());
+    }
+    public void alterPhoneNumInDB(Library library, String phoneNumber) {
+        String[] set = {"phone_number = ".concat(phoneNumber)};
+        String condition = "library_id = ?";
+        super.alterObjectInDB(getTableName(), set, condition, library.getLibraryID());
+    }
+    public void alterEmailInDB(Library library, String email) {
+        String[] set = {"email = ".concat(email)};
+        String condition = "library_id = ?";
+        super.alterObjectInDB(getTableName(), set, condition, library.getLibraryID());
+    }
 }

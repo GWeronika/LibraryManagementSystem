@@ -37,4 +37,19 @@ public class ReaderDAO extends GenericDAO<Reader> {
         super.selectObjectFromDB(getTableName(), columns, condition, name, name);
     }
 
+    public void alterLastNameInDB(Reader reader, String lastName) {
+        String[] set = {"last_name = ".concat(lastName)};
+        String condition = "reader_id = ?";
+        super.alterObjectInDB(getTableName(), set, condition, reader.getReaderID());
+    }
+    public void alterAddressInDB(Reader reader, String address) {
+        String[] set = {"address = ".concat(address)};
+        String condition = "reader_id = ?";
+        super.alterObjectInDB(getTableName(), set, condition, reader.getReaderID());
+    }
+    public void alterPhoneNumInDB(Reader reader, String phoneNumber) {
+        String[] set = {"phone_number = ".concat(phoneNumber)};
+        String condition = "reader_id = ?";
+        super.alterObjectInDB(getTableName(), set, condition, reader.getReaderID());
+    }
 }
