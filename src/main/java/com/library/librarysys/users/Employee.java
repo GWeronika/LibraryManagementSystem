@@ -10,6 +10,9 @@ import com.library.librarysys.dbconnection.connection.OrderDAO;
 import com.library.librarysys.interfaces.Identifiable;
 import com.library.librarysys.libcollection.Copy;
 import com.library.librarysys.libcollection.Library;
+import com.library.librarysys.users.interfaces.CopyManagement;
+import com.library.librarysys.users.interfaces.LoanOrderManagement;
+import com.library.librarysys.users.interfaces.PersonalData;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -17,7 +20,7 @@ import lombok.ToString;
 
 @ToString
 @Getter
-public class Employee extends LoggedUser implements Identifiable {
+public class Employee extends LoggedUser implements Identifiable, PersonalData, LoanOrderManagement, CopyManagement {
     private int employeeID;
     @Setter private Position position;
     @Setter private Library library;
@@ -40,51 +43,72 @@ public class Employee extends LoggedUser implements Identifiable {
     }
 
 
-    //LOAN functions
+    //LOAN/ORDER functions/////////////////////////////////////////
+    @Override
     public void showLoans() {
         LoanDAO dao = new LoanDAO();
         dao.selectLoansFromDB();
     }
+    @Override
     public void showLoans(Loan.Status status) {
         LoanDAO dao = new LoanDAO();
         dao.selectLoansFromDB(status);
     }
-
-    //ORDER functions
+    @Override
     public void showOrders() {
         OrderDAO dao = new OrderDAO();
         dao.selectOrderFromDB();
     }
+    @Override
     public void showOrders(int orderID) {
         OrderDAO dao = new OrderDAO();
         dao.selectOrderFromDB(orderID);
     }
+    @Override
     public void showOrders(Order.Status status) {
         OrderDAO dao = new OrderDAO();
         dao.selectOrderFromDB(status);
     }
+    @Override
+    public String orderToLoan() {
+        //delete from order table and add to the loan table in db, could use a trigger in sql
+        return "No implementation";
+    }
 
+    //COPY functions//////////////////////////////////////////////////////
+    @Override
     public void moveCopyToLibrary(Copy copy, Library library) {
         CopyDAO dao = new CopyDAO();
         dao.alterLibraryCopyInDB(copy, library);
     }
+    @Override
     public void changeCopyBlurb(Copy copy, String blurb) {
         CopyDAO dao = new CopyDAO();
         dao.alterBlurbCopyInDB(copy, blurb);
     }
+    @Override
     public void changeCopyStatus(Copy copy, Copy.Status status) {
         CopyDAO dao = new CopyDAO();
         dao.alterStatusCopyInDB(copy, status);
     }
+    @Override
+    public String addBookToResources() {
+        //create new book (there will be an automatic option to add to the database in the constructor) and add it to the 'newest' bookmark
+        return "No implementation";
+    }
 
+    //PERSONAL DATA functions   ////////////////////////////////////////////
+    @Override
     public void changeLastName(String lastName) {
         EmployeeDAO dao = new EmployeeDAO();
         dao.alterLastNameInDB(this, lastName);
     }
+    @Override
     public void changeAddress(String address) {
         EmployeeDAO dao = new EmployeeDAO();
         dao.alterAddressInDB(this, address);
     }
+    @Override
     public void changePhoneNumber(String number) {
         EmployeeDAO dao = new EmployeeDAO();
         dao.alterPhoneNumInDB(this, number);
@@ -94,20 +118,8 @@ public class Employee extends LoggedUser implements Identifiable {
         dao.alterLibraryInDB(this, library);
     }
 
-    public String orderNewBook() {
-        //still have no idea, maybe a window for entering a link or sth
-        return "No implementation";
-    }
-    public String addBookToResources() {
-        //create new book (there will be an automatic option to add to the database in the constructor) and add it to the 'newest' bookmark
-        return "No implementation";
-    }
     public String confirmPayment() {
         //in case of penalty for overdue the book, you mark that there is no penalty anymore, maybe listArray for penalties
-        return "No implementation";
-    }
-    public String orderToLoan() {
-        //delete from order table and add to the loan table in db, could use a trigger in sql
         return "No implementation";
     }
     public String createEvent() {
@@ -116,6 +128,10 @@ public class Employee extends LoggedUser implements Identifiable {
     }
     public String accessToAnalysis() {
         //you can see the books that were searched for but not found in the db (to buy it later)
+        return "No implementation";
+    }
+    public String orderNewBook() {
+        //still have no idea, maybe a window for entering a link or sth
         return "No implementation";
     }
 }

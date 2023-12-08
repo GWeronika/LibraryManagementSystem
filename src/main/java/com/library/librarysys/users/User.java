@@ -19,6 +19,7 @@ public class User {
         return "No implementation";
     }
 
+    //LIBRARY functions//////////////////////////////////////////////////
     /**
      * Displays all libraries in the library database
      * Displayed columns:
@@ -27,7 +28,6 @@ public class User {
      *
      * @see     LibraryDAO
      */
-    //LIBRARY functions
     public void browseLibraries() {
         LibraryDAO dao = new LibraryDAO();
         dao.selectLibraryFromDB();
@@ -51,6 +51,7 @@ public class User {
         dao.selectLibraryFromDB(phrase);
     }
 
+    //COPY functions////////////////////////////////////////////////
     /**
      * Displays all copies in the library database
      * Displayed columns:

@@ -25,9 +25,7 @@ public abstract class LoggedUser extends User implements Identifiable {
     }
 
     public void changePassword(String password) {
-        //responding to the button mechanism
         AccountDAO dao = new AccountDAO();
         dao.alterPasswordAccountInDB(this, password);
     }
-
 }

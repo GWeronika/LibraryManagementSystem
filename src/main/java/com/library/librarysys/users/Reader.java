@@ -3,14 +3,16 @@ package com.library.librarysys.users;
 import com.library.librarysys.account.Account;
 import com.library.librarysys.dbconnection.connection.AccountDAO;
 import com.library.librarysys.dbconnection.connection.OrderDAO;
+import com.library.librarysys.dbconnection.connection.ReaderDAO;
 import com.library.librarysys.interfaces.Identifiable;
+import com.library.librarysys.users.interfaces.PersonalData;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 @ToString
 @Getter @Setter
-public class Reader extends LoggedUser implements Identifiable {   //main panel of the reader
+public class Reader extends LoggedUser implements Identifiable, PersonalData {
     private int readerID;
     private final LibraryCard libraryCard;
 
@@ -56,5 +58,19 @@ public class Reader extends LoggedUser implements Identifiable {   //main panel 
         //responding to the button mechanism
         AccountDAO dao = new AccountDAO();
         dao.alterEmailAccountInDB(this, email);
+    }
+
+    //PERSONAL DATA functions   ////////////////////////////////////////////
+    public void changeLastName(String lastName) {
+        ReaderDAO dao = new ReaderDAO();
+        dao.alterLastNameInDB(this, lastName);
+    }
+    public void changeAddress(String address) {
+        ReaderDAO dao = new ReaderDAO();
+        dao.alterAddressInDB(this, address);
+    }
+    public void changePhoneNumber(String number) {
+        ReaderDAO dao = new ReaderDAO();
+        dao.alterPhoneNumInDB(this, number);
     }
 }
