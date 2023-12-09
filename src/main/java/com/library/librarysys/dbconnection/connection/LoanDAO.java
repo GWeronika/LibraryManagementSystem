@@ -38,6 +38,12 @@ public class LoanDAO extends GenericDAO<Loan> {
         String join = "JOIN copy ON loan.copy_id = copy.copy_id JOIN book ON book.book_id = copy.book_id";
         super.selectObjectFromDB(getTableName(), columns, condition, join, status);
     }
+    public void selectLoansFromDB(int id, Loan.Status status) {
+        String[] columns = {"loan_date", "return_date", "loan.status", "book.title", "book.author"};
+        String condition = "loan.status = ? AND loan_id = ?";
+        String join = "JOIN copy ON loan.copy_id = copy.copy_id JOIN book ON book.book_id = copy.book_id";
+        super.selectObjectFromDB(getTableName(), columns, condition, join, status, id);
+    }
 
     public Loan getLoanByID(int loanID) {
         List<Result> resultList = extractFromDB(loanID);

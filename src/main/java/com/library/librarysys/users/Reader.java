@@ -1,11 +1,11 @@
 package com.library.librarysys.users;
 
 import com.library.librarysys.account.Account;
-import com.library.librarysys.dbconnection.connection.AccountDAO;
-import com.library.librarysys.dbconnection.connection.LoanDAO;
-import com.library.librarysys.dbconnection.connection.OrderDAO;
-import com.library.librarysys.dbconnection.connection.ReaderDAO;
+import com.library.librarysys.account.Loan;
+import com.library.librarysys.account.Order;
+import com.library.librarysys.dbconnection.connection.*;
 import com.library.librarysys.interfaces.Identifiable;
+import com.library.librarysys.libcollection.Copy;
 import com.library.librarysys.users.interfaces.PersonalData;
 import lombok.Getter;
 import lombok.Setter;
@@ -61,46 +61,138 @@ public class Reader extends LoggedUser implements Identifiable, PersonalData {
     }
 
     /**
-     * removes the order with the given id from the database
+     * Removes the order with the given id from the database.
+     * Changes the status of the copy to AVAILABLE.
      *
      * @param orderID id of the order that will be canceled
-     * @see OrderDAO
+     * @see OrderDAO CopyDAO
      */
     public void cancelOrder(int orderID) {
-        OrderDAO dao = new OrderDAO();
-        dao.deleteOrderFromDB(orderID);
+        OrderDAO orderDAO = new OrderDAO();
+        CopyDAO copyDAO = new CopyDAO();
+
+        Order order = orderDAO.getOrderByID(orderID);
+        if(order != null) {
+            int copyID = order.getCopy().getCopyID();       //collecting the copyID from the order
+
+            Copy copy = copyDAO.getCopyByID(copyID);
+            copy.setStatus(Copy.Status.AVAILABLE);          //changing status to AVALIABLE in db and in the code
+            copyDAO.alterStatusCopyInDB(copy, Copy.Status.AVAILABLE);
+
+            orderDAO.deleteOrderFromDB(orderID);
+        } else {
+            System.out.println("Nie istnieje zamówienie o podanym ID");
+        }
     }
 
-    public String orderBook() {     //id or Copy?
-        //here we should get info from the button that was just clicked
-        return "No implementation";
+    /**
+     * Creates a book order with the given ID. Adds the order to the database.
+     * Changes the status of the copy to UNAVAILABLE.
+     *
+     * @param copyID id of the copy that will be ordered
+     * @see OrderDAO CopyDAO
+     */
+    public void orderBook(int copyID) {
+        CopyDAO copyDAO= new CopyDAO();
+        OrderDAO orderDAO = new OrderDAO();
+
+        Copy copy = copyDAO.getCopyByID(copyID);
+        if(copy != null) {
+            if (copy.getStatus() == Copy.Status.AVAILABLE) {
+                Order order = new Order(copy, this);
+                orderDAO.addOrderToDB(order);
+                copy.setStatus(Copy.Status.UNAVAILABLE);
+            } else {
+                System.out.println("Ten egzemplarz jest wypożyczony.");
+            }
+        } else {
+            System.out.println("Nie istnieje egzemplarz o podanym ID");
+        }
     }
-    public void viewLoan() {        //only loans from a specific reader
+
+    /**
+     * Shows the user his own loans (active, overdue as well as returned).
+     *
+     * @see LoanDAO
+     */
+    public void viewLoan() {
         LoanDAO dao = new LoanDAO();
         dao.selectLoansFromDB(this.readerID);
     }
-    public String prolong() {
-        //changes the returnDate to returnDate+=30, later, including days off from work??
-        return "No implementation";
+    /**
+     * Shows the user his own loans with a specific status.
+     *
+     * @param status the status of loans that the reader wants to see
+     * @see LoanDAO
+     */
+    public void viewLoan(Loan.Status status) {        //only active loans from a specific reader
+        LoanDAO dao = new LoanDAO();
+        dao.selectLoansFromDB(this.readerID, status);
     }
 
+    /**
+     * Extends the loan period of the copy by 30 days.
+     *
+     * @param loanID id of the loan to prolong
+     * @see LoanDAO
+     */
+    public void prolong(int loanID) {
+        LoanDAO loanDAO = new LoanDAO();
+        Loan loan = loanDAO.getLoanByID(loanID);
+
+        if(loan != null) {
+            if(loan.getReader().getReaderID() == this.readerID) {
+                loan.setReturnDate(loan.getReturnDate().plusDays(30));
+                loanDAO.alterReturnDateInDB(loan, loan.getReturnDate().plusDays(30));
+            } else {
+                System.out.println("Wypożyczenie nie należy do czytelnika o podanym ID");
+            }
+        } else {
+            System.out.println("Nie ma wypożyczenia o takim ID");
+        }
+    }
+
+    /**
+     * Changes the email address in the reader's account.
+     *
+     * @param email string value the reader wants to replace the old value with
+     * @see AccountDAO
+     */
     public void changeEmail(String email) {
         AccountDAO dao = new AccountDAO();
         dao.alterEmailAccountInDB(this, email);
-        super.getAccount().setEmail(email);
+        this.getAccount().setEmail(email);
     }
 
     //PERSONAL DATA functions   ////////////////////////////////////////////
+    /**
+     * Changes the last name of the reader.
+     *
+     * @param lastName string value the reader wants to replace the old value with
+     * @see ReaderDAO
+     */
     public void changeLastName(String lastName) {
         ReaderDAO dao = new ReaderDAO();
         dao.alterLastNameInDB(this, lastName);
         this.setLastname(lastName);
     }
+    /**
+     * Changes the address of the reader.
+     *
+     * @param address string value the reader wants to replace the old value with
+     * @see ReaderDAO
+     */
     public void changeAddress(String address) {
         ReaderDAO dao = new ReaderDAO();
         dao.alterAddressInDB(this, address);
         this.setAddress(address);
     }
+    /**
+     * Changes the phone number of the reader.
+     *
+     * @param number string value the reader wants to replace the old value with
+     * @see ReaderDAO
+     */
     public void changePhoneNumber(String number) {
         ReaderDAO dao = new ReaderDAO();
         dao.alterPhoneNumInDB(this, number);
