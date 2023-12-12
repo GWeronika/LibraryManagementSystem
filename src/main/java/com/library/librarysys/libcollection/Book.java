@@ -5,6 +5,10 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
+/**
+ * A class representing a loan in the library system.
+ * Implements the Identifiable interface.
+ */
 @ToString
 @EqualsAndHashCode
 @Getter
@@ -13,6 +17,13 @@ public class Book implements Identifiable {
     private final String title;
     private final String author;
 
+    /**
+     * Constructor for the Book class.
+     *
+     * @param bookID integer number representing book id
+     * @param title String value, title of the book
+     * @param author String value, author of the book
+     */
     public Book(int bookID, String title, String author) {
         this.bookID = bookID;
         this.title = title;

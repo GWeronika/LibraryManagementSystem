@@ -7,6 +7,10 @@ import lombok.ToString;
 
 import java.time.LocalTime;
 
+/**
+ * A class representing a opening in the library system.
+ * Implements the Identifiable interface.
+ */
 @ToString
 @EqualsAndHashCode
 @Getter
@@ -20,6 +24,14 @@ public class Opening implements Identifiable {
         MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
     }
 
+    /**
+     * Constructor for the Opening class.
+     *
+     * @param openingID integer number representing opening id
+     * @param day Day object, a day which the opening refers to
+     * @param openHour LocalTime object, time assigned to a specific day when the library opens
+     * @param closeHour LocalTime object, time assigned to a specific day when the library closes
+     */
     public Opening(int openingID, Day day, LocalTime openHour, LocalTime closeHour) {
         this.openingID = openingID;
         this.day = day;

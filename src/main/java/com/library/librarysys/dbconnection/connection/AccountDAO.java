@@ -9,12 +9,24 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * A class that is responsible for connecting to the "account" table in the library system.
+ * It provides methods that execute basic operations on the account table.
+ * Extends the GenericDAO class
+ *
+ * @see GenericDAO
+ */
 public class AccountDAO extends GenericDAO<Account> {
     public AccountDAO() {
         super("account");
     }
 
-    //later add double pass verification
+    /**
+     * Adds a new row to the "account" table.
+     *
+     * @param account Account object to be added
+     * @see GenericDAO
+     */
     public void addAccountToDB(Account account) {
         if (passVerification(account.getPassword())) {
             if(emailVerification(account.getEmail())) {
@@ -29,10 +41,23 @@ public class AccountDAO extends GenericDAO<Account> {
         }
     }
 
+    /**
+     * Deletes a row with a specific id from the "account" table.
+     *
+     * @param deleteID integer number, describing the id of the account to be deleted
+     * @see GenericDAO
+     */
     public void deleteAccountFromDB(int deleteID) {
         super.deleteObjectFromDB(deleteID);
     }
 
+    /**
+     * Gets the Account object with a specific id from the database.
+     *
+     * @param accountID integer number, id of the account
+     * @return Account object extracted from the database
+     * @see GenericDAO
+     */
     public Account getAccountByID(int accountID) {
         List<Result> resultList = extractFromDB(accountID);
         for (Result result : resultList) {
@@ -84,19 +109,51 @@ public class AccountDAO extends GenericDAO<Account> {
         }
     }
 
+    /**
+     * Checks whether there are duplicated emails in the account table.
+     *
+     * @param email email duplicate to be found
+     * @return integer number referring to the id of the repeated email
+     * @see GenericDAO
+     */
+    public int checkDuplicate(String email) {
+        String[] columns = {"email"};
+        return super.checkDuplicate(getTableName(), columns, email);
+    }
+
+    /**
+     * Checks whether the given password meet the specified requirements.
+     *
+     * @param password string value, describing the password to be saved
+     * @return true if password meets the requirements, false otherwise
+     * @see GenericDAO
+     */
     private boolean passVerification(String password) {
         final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$";
         Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
         Matcher matcher = pattern.matcher(password);
         return matcher.matches();
     }
-
+    /**
+     * Checks whether the given email meet the specified requirements.
+     *
+     * @param email string value, describing the email to be saved
+     * @return true if password meets the requirements, false otherwise
+     * @see GenericDAO
+     */
     private boolean emailVerification(String email) {
         final String EMAIL_PATTERN = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}$";
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
+    /**
+     * Extracts the account data with the specific id from the database.
+     *
+     * @param id integer number, id of the account
+     * @return the list with the account data
+     * @see GenericDAO
+     */
     private List<Result> extractFromDB(int id) {
         String[] columns = {"account_id", "email", "password"};
         String condition = "account_id = ?";

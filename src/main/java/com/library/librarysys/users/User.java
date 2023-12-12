@@ -1,22 +1,34 @@
 package com.library.librarysys.users;
 
+import com.library.librarysys.account.Account;
+import com.library.librarysys.dbconnection.connection.AccountDAO;
 import com.library.librarysys.dbconnection.connection.CopyDAO;
 import com.library.librarysys.dbconnection.connection.LibraryDAO;
 import com.library.librarysys.libcollection.Copy;
 
+/**
+ * A class representing a user in the library system.
+ * It contains functionalities that can be used by logged users
+ * as well as guests.
+ */
 public class User {
 
     /**
-     * Displays all libraries in the library database
-     * Displayed columns:
-     * name, location, phone number, email, opening day
-     * opening hours and closing hours
+     * Creates account with the specific email and password values.
+     * Adds account to the database.
      *
-     * @see     LibraryDAO
+     * @see     AccountDAO
      */
-    public String createAccount() {
-        //the account will only be created if the email address is not repeated in the database (the database does not accept duplicates)
-        return "No implementation";
+    public void createAccount(String email, String password) {
+        AccountDAO dao = new AccountDAO();
+
+        int duplicate = dao.checkDuplicate(email);
+        if(duplicate == 0) {
+            Account account = new Account(0, email, password);
+            dao.addAccountToDB(account);
+        } else {
+            System.out.println("Konto o takim adresie email już istnieje.");
+        }
     }
 
     //LIBRARY functions//////////////////////////////////////////////////

@@ -11,6 +11,10 @@ import com.library.librarysys.users.Employee;
 
 import java.time.LocalDate;
 
+/**
+ * A class representing a loan in the library system.
+ * Implements the Identifiable interface.
+ */
 @ToString
 @EqualsAndHashCode
 @Getter
@@ -32,6 +36,14 @@ public class Loan implements Identifiable {
     @Override
     public void setID(int newID) { this.loanID = newID; }
 
+    /**
+     * First constructor for the Loan class.
+     *
+     * @param loanID integer number representing loan id
+     * @param copy Copy object, a copy for which the loan applies
+     * @param reader Reader object, a reader who possess the loan
+     * @param employee Employee object, an employee who prepared the loan
+     */
     public Loan(int loanID, Copy copy, Reader reader, Employee employee) {
         this.loanID = loanID;
         this.copy = copy;
@@ -41,6 +53,17 @@ public class Loan implements Identifiable {
         this.reader = reader;
         this.employee = employee;
     }
+    /**
+     * Second constructor for the Loan class.
+     *
+     * @param loanID integer number representing loan id
+     * @param loanDate LocalDate object, loan date of the loan
+     * @param returnDate LocalDate object, return date of the loan
+     * @param status Status object, status of the loan
+     * @param copy Copy object, a copy for which the loan applies
+     * @param reader Reader object, a reader who possess the loan
+     * @param employee Employee object, an employee who prepared the loan
+     */
     public Loan(int loanID, LocalDate loanDate, LocalDate returnDate, Status status, Copy copy, Reader reader, Employee employee) {
         this.loanID = loanID;
         this.copy = copy;
