@@ -153,6 +153,25 @@ public class Reader extends LoggedUser implements Identifiable, PersonalData {
     }
 
     /**
+     * Removes the reader from the database.
+     * This also involves deleting all orders and loans of the reader
+     * with the given ID and their library account.
+     *
+     * @see ReaderDAO
+     */
+    public void deleteReader() {
+        ReaderDAO readerDAO = new ReaderDAO();
+        AccountDAO accountDAO = new AccountDAO();
+        Reader reader = readerDAO.getReaderByID(this.readerID);
+
+        //delete account
+        accountDAO.getAccountByID(reader.getAccount().getAccountID());
+
+        //trigger deletes loans and orders of the deleted reader
+        readerDAO.deleteReaderFromDB(this.readerID);
+    }
+
+    /**
      * Changes the email address in the reader's account.
      *
      * @param email string value the reader wants to replace the old value with

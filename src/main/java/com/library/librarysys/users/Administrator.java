@@ -48,24 +48,19 @@ public class Administrator extends LoggedUser implements Identifiable, EmployeeM
      * with the given ID and their library account.
      *
      * @param readerID id of the reader that will be deleted
-     * @see ReaderDAO
+     * @see ReaderDAO AccountDAO
      */
     @Override
     public void deleteReader(int readerID) {
-        CopyDAO copyDAO = new CopyDAO();
-        LoanDAO loanDAO = new LoanDAO();
         ReaderDAO readerDAO = new ReaderDAO();
         AccountDAO accountDAO = new AccountDAO();
         Reader reader = readerDAO.getReaderByID(readerID);
 
-        //delete loans and orders
-
-
         //delete account
         accountDAO.getAccountByID(reader.getAccount().getAccountID());
 
+        //trigger deletes loans and orders of the deleted reader
         readerDAO.deleteReaderFromDB(readerID);
-        System.out.println("Half implemented");
     }
     /**
      * Shows all readers from the database.
