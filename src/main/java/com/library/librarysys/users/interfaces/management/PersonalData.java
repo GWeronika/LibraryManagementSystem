@@ -1,4 +1,4 @@
-package com.library.librarysys.users.interfaces;
+package com.library.librarysys.users.interfaces.management;
 
 public interface PersonalData {
     void changeLastName(String lastName);

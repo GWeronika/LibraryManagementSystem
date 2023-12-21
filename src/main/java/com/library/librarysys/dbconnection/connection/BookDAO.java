@@ -2,6 +2,7 @@ package com.library.librarysys.dbconnection.connection;
 
 import com.library.librarysys.dbconnection.GenericDAO;
 import com.library.librarysys.libcollection.Book;
+import com.library.librarysys.openingformat.Result;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class BookDAO extends GenericDAO<Book> {
      * @see GenericDAO
      */
     public void addBookToDB(Book book) {
-        String query = "INSERT INTO book (title, author) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO book (title, author) VALUES (?, ?)";
         super.addObjectToDB(book, query, book.getTitle(), book.getAuthor());
     }
 

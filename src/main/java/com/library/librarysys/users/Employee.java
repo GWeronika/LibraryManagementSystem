@@ -4,13 +4,10 @@ import com.library.librarysys.account.Account;
 import com.library.librarysys.account.Loan;
 import com.library.librarysys.account.Order;
 import com.library.librarysys.dbconnection.connection.*;
-import com.library.librarysys.interfaces.Identifiable;
 import com.library.librarysys.libcollection.Book;
 import com.library.librarysys.libcollection.Copy;
 import com.library.librarysys.libcollection.Library;
-import com.library.librarysys.users.interfaces.CopyManagement;
-import com.library.librarysys.users.interfaces.LoanOrderManagement;
-import com.library.librarysys.users.interfaces.PersonalData;
+import com.library.librarysys.users.interfaces.IEmployee;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -18,12 +15,11 @@ import lombok.ToString;
 
 /**
  * A class representing an employee in the library system.
- * Extends the LoggedUser class and implements the Identifiable, PersonalData,
- * LoanOrderManagement and CopyManagement.
+ * Extends the LoggedUser class and implements the IEmployee interface.
  */
 @ToString
 @Getter
-public class Employee extends LoggedUser implements Identifiable, PersonalData, LoanOrderManagement, CopyManagement {
+public class Employee extends LoggedUser implements IEmployee {
     private int employeeID;
     @Setter private Position position;
     @Setter private Library library;
@@ -131,6 +127,20 @@ public class Employee extends LoggedUser implements Identifiable, PersonalData, 
         orderDAO.deleteOrderFromDB(orderID);
         Loan loan = new Loan(0, order.getCopy(), order.getReader(), this);
         loanDAO.addLoanToDB(loan);
+    }
+
+    /**
+     * Changes the status of the prepared order.
+     *
+     * @param orderID id of the order that will be processed by the employee
+     * @see OrderDAO
+     */
+    @Override
+    public void prepareOrder(int orderID) {
+        OrderDAO dao = new OrderDAO();
+        Order order = dao.getOrderByID(orderID);
+        order.setStatus(Order.Status.READY);
+        dao.alterStatusInDB(order, Order.Status.READY);
     }
 
     //COPY functions//////////////////////////////////////////////////////

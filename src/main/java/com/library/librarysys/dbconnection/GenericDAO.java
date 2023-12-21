@@ -1,6 +1,6 @@
 package com.library.librarysys.dbconnection;
 
-import com.library.librarysys.dbconnection.connection.Result;
+import com.library.librarysys.openingformat.Result;
 import com.library.librarysys.interfaces.Identifiable;
 import lombok.Getter;
 

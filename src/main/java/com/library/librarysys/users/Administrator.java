@@ -2,22 +2,19 @@ package com.library.librarysys.users;
 
 import com.library.librarysys.account.Account;
 import com.library.librarysys.dbconnection.connection.*;
-import com.library.librarysys.interfaces.Identifiable;
 import com.library.librarysys.libcollection.Library;
-import com.library.librarysys.users.interfaces.EmployeeManagement;
-import com.library.librarysys.users.interfaces.LibraryManagement;
-import com.library.librarysys.users.interfaces.ReaderManagement;
+import com.library.librarysys.libcollection.Opening;
+import com.library.librarysys.users.interfaces.IAdministrator;
 import lombok.Getter;
 import lombok.ToString;
 
 /**
  * A class representing an administrator in the library system.
- * Extends the LoggedUser class and implements the Identifiable, EmployeeManagement, ReaderManagement
- * and LibraryManagement interfaces.
+ * Extends the LoggedUser class and implements the IAdministrator interfaces.
  */
 @ToString
 @Getter
-public class Administrator extends LoggedUser implements Identifiable, EmployeeManagement, ReaderManagement, LibraryManagement {
+public class Administrator extends LoggedUser implements IAdministrator {
     private int adminID;
 
     /**
@@ -108,7 +105,7 @@ public class Administrator extends LoggedUser implements Identifiable, EmployeeM
         dao.deleteEmployeeFromDB(employeeID);
     }
     /**
-     * Shows all employees from the database..
+     * Shows all employees from the database.
      *
      * @see EmployeeDAO
      */
@@ -142,7 +139,7 @@ public class Administrator extends LoggedUser implements Identifiable, EmployeeM
     /**
      * Shows employee hired on a specific position.
      *
-     * @param position Employee.Position value describing the position of the employees to be found
+     * @param position Employee.Position object describing the position of the employees to be found
      * @see EmployeeDAO Employee.Position
      */
     @Override
@@ -153,8 +150,8 @@ public class Administrator extends LoggedUser implements Identifiable, EmployeeM
     /**
      * Changes the position of the given employee.
      *
-     * @param employee Employee type value describing the specific employee
-     * @param position Employee.Position describes the position of the reader to be found
+     * @param employee Employee object, describing the specific employee
+     * @param position Employee.Position object, describes the position of the reader to be found
      * @see EmployeeDAO Employee.Position
      */
     @Override
@@ -172,7 +169,7 @@ public class Administrator extends LoggedUser implements Identifiable, EmployeeM
      */
     @Override
     public void confirmEmployee(String firstName, String lastName) {
-        Account account = new Account(0, firstName + "." + lastName + "@example.com",
+        Account account = new Account(0, firstName + "." + lastName + "@employee.example.com",
                 firstName.toLowerCase() + "." + lastName.toLowerCase() + ".EMPLOYEE");
         AccountDAO dao = new AccountDAO();
         dao.addAccountToDB(account);
@@ -180,9 +177,9 @@ public class Administrator extends LoggedUser implements Identifiable, EmployeeM
 
     //LIBRARY functions///////////////////////////////////////////////////
     /**
-     * Changes the location of the library object.
+     * Changes the location of the library.
      *
-     * @param library Library type value, describing the specific library
+     * @param library Library object, describing the specific library
      * @param location string value, location to be changed
      * @see LibraryDAO
      */
@@ -193,9 +190,9 @@ public class Administrator extends LoggedUser implements Identifiable, EmployeeM
         library.setLocation(location);
     }
     /**
-     * Changes the phone number of the library object.
+     * Changes the phone number of the library.
      *
-     * @param library Library type value, describing the specific library
+     * @param library Library object, describing the specific library
      * @param phoneNumber string value, phone number to be changed
      * @see LibraryDAO
      */
@@ -206,9 +203,9 @@ public class Administrator extends LoggedUser implements Identifiable, EmployeeM
         library.setPhoneNum(phoneNumber);
     }
     /**
-     * Changes the email of the library object.
+     * Changes the email of the library.
      *
-     * @param library Library type value, describing the specific library
+     * @param library Library object, describing the specific library
      * @param email string value, email to be changed
      * @see LibraryDAO
      */
@@ -224,10 +221,25 @@ public class Administrator extends LoggedUser implements Identifiable, EmployeeM
         //bookmark with rules, make new posts
         return "No implementation";
     }
+
+    /**
+     * Changes the opening of the library.
+     * Adds an opening if no such opening exists for a given library yet.
+     *
+     * @param library Library object, describing the specific library
+     * @param opening Opening object, opening to be changed
+     * @see LibraryDAO
+     */
     @Override
-    public String changeLibraryOpenings() {
-        //could be made for each library, just use setters
-        return "No implementation";
+    public void changeLibraryOpenings(Library library, Opening opening) {
+        OpeningDAO dao = new OpeningDAO();
+        Opening openingThisDay = library.getOpeningsList().get(opening.getDay());   //gets the opening from the same day that is to be changed
+        if(openingThisDay == null || openingThisDay.getOpenHour() != opening.getOpenHour() || openingThisDay.getCloseHour() != opening.getCloseHour()) {
+            Opening newOpening = new Opening(0, opening.getDay(), opening.getOpenHour(), opening.getCloseHour());
+            dao.addOpeningToDB(newOpening);
+        } else {
+            System.out.println("Istnieją już godziny (" + opening + ") dla " + library.getName());
+        }
     }
     public String deleteAccount() {
         //delete the account and the reader/employee from the db

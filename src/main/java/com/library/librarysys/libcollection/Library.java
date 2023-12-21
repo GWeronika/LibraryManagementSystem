@@ -33,7 +33,7 @@ public class Library implements Identifiable {
      * @param location String value, location of the library
      * @param phoneNum String value, phone number of the library
      * @param email String value, email of the library
-     * @param openings an array of Opening objects, all openings of the library
+     * @param openings a map of Opening objects, all openings of the library
      */
     public Library(int libraryID, String name, String location, String phoneNum, String email, Opening... openings) {
         this.libraryID = libraryID;

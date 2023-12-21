@@ -1,4 +1,4 @@
-package com.library.librarysys.dbconnection.connection;
+package com.library.librarysys.openingformat;
 
 import lombok.Getter;
 

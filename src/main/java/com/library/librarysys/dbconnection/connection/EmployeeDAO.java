@@ -2,6 +2,7 @@ package com.library.librarysys.dbconnection.connection;
 
 import com.library.librarysys.dbconnection.GenericDAO;
 import com.library.librarysys.libcollection.Library;
+import com.library.librarysys.openingformat.Result;
 import com.library.librarysys.users.Employee;
 
 import java.util.List;

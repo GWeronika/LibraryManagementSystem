@@ -4,20 +4,19 @@ import com.library.librarysys.account.Account;
 import com.library.librarysys.account.Loan;
 import com.library.librarysys.account.Order;
 import com.library.librarysys.dbconnection.connection.*;
-import com.library.librarysys.interfaces.Identifiable;
 import com.library.librarysys.libcollection.Copy;
-import com.library.librarysys.users.interfaces.PersonalData;
+import com.library.librarysys.users.interfaces.IReader;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 /**
  * A class representing a reader in the library system.
- * Extends the LoggedUser class and implements the Identifiable and PersonalData,
+ * Extends the LoggedUser class and implements the IReader interface.
  */
 @ToString
 @Getter @Setter
-public class Reader extends LoggedUser implements Identifiable, PersonalData {
+public class Reader extends LoggedUser implements IReader {
     private int readerID;
     private final LibraryCard libraryCard;
 

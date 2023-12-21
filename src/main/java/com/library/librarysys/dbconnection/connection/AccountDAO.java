@@ -2,6 +2,7 @@ package com.library.librarysys.dbconnection.connection;
 
 import com.library.librarysys.account.Account;
 import com.library.librarysys.dbconnection.GenericDAO;
+import com.library.librarysys.openingformat.Result;
 import com.library.librarysys.users.LoggedUser;
 import com.library.librarysys.users.Reader;
 

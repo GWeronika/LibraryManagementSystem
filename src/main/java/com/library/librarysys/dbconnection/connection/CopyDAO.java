@@ -3,6 +3,7 @@ package com.library.librarysys.dbconnection.connection;
 import com.library.librarysys.dbconnection.GenericDAO;
 import com.library.librarysys.libcollection.Copy;
 import com.library.librarysys.libcollection.Library;
+import com.library.librarysys.openingformat.Result;
 
 import java.util.List;
 

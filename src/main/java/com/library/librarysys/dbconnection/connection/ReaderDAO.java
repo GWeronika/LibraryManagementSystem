@@ -1,6 +1,7 @@
 package com.library.librarysys.dbconnection.connection;
 
 import com.library.librarysys.dbconnection.GenericDAO;
+import com.library.librarysys.openingformat.Result;
 import com.library.librarysys.users.Reader;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public class ReaderDAO extends GenericDAO<Reader> {
      */
     public void addReaderToDB(Reader reader) {
         String query = "INSERT INTO reader (first_name, last_name, address, phone_number, library_card_number, account_id) " +
-                "VALUES (?, ?, ?, ?)";
+                "VALUES (?, ?, ?, ?, ?, ?)";
         super.addObjectToDB(reader, query, reader.getFirstname(), reader.getLastname(), reader.getAddress(), reader.getPhoneNum(),
                 reader.getLibraryCard().getNumber(), reader.getAccount().getAccountID());
     }

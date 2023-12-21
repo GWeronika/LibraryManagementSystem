@@ -2,6 +2,7 @@ package com.library.librarysys.dbconnection.connection;
 
 import com.library.librarysys.dbconnection.GenericDAO;
 import com.library.librarysys.libcollection.Opening;
+import com.library.librarysys.openingformat.Result;
 
 import java.time.LocalTime;
 import java.util.List;
@@ -60,6 +61,12 @@ public class OpeningDAO extends GenericDAO<Opening> {
             }
         }
         return null;
+    }
+
+    public List<Result> extractFromDB(Opening.Day day) {
+        String[] columns = {"opening_id", "day", "open_hour", "close_hour"};
+        String condition = "opening_day = ?";
+        return super.extractObjectFromDB(getTableName(), columns, condition, null, day);
     }
 
     /**
