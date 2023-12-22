@@ -28,7 +28,7 @@ public class CopyDAO extends GenericDAO<Copy> {
     public void addCopyToDB(Copy copy) {
         String query = "INSERT INTO copy (publisher, isbn, release_year, format, language, " +
                 "blurb, status, library_id, book_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        super.addObjectToDB(copy, query, copy.getPublisher(), copy.getISBN(), copy.getReleaseYear(), copy.getFormat(),
+        super.addObjectToDB(copy, query, copy.getPublisher(), copy.getISBN(), copy.getReleaseYear(), copy.getFormat().name(),
                 copy.getLanguage(), copy.getBlurb(), copy.getStatus().name(), copy.getLibrary().getLibraryID(),
                 copy.getBook().getBookID());
     }

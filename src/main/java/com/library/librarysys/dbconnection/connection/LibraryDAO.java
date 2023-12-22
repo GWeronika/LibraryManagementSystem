@@ -67,7 +67,8 @@ public class LibraryDAO extends GenericDAO<Library> {
         Library library = null;
 
         for (Result result : resultList) {
-            int resultLibraryID = Integer.parseInt(result.getColumnValues().get("library_id"));
+
+            int resultLibraryID = Integer.parseInt(result.getColumnValues().get("library.library_id"));
 
             if (resultLibraryID == libraryID) {
                 String name = result.getColumnValues().get("name");
@@ -80,11 +81,10 @@ public class LibraryDAO extends GenericDAO<Library> {
                 LocalTime openHour = LocalTime.parse(result.getColumnValues().get("opening.open_hour"));
                 LocalTime closeHour = LocalTime.parse(result.getColumnValues().get("opening.close_hour"));
 
-                if (library == null) {
-                    library = new Library(resultLibraryID, name, location, phoneNumber, email);
-                }
                 Opening opening = new Opening(openingID, day, openHour, closeHour);
-                library.getOpeningsList().put(day, opening);
+                if (library == null) {
+                    library = new Library(resultLibraryID, name, location, phoneNumber, email, opening);
+                }
             }
         }
         return library;
@@ -132,10 +132,10 @@ public class LibraryDAO extends GenericDAO<Library> {
      * @see GenericDAO
      */
     private List<Result> extractFromDB(int id) {
-        String[] columns = {"library_id", "name", "location", "phone_number", "email",  "opening.opening_id", "opening.day",
+        String[] columns = {"library.library_id", "name", "location", "phone_number", "email",  "opening.opening_id", "opening.day",
                 "opening.open_hour", "opening.close_hour"};
-        String condition = "library_id = ?";
-        String join = "JOIN library_opening ON library.library_id = library_opening.library.id " +
+        String condition = "library.library_id = ?";
+        String join = "JOIN library_opening ON library.library_id = library_opening.library_id " +
                 "JOIN opening ON library_opening.opening_id = opening.opening_id";
         return super.extractObjectFromDB(getTableName(), columns, condition, join, id);
     }

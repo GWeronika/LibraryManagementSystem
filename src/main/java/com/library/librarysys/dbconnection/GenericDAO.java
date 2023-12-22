@@ -197,7 +197,7 @@ public class GenericDAO<T extends Identifiable> {
      * @return id of the row with the duplicate, 0 if there is no duplicate or an error
      */
     public int checkDuplicate(String tableName, String[] columns, Object... values) {
-        StringBuilder queryBuilder = new StringBuilder("SELECT id FROM ");
+        StringBuilder queryBuilder = new StringBuilder("SELECT " + tableName + "_id FROM ");
         queryBuilder.append(tableName).append(" WHERE ");
 
         for (int i = 0; i < columns.length; i++) {
@@ -218,7 +218,7 @@ public class GenericDAO<T extends Identifiable> {
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    return resultSet.getInt("id");
+                    return resultSet.getInt(tableName + "_id");
                 }
             }
 

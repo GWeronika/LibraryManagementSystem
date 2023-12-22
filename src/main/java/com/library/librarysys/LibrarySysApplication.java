@@ -1,5 +1,12 @@
 package com.library.librarysys;
 
+import com.library.librarysys.account.Account;
+import com.library.librarysys.account.Loan;
+import com.library.librarysys.dbconnection.connection.LibraryDAO;
+import com.library.librarysys.libcollection.Copy;
+import com.library.librarysys.libcollection.Library;
+import com.library.librarysys.users.Administrator;
+import com.library.librarysys.users.Employee;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +20,23 @@ public class LibrarySysApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(LibrarySysApplication.class, args);
+        Account ac = new Account(999, "4", "4");
+        Administrator a = new Administrator(10, "a", "c", "s", "0", ac);
+
+        LibraryDAO lDao = new LibraryDAO();
+        Library library4 = lDao.getLibraryByID(4);
+        Account accc = new Account(100, "4", "4");
+        Library lib = new Library(8, "f", "g", "7", "t");
+        Employee e = new Employee(100, "r", "r", "r", "9", accc, Employee.Position.LIBRARIAN, lib);
+        e.orderNewBook("Niedokończone opowieści", "J.R.R. Tolkien", "Wydawnictwo Tolkienowskie",
+                "9781230004270", "2013", Copy.Format.BOOK, "polski", "Opowieści, których nie było" +
+                        "we Władcy Pierścieni", library4);
+        e.browseBooks("Niedokończone opowieści");
+        System.out.println("\n");
+
+        e.browseBooks("ma");
+        System.out.println("\n");
+        e.browseLibraries();
     }
 
     @RestController
