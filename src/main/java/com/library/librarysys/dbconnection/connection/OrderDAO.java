@@ -71,7 +71,7 @@ public class OrderDAO extends GenericDAO<Order> {
      */
     public void selectOrderFromDB(Order.Status status) {
         String[] columns = {"order_date", "orders.status", "book.title", "book.author"};
-        String condition = "status = ?";
+        String condition = "orders.status = ?";
         String join = "JOIN copy ON orders.copy_id = copy.copy_id JOIN book ON book.book_id = copy.book_id";
         super.selectObjectFromDB(getTableName(), columns, condition, join, status);
     }
@@ -92,11 +92,11 @@ public class OrderDAO extends GenericDAO<Order> {
 
             if (resultCopyID == orderID) {
                 LocalDate orderDate = LocalDate.parse(result.getColumnValues().get("order_date"));
-                Order.Status status = Order.Status.valueOf(result.getColumnValues().get("status"));
+                Order.Status status = Order.Status.valueOf((result.getColumnValues().get("orders.status")));
                 int readerID = Integer.parseInt(result.getColumnValues().get("reader_id"));
                 int copyID = Integer.parseInt(result.getColumnValues().get("copy_id"));
 
-                return new Order(copyDAO.getCopyByID(copyID), readerDAO.getReaderByID(readerID));
+                return new Order(resultCopyID, copyDAO.getCopyByID(copyID), orderDate, status, readerDAO.getReaderByID(readerID));
             }
         }
         return null;
@@ -109,7 +109,7 @@ public class OrderDAO extends GenericDAO<Order> {
      * @param status Order.Status object, status to be changed
      */
     public void alterStatusInDB(Order order, Order.Status status) {
-        String[] set = {"status = ".concat(status.name())};
+        String[] set = {"orders.status = '".concat(status.name()).concat("'")};
         String condition = "order_id = ?";
         super.alterObjectInDB(getTableName(), set, condition, order.getOrderID());
     }
@@ -121,7 +121,7 @@ public class OrderDAO extends GenericDAO<Order> {
      * @see GenericDAO
      */
     private List<Result> extractFromDB(int id) {
-        String[] columns = {"order_id", "order_date", "status", "reader_id", "copy_id"};
+        String[] columns = {"order_id", "order_date", "orders.status", "reader_id", "copy_id"};
         String condition = "order_id = ?";
         return super.extractObjectFromDB(getTableName(), columns, condition, null, id);
     }
