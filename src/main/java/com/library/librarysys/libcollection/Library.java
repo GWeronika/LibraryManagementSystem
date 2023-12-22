@@ -61,6 +61,7 @@ public class Library implements Identifiable {
      * @see Opening
      */
     private void initializeOpening(Opening... openings) {
+        this.openingsList = new HashMap<>();
         for(Opening day : openings) {
             Opening.Day dayKey = Opening.Day.valueOf(String.valueOf(day.getDay()));
             if (openingsList.containsKey(dayKey)) {

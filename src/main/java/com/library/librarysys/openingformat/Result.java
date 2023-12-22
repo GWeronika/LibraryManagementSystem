@@ -7,6 +7,8 @@ import java.util.Map;
 
 /**
  * A class representing a result for storing values in a HashMap.
+ * All columns are stored as follows:
+ * column_name, value
  */
 @Getter
 public class Result {
