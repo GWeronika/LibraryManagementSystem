@@ -161,7 +161,19 @@ public class Administrator extends LoggedUser implements IAdministrator {
         employee.setPosition(position);
     }
     /**
-     * Adds the new-hired employee's password to the database.
+     * Changes the library where the employee works.
+     *
+     * @param library a new reference to the library where the employee will work
+     * @param employee the employee whose library is to be changed
+     * @see EmployeeDAO
+     */
+    public void changeEmployeeLibrary(Employee employee, Library library) {
+        EmployeeDAO dao = new EmployeeDAO();
+        dao.alterLibraryInDB(employee, library);
+        employee.setLibrary(library);
+    }
+    /**
+     * Adds the new-hired employee's account to the database.
      *
      * @param firstName string value, first name of the employee
      * @param lastName string value, last name of the employee
@@ -169,10 +181,9 @@ public class Administrator extends LoggedUser implements IAdministrator {
      */
     @Override
     public void confirmEmployee(String firstName, String lastName) {
-        Account account = new Account(0, firstName + "." + lastName + "@employee.example.com",
-                firstName.toLowerCase() + "." + lastName.toLowerCase() + ".EMPLOYEE");
-        AccountDAO dao = new AccountDAO();
-        dao.addAccountToDB(account);
+        String email = firstName + "." + lastName + "@employee.example.com";
+        String pass = firstName.toLowerCase() + "." + lastName.toLowerCase() + ".EMPLOYEE";
+        createAccount(email, pass);
     }
 
     //LIBRARY functions///////////////////////////////////////////////////
@@ -216,12 +227,6 @@ public class Administrator extends LoggedUser implements IAdministrator {
         library.setEmail(email);
     }
 
-    @Override
-    public String establishRules() {
-        //bookmark with rules, make new posts
-        return "No implementation";
-    }
-
     /**
      * Changes the opening of the library.
      * Adds an opening if no such opening exists for a given library yet.
@@ -241,8 +246,29 @@ public class Administrator extends LoggedUser implements IAdministrator {
             System.out.println("Istnieją już godziny (" + opening + ") dla " + library.getName());
         }
     }
-    public String deleteAccount() {
-        //delete the account and the reader/employee from the db
-        return "No implementation";
+
+    /**
+     * Adds the new administrator's account to the database.
+     *
+     * @param firstName string value, first name of the admin
+     * @param lastName string value, last name of the admin
+     * @see AccountDAO
+     */
+    @Override
+    public void addAdmin(String firstName, String lastName) {
+        String email = firstName + "." + lastName + "@admin.example.com";
+        String pass = firstName.toLowerCase() + "." + lastName.toLowerCase() + ".ADMINISTRATOR";
+        createAccount(email, pass);
+    }
+
+    /**
+     * Deletes the  administrator's account from the database.
+     *
+     * @see AccountDAO
+     */
+    @Override
+    public void deleteAccount() {
+        AccountDAO dao = new AccountDAO();
+        dao.deleteAccountFromDB(this.adminID);
     }
 }

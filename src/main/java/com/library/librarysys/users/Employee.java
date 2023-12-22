@@ -28,7 +28,7 @@ public class Employee extends LoggedUser implements IEmployee {
      * Enumeration representing various employee positions in the library system.
      * Additional positions may be added in the future.
      */
-    public enum Position {     //additional positions may be added later
+    public enum Position {
         MANAGER,
         LIBRARIAN
     }
@@ -233,23 +233,13 @@ public class Employee extends LoggedUser implements IEmployee {
         dao.alterPhoneNumInDB(this, number);
         this.setPhoneNum(number);
     }
-    /**
-     * Changes the library where the employee works.
-     *
-     * @param library a new reference to the library where the employee will work
-     * @see EmployeeDAO
-     */
-    public void changeLibrary(Library library) {
-        EmployeeDAO dao = new EmployeeDAO();
-        dao.alterLibraryInDB(this, library);
-        this.setLibrary(library);
-    }
 
     /**
      * Adds a new copy (and a book if it does not exist) to the collection.
      *
      * @see CopyDAO BookDAO
      */
+    @Override
     public void orderNewBook(String title, String author, String publisher, String isbn, String releaseYear,
                                Copy.Format format, String language, String blurb, Library library) {      //buy new book
         BookDAO bookDAO = new BookDAO();
@@ -267,15 +257,7 @@ public class Employee extends LoggedUser implements IEmployee {
         }
         copyDAO.addCopyToDB(copy);
     }
-    public String confirmPayment() {
-        //in case of penalty for overdue the book, you mark that there is no penalty anymore, maybe listArray for penalties
-        //issuing a proof of payment should be taken into account
-        return "No implementation";
-    }
-    public String createEvent() {
-        //add an image and text to the 'newest' bookmark
-        return "No implementation";
-    }
+
     public String accessToAnalysis() {
         //you can see the books that were searched for but not found in the db (to buy it later)
         return "No implementation";

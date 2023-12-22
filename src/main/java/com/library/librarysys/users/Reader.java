@@ -66,6 +66,7 @@ public class Reader extends LoggedUser implements IReader {
      * @param orderID id of the order that will be canceled
      * @see OrderDAO CopyDAO
      */
+    @Override
     public void cancelOrder(int orderID) {
         OrderDAO orderDAO = new OrderDAO();
         CopyDAO copyDAO = new CopyDAO();
@@ -91,6 +92,7 @@ public class Reader extends LoggedUser implements IReader {
      * @param copyID id of the copy that will be ordered
      * @see OrderDAO CopyDAO
      */
+    @Override
     public void orderBook(int copyID) {
         CopyDAO copyDAO= new CopyDAO();
         OrderDAO orderDAO = new OrderDAO();
@@ -114,6 +116,7 @@ public class Reader extends LoggedUser implements IReader {
      *
      * @see LoanDAO
      */
+    @Override
     public void viewLoan() {
         LoanDAO dao = new LoanDAO();
         dao.selectLoansFromDB(this.readerID);
@@ -124,6 +127,7 @@ public class Reader extends LoggedUser implements IReader {
      * @param status the status of loans that the reader wants to see
      * @see LoanDAO
      */
+    @Override
     public void viewLoan(Loan.Status status) {        //only active loans from a specific reader
         LoanDAO dao = new LoanDAO();
         dao.selectLoansFromDB(this.readerID, status);
@@ -135,6 +139,7 @@ public class Reader extends LoggedUser implements IReader {
      * @param loanID id of the loan to prolong
      * @see LoanDAO
      */
+    @Override
     public void prolong(int loanID) {
         LoanDAO loanDAO = new LoanDAO();
         Loan loan = loanDAO.getLoanByID(loanID);
@@ -158,6 +163,7 @@ public class Reader extends LoggedUser implements IReader {
      *
      * @see ReaderDAO
      */
+    @Override
     public void deleteReader() {
         ReaderDAO readerDAO = new ReaderDAO();
         AccountDAO accountDAO = new AccountDAO();
@@ -176,6 +182,7 @@ public class Reader extends LoggedUser implements IReader {
      * @param email string value the reader wants to replace the old value with
      * @see AccountDAO
      */
+    @Override
     public void changeEmail(String email) {
         AccountDAO dao = new AccountDAO();
         dao.alterEmailAccountInDB(this, email);

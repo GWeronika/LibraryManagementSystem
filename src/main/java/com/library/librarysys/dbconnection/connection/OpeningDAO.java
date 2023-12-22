@@ -63,12 +63,6 @@ public class OpeningDAO extends GenericDAO<Opening> {
         return null;
     }
 
-    public List<Result> extractFromDB(Opening.Day day) {
-        String[] columns = {"opening_id", "day", "open_hour", "close_hour"};
-        String condition = "opening_day = ?";
-        return super.extractObjectFromDB(getTableName(), columns, condition, null, day);
-    }
-
     /**
      * Extracts the opening data with the specific id from the database.
      *

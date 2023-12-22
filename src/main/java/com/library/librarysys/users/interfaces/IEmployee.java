@@ -5,5 +5,5 @@ import com.library.librarysys.users.interfaces.management.CopyManagement;
 import com.library.librarysys.users.interfaces.management.LoanOrderManagement;
 import com.library.librarysys.users.interfaces.management.PersonalData;
 
-public interface IEmployee extends Identifiable, PersonalData, LoanOrderManagement, CopyManagement {
+public interface IEmployee extends Identifiable, PersonalData, LoanOrderManagement, CopyManagement, IUser {
 }

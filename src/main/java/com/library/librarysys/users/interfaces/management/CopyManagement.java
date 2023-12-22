@@ -8,8 +8,7 @@ public interface CopyManagement {
     void changeCopyBlurb(Copy copy, String blurb);
     void changeCopyStatus(Copy copy, Copy.Status status);
     void addBookToResources(Copy copy);
-    void browseBooks();
-    void browseBooks(int number);
-    void browseBooks(String phrase);
-    void browseBooks(Copy.Format format);
-}
+    void orderNewBook(String title, String author, String publisher, String isbn, String releaseYear,
+                      Copy.Format format, String language, String blurb, Library library);
+
+    }
