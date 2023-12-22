@@ -180,7 +180,7 @@ public class GenericDAO<T extends Identifiable> {
                 setParameters(preparedStatement, parameters);
 
                 int affectedRows = preparedStatement.executeUpdate();
-                System.out.println("Liczba zmionionych wierszy: " + affectedRows);
+                System.out.println("Liczba zmienionych wierszy: " + affectedRows);
             }
         } catch (SQLException e) {
             System.out.println("Brak połączenia z bazą danych");

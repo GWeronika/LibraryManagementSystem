@@ -2,6 +2,7 @@ package com.library.librarysys;
 
 import com.library.librarysys.account.Account;
 import com.library.librarysys.account.Loan;
+import com.library.librarysys.account.Order;
 import com.library.librarysys.dbconnection.connection.LibraryDAO;
 import com.library.librarysys.libcollection.Copy;
 import com.library.librarysys.libcollection.Library;
@@ -28,15 +29,7 @@ public class LibrarySysApplication {
         Account accc = new Account(100, "4", "4");
         Library lib = new Library(8, "f", "g", "7", "t");
         Employee e = new Employee(100, "r", "r", "r", "9", accc, Employee.Position.LIBRARIAN, lib);
-        e.orderNewBook("Niedokończone opowieści", "J.R.R. Tolkien", "Wydawnictwo Tolkienowskie",
-                "9781230004270", "2013", Copy.Format.BOOK, "polski", "Opowieści, których nie było" +
-                        "we Władcy Pierścieni", library4);
-        e.browseBooks("Niedokończone opowieści");
-        System.out.println("\n");
-
-        e.browseBooks("ma");
-        System.out.println("\n");
-        e.browseLibraries();
+//        e.orderToLoan(21);
     }
 
     @RestController
