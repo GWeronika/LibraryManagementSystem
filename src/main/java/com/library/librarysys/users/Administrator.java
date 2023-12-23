@@ -56,7 +56,7 @@ public class Administrator extends LoggedUser implements IAdministrator {
         //trigger deletes loans and orders of the deleted reader
         readerDAO.deleteReaderFromDB(readerID);
         //delete account
-        accountDAO.getAccountByID(reader.getAccount().getAccountID());
+        accountDAO.deleteAccountFromDB(reader.getAccount().getAccountID());
     }
     /**
      * Shows all readers from the database.
@@ -101,7 +101,11 @@ public class Administrator extends LoggedUser implements IAdministrator {
     @Override
     public void deleteEmployee(int employeeID) {
         EmployeeDAO dao = new EmployeeDAO();
+        AccountDAO accountDAO = new AccountDAO();
+        Employee employee = dao.getEmployeeByID(employeeID);
+
         dao.deleteEmployeeFromDB(employeeID);
+        accountDAO.deleteAccountFromDB(employee.getAccount().getAccountID());
     }
     /**
      * Shows all employees from the database.
@@ -180,8 +184,8 @@ public class Administrator extends LoggedUser implements IAdministrator {
      */
     @Override
     public void confirmEmployee(String firstName, String lastName) {
-        String email = firstName + "." + lastName + "@employee.example.com";
-        String pass = firstName.toLowerCase() + "." + lastName.toLowerCase() + ".EMPLOYEE";
+        String email = firstName.toLowerCase() + "." + lastName.toLowerCase() + "@employee.example.com";
+        String pass = firstName.toLowerCase() + "." + lastName.toLowerCase() + "!EMPLOYEE1";
         createAccount(email, pass);
     }
 
@@ -237,7 +241,9 @@ public class Administrator extends LoggedUser implements IAdministrator {
     @Override
     public void changeLibraryOpenings(Library library, Opening opening) {
         OpeningDAO dao = new OpeningDAO();
-        Opening openingThisDay = library.getOpeningsList().get(opening.getDay());   //gets the opening from the same day that is to be changed
+        LibraryDAO libraryDAO = new LibraryDAO();
+        Opening openingThisDay = libraryDAO.getLibraryByID(library.getLibraryID()).getOpeningsList().get(opening.getDay());  //gets the opening from the same day that is to be changed
+        System.out.println(openingThisDay);
         if(openingThisDay == null || openingThisDay.getOpenHour() != opening.getOpenHour() || openingThisDay.getCloseHour() != opening.getCloseHour()) {
             Opening newOpening = new Opening(0, opening.getDay(), opening.getOpenHour(), opening.getCloseHour());
             dao.addOpeningToDB(newOpening);
@@ -246,28 +252,28 @@ public class Administrator extends LoggedUser implements IAdministrator {
         }
     }
 
-    /**
-     * Adds the new administrator's account to the database.
-     *
-     * @param firstName string value, first name of the admin
-     * @param lastName string value, last name of the admin
-     * @see AccountDAO
-     */
-    @Override
-    public void addAdmin(String firstName, String lastName) {
-        String email = firstName + "." + lastName + "@admin.example.com";
-        String pass = firstName.toLowerCase() + "." + lastName.toLowerCase() + ".ADMINISTRATOR";
-        createAccount(email, pass);
-    }
-
-    /**
-     * Deletes the  administrator's account from the database.
-     *
-     * @see AccountDAO
-     */
-    @Override
-    public void deleteAccount() {
-        AccountDAO dao = new AccountDAO();
-        dao.deleteAccountFromDB(this.adminID);
-    }
+//    /**
+//     * Adds the new administrator's account to the database.
+//     *
+//     * @param firstName string value, first name of the admin
+//     * @param lastName string value, last name of the admin
+//     * @see AccountDAO
+//     */
+//    @Override
+//    public void addAdmin(String firstName, String lastName) {
+//        String email = firstName + "." + lastName + "@admin.example.com";
+//        String pass = firstName.toLowerCase() + "." + lastName.toLowerCase() + ".ADMINISTRATOR";
+//        createAccount(email, pass);
+//    }
+//
+//    /**
+//     * Deletes the  administrator's account from the database.
+//     *
+//     * @see AccountDAO
+//     */
+//    @Override
+//    public void deleteAccount() {
+//        AccountDAO dao = new AccountDAO();
+//        dao.deleteAccountFromDB(this.adminID);
+//    }
 }

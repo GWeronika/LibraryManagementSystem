@@ -29,6 +29,7 @@ public class AccountDAO extends GenericDAO<Account> {
      * @see GenericDAO
      */
     public void addAccountToDB(Account account) {
+        System.out.println(account.getPassword());
         if (passVerification(account.getPassword())) {
             if(emailVerification(account.getEmail())) {
                 String query = "INSERT INTO account (email, password) VALUES (?, ?)";
@@ -38,7 +39,7 @@ public class AccountDAO extends GenericDAO<Account> {
             }
         } else {
             System.out.println("Hasło nie spełnia wymagań. Wymagania: 8 znaków -> wielka litera, mała litera, cyfra," +
-                    " znak specjalny spośród {@#$%^&+=!)");
+                    " znak specjalny spośród {@#$%^&+=!.)");
         }
     }
 
@@ -89,7 +90,7 @@ public class AccountDAO extends GenericDAO<Account> {
             super.alterObjectInDB(getTableName(), set, condition, loggedUser.getAccount().getAccountID());
         } else {
             System.out.println("Hasło nie spełnia wymagań. Wymagania: 8 znaków -> wielka litera, mała litera, cyfra," +
-                    " znak specjalny spośród {@#$%^&+=!)");
+                    " znak specjalny spośród {@#$%^&+=!.)");
         }
     }
 

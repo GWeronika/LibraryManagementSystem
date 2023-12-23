@@ -247,6 +247,8 @@ public class GenericDAO<T extends Identifiable> {
                 preparedStatement.setDate(i + 1, (java.sql.Date) parameters[i]);
             } else if (parameters[i] instanceof Enum<?>) {
                 preparedStatement.setString(i + 1, ((Enum<?>) parameters[i]).name());
+            } else if (parameters[i] instanceof java.sql.Time) {
+                preparedStatement.setTime(i + 1, (java.sql.Time) parameters[i]);
             }
         }
     }
