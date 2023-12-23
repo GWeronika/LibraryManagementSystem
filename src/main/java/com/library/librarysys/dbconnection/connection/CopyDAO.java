@@ -26,8 +26,8 @@ public class CopyDAO extends GenericDAO<Copy> {
      * @see GenericDAO
      */
     public void addCopyToDB(Copy copy) {
-        String query = "INSERT INTO copy (publisher, isbn, release_year, format, language, " +
-                "blurb, status, library_id, book_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO copy (publisher, isbn, release_year, copy.format, language, " +
+                "blurb, copy.status, library_id, book_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         super.addObjectToDB(copy, query, copy.getPublisher(), copy.getISBN(), copy.getReleaseYear(), copy.getFormat().name(),
                 copy.getLanguage(), copy.getBlurb(), copy.getStatus().name(), copy.getLibrary().getLibraryID(),
                 copy.getBook().getBookID());
@@ -49,7 +49,7 @@ public class CopyDAO extends GenericDAO<Copy> {
      * @see GenericDAO
      */
     public void selectCopyFromDB() {
-        String[] columns = {"book.title", "book.author", "publisher", "isbn", "release_year", "format", "language", "blurb", "status", "library.name"};
+        String[] columns = {"book.title", "book.author", "publisher", "isbn", "release_year", "copy.format", "language", "blurb", "copy.status", "library.name"};
         String join = "JOIN library ON library.library_id = copy.library_id JOIN book ON book.book_id = copy.book_id";
         super.selectObjectFromDB(getTableName(), columns, null, join);
     }
@@ -60,19 +60,19 @@ public class CopyDAO extends GenericDAO<Copy> {
      * @see GenericDAO
      */
     public void selectCopyFromDB(int number) {
-        String[] columns = {"book.title", "book.author", "publisher", "isbn", "release_year", "format", "language", "blurb", "status", "library.name"};
+        String[] columns = {"book.title", "book.author", "publisher", "isbn", "release_year", "copy.format", "language", "blurb", "copy.status", "library.name"};
         String condition = "copy_id = ? OR isbn = ?";
         String join = "JOIN library ON library.library_id = copy.library_id JOIN book ON book.book_id = copy.book_id";
         super.selectObjectFromDB(getTableName(), columns, condition, join, number, number);
     }
     /**
-     * Selects all rows from the "copy" table with the specific title or author..
+     * Selects all rows from the "copy" table with the specific title or author.
      *
      * @param name string value, title or author of the copy to be found
      * @see GenericDAO
      */
     public void selectCopyFromDB(String name) {
-        String[] columns = {"book.title", "book.author", "publisher", "isbn", "release_year", "format", "language", "blurb", "status", "library.name"};
+        String[] columns = {"book.title", "book.author", "publisher", "isbn", "release_year", "copy.format", "language", "blurb", "copy.status", "library.name"};
         String condition = "book.title LIKE ? OR book.author LIKE ? ";
         String join = "JOIN library ON library.library_id = copy.library_id JOIN book ON book.book_id = copy.book_id";
         String likeName = "%" + name + "%";
@@ -85,7 +85,7 @@ public class CopyDAO extends GenericDAO<Copy> {
      * @see GenericDAO
      */
     public void selectCopyFromDB(Copy.Format format) {
-        String[] columns = {"book.title", "book.author", "publisher", "isbn", "release_year", "format", "language", "blurb", "status", "library.name"};
+        String[] columns = {"book.title", "book.author", "publisher", "isbn", "release_year", "copy.format", "language", "blurb", "copy.status", "library.name"};
         String condition = "format = ?";
         String join = "JOIN library ON library.library_id = copy.library_id JOIN book ON book.book_id = copy.book_id";
         super.selectObjectFromDB(getTableName(), columns, condition, join, format);
@@ -109,11 +109,11 @@ public class CopyDAO extends GenericDAO<Copy> {
                 String publisher = result.getColumnValues().get("publisher");
                 int bookID = Integer.parseInt(result.getColumnValues().get("book_id"));
                 String isbn = result.getColumnValues().get("isbn");
-                Copy.Format format = Copy.Format.valueOf(result.getColumnValues().get("format"));
+                Copy.Format format = Copy.Format.valueOf(result.getColumnValues().get("copy.format"));
                 String releaseYear = result.getColumnValues().get("release_year");
                 String language = result.getColumnValues().get("language");
                 String blurb = result.getColumnValues().get("blurb");
-                Copy.Status status = Copy.Status.valueOf(result.getColumnValues().get("status"));
+                Copy.Status status = Copy.Status.valueOf(result.getColumnValues().get("copy.status"));
                 int libraryID = Integer.parseInt(result.getColumnValues().get("library_id"));
 
                 return new Copy(copyID, bookDAO.getBookByID(bookID), publisher, isbn, format, releaseYear, language, blurb, status,
@@ -141,7 +141,7 @@ public class CopyDAO extends GenericDAO<Copy> {
      * @param blurb string value, blurb to be changed
      */
     public void alterBlurbCopyInDB(Copy copy, String blurb) {
-        String[] set = {"blurb = ".concat(blurb)};
+        String[] set = {"blurb = '".concat(blurb) + "'"};
         String condition = "copy_id = ?";
         super.alterObjectInDB(getTableName(), set, condition, copy.getCopyID());
     }
@@ -152,7 +152,7 @@ public class CopyDAO extends GenericDAO<Copy> {
      * @param status Copy.Status object, status to be changed
      */
     public void alterStatusCopyInDB(Copy copy, Copy.Status status) {
-        String[] set = {"status = ".concat(status.name())};
+        String[] set = {"copy.status = '".concat(status.name()) + "'"};
         String condition = "copy_id = ?";
         super.alterObjectInDB(getTableName(), set, condition, copy.getCopyID());
     }
@@ -164,7 +164,7 @@ public class CopyDAO extends GenericDAO<Copy> {
      * @see GenericDAO
      */
     private List<Result> extractFromDB(int id) {
-        String[] columns = {"copy_id", "publisher", "isbn", "release_year", "format", "language", "blurb", "status", "library_id", "book_id"};
+        String[] columns = {"copy_id", "publisher", "isbn", "release_year", "copy.format", "language", "blurb", "copy.status", "library_id", "book_id"};
         String condition = "copy_id = ?";
         return super.extractObjectFromDB(getTableName(), columns, condition, null, id);
     }

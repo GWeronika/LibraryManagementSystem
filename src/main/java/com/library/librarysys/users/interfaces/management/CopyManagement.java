@@ -7,7 +7,6 @@ public interface CopyManagement {
     void moveCopyToLibrary(Copy copy, Library library);
     void changeCopyBlurb(Copy copy, String blurb);
     void changeCopyStatus(Copy copy, Copy.Status status);
-    void addBookToResources(Copy copy);
     void orderNewBook(String title, String author, String publisher, String isbn, String releaseYear,
                       Copy.Format format, String language, String blurb, Library library);
 

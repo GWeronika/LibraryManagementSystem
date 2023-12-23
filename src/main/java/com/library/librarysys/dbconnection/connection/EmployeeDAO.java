@@ -127,7 +127,7 @@ public class EmployeeDAO extends GenericDAO<Employee> {
      * @param lastName string value, last name to be changed
      */
     public void alterLastNameInDB(Employee employee, String lastName) {
-        String[] set = {"last_name = ".concat(lastName)};
+        String[] set = {"last_name = '".concat(lastName) + "'"};
         String condition = "employee_id = ?";
         super.alterObjectInDB(getTableName(), set, condition, employee.getEmployeeID());
     }
@@ -138,7 +138,7 @@ public class EmployeeDAO extends GenericDAO<Employee> {
      * @param address string value, address to be changed
      */
     public void alterAddressInDB(Employee employee, String address) {
-        String[] set = {"address = ".concat(address)};
+        String[] set = {"address = '".concat(address) + "'"};
         String condition = "employee_id = ?";
         super.alterObjectInDB(getTableName(), set, condition, employee.getEmployeeID());
     }
@@ -149,7 +149,7 @@ public class EmployeeDAO extends GenericDAO<Employee> {
      * @param number string value, phone number to be changed
      */
     public void alterPhoneNumInDB(Employee employee, String number) {
-        String[] set = {"phone_number = ".concat(number)};
+        String[] set = {"phone_number = '".concat(number) + "'"};
         String condition = "employee_id = ?";
         super.alterObjectInDB(getTableName(), set, condition, employee.getEmployeeID());
     }
@@ -160,7 +160,7 @@ public class EmployeeDAO extends GenericDAO<Employee> {
      * @param position Employee.Position object, position to be changed
      */
     public void alterPositionInDB(Employee employee, Employee.Position position) {
-        String[] set = {"position = ".concat(String.valueOf(position))};
+        String[] set = {"position = '".concat(String.valueOf(position)) + "'"};
         String condition = "employee_id = ?";
         super.alterObjectInDB(getTableName(), set, condition, employee.getEmployeeID());
     }
