@@ -107,12 +107,12 @@ public class LoanDAO extends GenericDAO<Loan> {
             if (resultLoanID == loanID) {
                 LocalDate loanDate = LocalDate.parse(result.getColumnValues().get("loan_date"));
                 LocalDate returnDate = LocalDate.parse(result.getColumnValues().get("return_date"));
-                Loan.Status status = Loan.Status.valueOf(result.getColumnValues().get("status"));
+                Loan.Status status = Loan.Status.valueOf(result.getColumnValues().get("loan.status"));
                 int employeeID = Integer.parseInt(result.getColumnValues().get("employee_id"));
                 int copyID = Integer.parseInt(result.getColumnValues().get("copy_id"));
                 int readerID = Integer.parseInt(result.getColumnValues().get("reader_id"));
 
-                return new Loan(resultLoanID, loanDate, returnDate, status, copyDAO.getCopyByID(copyID),
+                return new Loan(loanDate, returnDate, status, copyDAO.getCopyByID(copyID),
                         readerDAO.getReaderByID(readerID), employeeDAO.getEmployeeByID(employeeID));
             }
         }
@@ -137,7 +137,7 @@ public class LoanDAO extends GenericDAO<Loan> {
      * @param status Loan.Status object, status to be changed
      */
     public void alterStatusInDB(Loan loan, Loan.Status status) {
-        String[] set = {"status = ".concat(String.valueOf(status))};
+        String[] set = {"loan.status = '".concat(String.valueOf(status)).concat("'")};
         String condition = "loan_id = ?";
         super.alterObjectInDB(getTableName(), set, condition, loan.getLoanID());
     }
@@ -150,7 +150,7 @@ public class LoanDAO extends GenericDAO<Loan> {
      * @see GenericDAO
      */
     private List<Result> extractFromDB(int id) {
-        String[] columns = {"loan_id", "loan_date", "return_date", "status", "employee_id", "copy_id", "reader_id"};
+        String[] columns = {"loan_id", "loan_date", "return_date", "loan.status", "employee_id", "copy_id", "reader_id"};
         String condition = "loan_id = ?";
         return super.extractObjectFromDB(getTableName(), columns, condition, null, id);
     }

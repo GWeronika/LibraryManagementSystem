@@ -124,9 +124,9 @@ public class Employee extends LoggedUser implements IEmployee {
         OrderDAO orderDAO = new OrderDAO();
         LoanDAO loanDAO = new LoanDAO();
         Order order = orderDAO.getOrderByID(orderID);
-        orderDAO.deleteOrderFromDB(orderID);
-        Loan loan = new Loan(0, order.getCopy(), order.getReader(), this);
+        Loan loan = new Loan(order.getCopy(), order.getReader(), this);
         loanDAO.addLoanToDB(loan);
+        orderDAO.deleteOrderFromDB(orderID);
     }
 
     /**
@@ -183,17 +183,6 @@ public class Employee extends LoggedUser implements IEmployee {
         CopyDAO dao = new CopyDAO();
         dao.alterStatusCopyInDB(copy, status);
         copy.setStatus(status);
-    }
-    /**
-     * Adds a new book to the database.
-     *
-     * @param copy copy of the book to be added
-     * @see CopyDAO
-     */
-    @Override
-    public void addBookToResources(Copy copy) {
-        CopyDAO dao = new CopyDAO();
-        dao.addCopyToDB(copy);
     }
 
     //PERSONAL DATA functions   ////////////////////////////////////////////
