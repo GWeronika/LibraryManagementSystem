@@ -54,6 +54,7 @@ public class Loan implements Identifiable {
     /**
      * Second constructor for the Loan class.
      *
+     * @param loanID integer number representing loan id
      * @param loanDate LocalDate object, loan date of the loan
      * @param returnDate LocalDate object, return date of the loan
      * @param status Status object, status of the loan
@@ -61,7 +62,8 @@ public class Loan implements Identifiable {
      * @param reader Reader object, a reader who possess the loan
      * @param employee Employee object, an employee who prepared the loan
      */
-    public Loan(LocalDate loanDate, LocalDate returnDate, Status status, Copy copy, Reader reader, Employee employee) {
+    public Loan(int loanID, LocalDate loanDate, LocalDate returnDate, Status status, Copy copy, Reader reader, Employee employee) {
+        this.loanID = loanID;
         this.copy = copy;
         this.loanDate = loanDate;
         this.returnDate = returnDate;

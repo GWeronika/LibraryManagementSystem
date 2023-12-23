@@ -3,6 +3,7 @@ package com.library.librarysys.dbconnection.connection;
 import com.library.librarysys.account.Loan;
 import com.library.librarysys.dbconnection.GenericDAO;
 import com.library.librarysys.openingformat.Result;
+import com.library.librarysys.users.Reader;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -82,11 +83,17 @@ public class LoanDAO extends GenericDAO<Loan> {
      * @param status Loan.Status object, status of the loan to be found
      * @see GenericDAO
      */
-    public void selectLoansFromDB(int id, Loan.Status status) {
+    public void selectLoansFromDB(Reader reader, Loan.Status status) {
         String[] columns = {"loan_date", "return_date", "loan.status", "book.title", "book.author"};
-        String condition = "loan.status = ? AND loan_id = ?";
+        String condition = "loan.status = ? AND reader_id = ?";
         String join = "JOIN copy ON loan.copy_id = copy.copy_id JOIN book ON book.book_id = copy.book_id";
-        super.selectObjectFromDB(getTableName(), columns, condition, join, status, id);
+        super.selectObjectFromDB(getTableName(), columns, condition, join, status, reader.getReaderID());
+    }
+    public void selectLoansFromDB(Reader reader) {
+        String[] columns = {"loan_date", "return_date", "loan.status", "book.title", "book.author"};
+        String condition = "reader_id = ?";
+        String join = "JOIN copy ON loan.copy_id = copy.copy_id JOIN book ON book.book_id = copy.book_id";
+        super.selectObjectFromDB(getTableName(), columns, condition, join, reader.getReaderID());
     }
 
     /**
@@ -112,7 +119,7 @@ public class LoanDAO extends GenericDAO<Loan> {
                 int copyID = Integer.parseInt(result.getColumnValues().get("copy_id"));
                 int readerID = Integer.parseInt(result.getColumnValues().get("reader_id"));
 
-                return new Loan(loanDate, returnDate, status, copyDAO.getCopyByID(copyID),
+                return new Loan(resultLoanID, loanDate, returnDate, status, copyDAO.getCopyByID(copyID),
                         readerDAO.getReaderByID(readerID), employeeDAO.getEmployeeByID(employeeID));
             }
         }
@@ -126,7 +133,7 @@ public class LoanDAO extends GenericDAO<Loan> {
      * @param returnDate LocalDate object, return date to be changed
      */
     public void alterReturnDateInDB(Loan loan, LocalDate returnDate) {
-        String[] set = {"return_date = ".concat(String.valueOf(returnDate))};
+        String[] set = {"return_date = '".concat(String.valueOf(returnDate)) + "'"};
         String condition = "loan_id = ?";
         super.alterObjectInDB(getTableName(), set, condition, loan.getLoanID());
     }

@@ -110,7 +110,7 @@ public class ReaderDAO extends GenericDAO<Reader> {
      * @param lastName string value, last name to be changed
      */
     public void alterLastNameInDB(Reader reader, String lastName) {
-        String[] set = {"last_name = ".concat(lastName)};
+        String[] set = {"last_name = '".concat(lastName) + "'"};
         String condition = "reader_id = ?";
         super.alterObjectInDB(getTableName(), set, condition, reader.getReaderID());
     }
@@ -121,7 +121,7 @@ public class ReaderDAO extends GenericDAO<Reader> {
      * @param address string value, address to be changed
      */
     public void alterAddressInDB(Reader reader, String address) {
-        String[] set = {"address = ".concat(address)};
+        String[] set = {"address = '".concat(address) + "'"};
         String condition = "reader_id = ?";
         super.alterObjectInDB(getTableName(), set, condition, reader.getReaderID());
     }
@@ -132,7 +132,7 @@ public class ReaderDAO extends GenericDAO<Reader> {
      * @param phoneNumber string value, phone number to be changed
      */
     public void alterPhoneNumInDB(Reader reader, String phoneNumber) {
-        String[] set = {"phone_number = ".concat(phoneNumber)};
+        String[] set = {"phone_number = '".concat(phoneNumber) + "'"};
         String condition = "reader_id = ?";
         super.alterObjectInDB(getTableName(), set, condition, reader.getReaderID());
     }

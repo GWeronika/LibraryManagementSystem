@@ -26,7 +26,7 @@ public class EmployeeDAO extends GenericDAO<Employee> {
      * @see GenericDAO
      */
     public void addEmployeeToDB(Employee employee) {
-        String query = "INSERT INTO employee (first_name, last_name, address, phone_number, position, library_id, account_id)" +
+        String query = "INSERT INTO employee (first_name, last_name, address, employee.phone_number, position, library_id, account_id)" +
                 " VALUES (?, ?, ?, ?, ?, ?, ?)";
         super.addObjectToDB(employee, query, employee.getFirstname(), employee.getLastname(), employee.getAddress(),
                 employee.getPhoneNum(), employee.getPosition().name(), employee.getLibrary().getLibraryID(),
@@ -108,7 +108,7 @@ public class EmployeeDAO extends GenericDAO<Employee> {
                 String firstName = result.getColumnValues().get("first_name");
                 String lastName = result.getColumnValues().get("last_name");
                 String address = result.getColumnValues().get("address");
-                String phoneNumber = result.getColumnValues().get("phone_number");
+                String phoneNumber = result.getColumnValues().get("employee.phone_number");
                 Employee.Position position = Employee.Position.valueOf(result.getColumnValues().get("position"));
                 int libraryID = Integer.parseInt(result.getColumnValues().get("library_id"));
                 int accountID = Integer.parseInt(result.getColumnValues().get("account_id"));
@@ -149,7 +149,7 @@ public class EmployeeDAO extends GenericDAO<Employee> {
      * @param number string value, phone number to be changed
      */
     public void alterPhoneNumInDB(Employee employee, String number) {
-        String[] set = {"phone_number = '".concat(number) + "'"};
+        String[] set = {"employee.phone_number = '".concat(number) + "'"};
         String condition = "employee_id = ?";
         super.alterObjectInDB(getTableName(), set, condition, employee.getEmployeeID());
     }
@@ -183,7 +183,7 @@ public class EmployeeDAO extends GenericDAO<Employee> {
      * @see GenericDAO
      */
     private List<Result> extractFromDB(int id) {
-        String[] columns = {"employee_id", "first_name", "last_name", "address", "phone_number", "position",
+        String[] columns = {"employee_id", "first_name", "last_name", "address", "employee.phone_number", "position",
                 "library_id", "account_id"};
         String condition = "employee_id = ?";
         return super.extractObjectFromDB(getTableName(), columns, condition, null, id);

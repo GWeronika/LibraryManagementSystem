@@ -86,7 +86,7 @@ public class CopyDAO extends GenericDAO<Copy> {
      */
     public void selectCopyFromDB(Copy.Format format) {
         String[] columns = {"book.title", "book.author", "publisher", "isbn", "release_year", "copy.format", "language", "blurb", "copy.status", "library.name"};
-        String condition = "format = ?";
+        String condition = "copy.format = ?";
         String join = "JOIN library ON library.library_id = copy.library_id JOIN book ON book.book_id = copy.book_id";
         super.selectObjectFromDB(getTableName(), columns, condition, join, format);
     }

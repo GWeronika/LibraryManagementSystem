@@ -97,7 +97,7 @@ public class LibraryDAO extends GenericDAO<Library> {
      * @param location string value, location to be changed
      */
     public void alterLocationInDB(Library library, String location) {
-        String[] set = {"location = ".concat(location)};
+        String[] set = {"location = '".concat(location) + "'"};
         String condition = "library_id = ?";
         super.alterObjectInDB(getTableName(), set, condition, library.getLibraryID());
     }
@@ -108,7 +108,7 @@ public class LibraryDAO extends GenericDAO<Library> {
      * @param phoneNumber string value, phone number to be changed
      */
     public void alterPhoneNumInDB(Library library, String phoneNumber) {
-        String[] set = {"phone_number = ".concat(phoneNumber)};
+        String[] set = {"phone_number = '".concat(phoneNumber) + "'"};
         String condition = "library_id = ?";
         super.alterObjectInDB(getTableName(), set, condition, library.getLibraryID());
     }
@@ -119,7 +119,7 @@ public class LibraryDAO extends GenericDAO<Library> {
      * @param email string value, email to be changed
      */
     public void alterEmailInDB(Library library, String email) {
-        String[] set = {"email = ".concat(email)};
+        String[] set = {"email = '".concat(email) + "'"};
         String condition = "library_id = ?";
         super.alterObjectInDB(getTableName(), set, condition, library.getLibraryID());
     }
