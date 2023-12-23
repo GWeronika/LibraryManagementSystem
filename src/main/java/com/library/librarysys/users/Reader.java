@@ -72,7 +72,7 @@ public class Reader extends LoggedUser implements IReader {
         CopyDAO copyDAO = new CopyDAO();
 
         Order order = orderDAO.getOrderByID(orderID);
-        if(order != null) {
+        if(order != null && order.getReader().getReaderID() == this.getReaderID()) {
             int copyID = order.getCopy().getCopyID();       //collecting the copyID from the order
 
             Copy copy = copyDAO.getCopyByID(copyID);
@@ -81,7 +81,7 @@ public class Reader extends LoggedUser implements IReader {
 
             orderDAO.deleteOrderFromDB(orderID);
         } else {
-            System.out.println("Nie istnieje zamówienie o podanym ID");
+            System.out.println("Nie istnieje twoje zamówienie o podanym ID");
         }
     }
 
@@ -119,7 +119,7 @@ public class Reader extends LoggedUser implements IReader {
     @Override
     public void viewLoan() {
         LoanDAO dao = new LoanDAO();
-        dao.selectLoansFromDB(this.readerID);
+        dao.selectLoansFromDB(this);
     }
     /**
      * Shows the user his own loans with a specific status.
@@ -130,7 +130,7 @@ public class Reader extends LoggedUser implements IReader {
     @Override
     public void viewLoan(Loan.Status status) {        //only active loans from a specific reader
         LoanDAO dao = new LoanDAO();
-        dao.selectLoansFromDB(this.readerID, status);
+        dao.selectLoansFromDB(this, status);
     }
 
     /**
@@ -146,8 +146,8 @@ public class Reader extends LoggedUser implements IReader {
 
         if(loan != null) {
             if(loan.getReader().getReaderID() == this.readerID) {
-                loan.setReturnDate(loan.getReturnDate().plusDays(30));
                 loanDAO.alterReturnDateInDB(loan, loan.getReturnDate().plusDays(30));
+                loan.setReturnDate(loan.getReturnDate().plusDays(30));
             } else {
                 System.out.println("Wypożyczenie nie należy do czytelnika o podanym ID");
             }
@@ -169,11 +169,10 @@ public class Reader extends LoggedUser implements IReader {
         AccountDAO accountDAO = new AccountDAO();
         Reader reader = readerDAO.getReaderByID(this.readerID);
 
-        //delete account
-        accountDAO.getAccountByID(reader.getAccount().getAccountID());
-
         //trigger deletes loans and orders of the deleted reader
         readerDAO.deleteReaderFromDB(this.readerID);
+        //delete account
+        accountDAO.deleteAccountFromDB(reader.getAccount().getAccountID());
     }
 
     /**

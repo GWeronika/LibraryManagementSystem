@@ -53,11 +53,10 @@ public class Administrator extends LoggedUser implements IAdministrator {
         AccountDAO accountDAO = new AccountDAO();
         Reader reader = readerDAO.getReaderByID(readerID);
 
-        //delete account
-        accountDAO.getAccountByID(reader.getAccount().getAccountID());
-
         //trigger deletes loans and orders of the deleted reader
         readerDAO.deleteReaderFromDB(readerID);
+        //delete account
+        accountDAO.getAccountByID(reader.getAccount().getAccountID());
     }
     /**
      * Shows all readers from the database.

@@ -26,7 +26,7 @@ public class OrderDAO extends GenericDAO<Order> {
      * @see GenericDAO
      */
     public void addOrderToDB(Order order) {
-        String query = "INSERT INTO orders (orders_date, status, reader_id, copy_id) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO orders (orders_date, orders.status, reader_id, copy_id) VALUES (?, ?, ?, ?)";
         super.addObjectToDB(order, query, order.getOrderDate(), order.getStatus().name(), order.getReader().getReaderID(),
                 order.getCopy().getCopyID());
     }

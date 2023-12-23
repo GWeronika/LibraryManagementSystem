@@ -84,7 +84,7 @@ public class AccountDAO extends GenericDAO<Account> {
      */
     public void alterPasswordAccountInDB(LoggedUser loggedUser, String password) {  //double pass as well
         if(passVerification(password)) {
-            String[] set = {"password = ".concat(password)};
+            String[] set = {"password = '".concat(password) + "'"};
             String condition = "account_id = ?";
             super.alterObjectInDB(getTableName(), set, condition, loggedUser.getAccount().getAccountID());
         } else {
@@ -102,7 +102,7 @@ public class AccountDAO extends GenericDAO<Account> {
      */
     public void alterEmailAccountInDB(Reader reader, String email) {
         if(emailVerification(email)) {
-            String[] set = {"email = ".concat(email)};
+            String[] set = {"email = '".concat(email) + "'"};
             String condition = "account_id = ?";
             super.alterObjectInDB(getTableName(), set, condition, reader.getAccount().getAccountID());
         } else {
