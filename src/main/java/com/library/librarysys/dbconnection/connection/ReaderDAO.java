@@ -71,7 +71,7 @@ public class ReaderDAO extends GenericDAO<Reader> {
     public void selectReaderFromDB(String name) {      //search by firstname or lastname
         String[] columns = {"first_name", "last_name", "address", "phone_number", "library_card_number"};
         String condition = "first_name = ? OR last_name = ?";
-        super.selectObjectFromDB(getTableName(), columns, condition, name, name);
+        super.selectObjectFromDB(getTableName(), columns, condition, null, name, name);
     }
 
     /**

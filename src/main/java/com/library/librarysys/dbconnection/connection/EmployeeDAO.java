@@ -170,7 +170,7 @@ public class EmployeeDAO extends GenericDAO<Employee> {
      * @param employee an employee whose library is to be changed
      * @param library library object to be changed
      */public void alterLibraryInDB(Employee employee, Library library) {
-        String[] set = {"library_id = ".concat(String.valueOf(library))};
+        String[] set = {"library_id = ".concat(String.valueOf(library.getLibraryID()))};
         String condition = "employee_id = ?";
         super.alterObjectInDB(getTableName(), set, condition, employee.getEmployeeID());
     }

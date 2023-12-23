@@ -83,10 +83,12 @@ public class LibraryDAO extends GenericDAO<Library> {
 
                 Opening opening = new Opening(openingID, day, openHour, closeHour);
                 if (library == null) {
-                    library = new Library(resultLibraryID, name, location, phoneNumber, email, opening);
+                    library = new Library(resultLibraryID, name, location, phoneNumber, email);
                 }
+                library.getOpeningsList().put(day, opening);
             }
         }
+        System.out.println(library.getOpeningsList() + "\n");
         return library;
     }
 
