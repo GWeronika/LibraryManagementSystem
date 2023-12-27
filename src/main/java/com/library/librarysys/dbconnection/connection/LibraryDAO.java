@@ -39,7 +39,7 @@ public class LibraryDAO extends GenericDAO<Library> {
     public void selectLibraryFromDB(int id) {
         String[] columns = {"name", "location", "phone_number", "email", "opening.day", "opening.open_hour", "opening.close_hour"};
         String join = "JOIN library_opening ON library.library_id = library_opening.library_id JOIN opening ON library_opening.opening_id = opening.opening_id";
-        String condition = "library_id = ?";
+        String condition = "library.library_id = ?";
         super.selectObjectFromDB(getTableName(), columns, condition, join, id);
     }
     /**
@@ -51,8 +51,9 @@ public class LibraryDAO extends GenericDAO<Library> {
     public void selectLibraryFromDB(String name) {
         String[] columns = {"name", "location", "phone_number", "email", "opening.day", "opening.open_hour", "opening.close_hour"};
         String join = "JOIN library_opening ON library.library_id = library_opening.library_id JOIN opening ON library_opening.opening_id = opening.opening_id";
-        String condition = "name = ? OR location = ?";
-        super.selectObjectFromDB(getTableName(), columns, condition, join, name, name);
+        String condition = "name LIKE ? OR location LIKE ?";
+        String newName = "%".concat(name).concat("%");
+        super.selectObjectFromDB(getTableName(), columns, condition, join, newName, newName);
     }
 
     /**
@@ -88,7 +89,7 @@ public class LibraryDAO extends GenericDAO<Library> {
                 library.getOpeningsList().put(day, opening);
             }
         }
-        System.out.println(library.getOpeningsList() + "\n");
+//        System.out.println(library.getOpeningsList() + "\n");
         return library;
     }
 
