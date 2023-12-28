@@ -24,7 +24,7 @@ public class User {
 
         int duplicate = dao.checkDuplicate(email);
         if(duplicate == 0) {
-            Account account = new Account(0, email, password);
+            Account account = new Account(email, password);
             dao.addAccountToDB(account);
         } else {
             System.out.println("Konto o takim adresie email już istnieje.");

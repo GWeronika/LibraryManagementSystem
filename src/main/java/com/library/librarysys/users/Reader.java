@@ -38,7 +38,7 @@ public class Reader extends LoggedUser implements IReader {
     }
 
     /**
-     * Constructor for the Reader class.
+     * First constructor for the Reader class.
      *
      * @param readerID integer number, reader id
      * @param firstname string value, reader first name
@@ -51,6 +51,21 @@ public class Reader extends LoggedUser implements IReader {
     public Reader(int readerID, String firstname, String lastname, String address, String phoneNum, Account account, LibraryCard libraryCard) {
         super(firstname, lastname, address, phoneNum, account);
         this.readerID = readerID;
+        this.libraryCard = libraryCard;
+    }
+
+    /**
+     * Second constructor for the Reader class.
+     *
+     * @param firstname string value, reader first name
+     * @param lastname string value, reader last name
+     * @param address string value, reader address
+     * @param phoneNum string value, reader phone number
+     * @param account reference to a reader account
+     * @param libraryCard library card with a unique number that the reader has
+     */
+    public Reader(String firstname, String lastname, String address, String phoneNum, Account account, LibraryCard libraryCard) {
+        super(firstname, lastname, address, phoneNum, account);
         this.libraryCard = libraryCard;
     }
 
@@ -171,9 +186,10 @@ public class Reader extends LoggedUser implements IReader {
         Reader reader = readerDAO.getReaderByID(this.readerID);
 
         //trigger deletes loans and orders of the deleted reader
-        readerDAO.deleteReaderFromDB(this.readerID);
-        //delete account
-        accountDAO.deleteAccountFromDB(reader.getAccount().getAccountID());
+        if(readerDAO.deleteReaderFromDB(this.readerID)) {
+            //delete account
+            accountDAO.deleteAccountFromDB(reader.getAccount().getAccountID());
+        }
     }
 
     /**

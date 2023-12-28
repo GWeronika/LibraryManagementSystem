@@ -12,7 +12,6 @@ public class LibrarySysApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(LibrarySysApplication.class, args);
-
     }
 
     @RestController

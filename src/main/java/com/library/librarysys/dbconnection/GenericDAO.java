@@ -67,7 +67,7 @@ public class GenericDAO<T extends Identifiable> {
      * @param id the object to be removed from the database
      * Can be used to dynamically adapt a query to specific object data.
      */
-    public void deleteObjectFromDB(int id) {
+    public boolean deleteObjectFromDB(int id) {
         try (Connection connection = DBConnection.getConnection()) {
             String query = "DELETE FROM " + tableName + " WHERE " + tableName.toLowerCase() + "_id = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -77,14 +77,17 @@ public class GenericDAO<T extends Identifiable> {
 
                 if (affectedRows > 0) {
                     System.out.println(tableName + " usunięte z bazy danych.");
+                    return true;
                 } else {
                     System.out.println(tableName + " z ID " + id + " nie odnaleziono w bazie danych.");
+                    return false;
                 }
             }
         } catch (SQLException e) {
             System.out.println("Brak połączenia z bazą danych");
             e.printStackTrace();
         }
+        return false;
     }
 
     /**

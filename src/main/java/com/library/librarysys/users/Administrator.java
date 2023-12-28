@@ -55,9 +55,10 @@ public class Administrator extends LoggedUser implements IAdministrator {
         Reader reader = readerDAO.getReaderByID(readerID);
 
         //trigger deletes loans and orders of the deleted reader
-        readerDAO.deleteReaderFromDB(readerID);
-        //delete account
-        accountDAO.deleteAccountFromDB(reader.getAccount().getAccountID());
+        if(readerDAO.deleteReaderFromDB(readerID)) {
+            //delete account
+            accountDAO.deleteAccountFromDB(reader.getAccount().getAccountID());
+        }
     }
     /**
      * Shows all readers from the database.
@@ -105,8 +106,9 @@ public class Administrator extends LoggedUser implements IAdministrator {
         AccountDAO accountDAO = new AccountDAO();
         Employee employee = dao.getEmployeeByID(employeeID);
 
-        dao.deleteEmployeeFromDB(employeeID);
-        accountDAO.deleteAccountFromDB(employee.getAccount().getAccountID());
+        if(dao.deleteEmployeeFromDB(employeeID)) {
+            accountDAO.deleteAccountFromDB(employee.getAccount().getAccountID());
+        }
     }
     /**
      * Shows all employees from the database.
@@ -248,13 +250,13 @@ public class Administrator extends LoggedUser implements IAdministrator {
 
         if(openingThisDay == null) {
             LibraryOpening connection = new LibraryOpening(library, opening);
-            Opening newOpening = new Opening(0, opening.getDay(), opening.getOpenHour(), opening.getCloseHour());
+            Opening newOpening = new Opening(opening.getDay(), opening.getOpenHour(), opening.getCloseHour());
             openingDAO.addOpeningToDB(newOpening);
             libOpDAO.addLibraryOpeningToDB(connection);
         }
         else if(openingThisDay.getOpenHour() != opening.getOpenHour() || openingThisDay.getCloseHour() != opening.getCloseHour()) {
             //add new connection
-            Opening newOpening = new Opening(0, opening.getDay(), opening.getOpenHour(), opening.getCloseHour());
+            Opening newOpening = new Opening(opening.getDay(), opening.getOpenHour(), opening.getCloseHour());
             openingDAO.addOpeningToDB(newOpening);
             LibraryOpening connection = new LibraryOpening(library, newOpening);
             libOpDAO.addLibraryOpeningToDB(connection);

@@ -39,8 +39,8 @@ public class EmployeeDAO extends GenericDAO<Employee> {
      * @param deleteID integer number, describing the id of the employee to be deleted
      * @see GenericDAO
      */
-    public void deleteEmployeeFromDB(int deleteID) {
-        super.deleteObjectFromDB(deleteID);
+    public boolean deleteEmployeeFromDB(int deleteID) {
+        return super.deleteObjectFromDB(deleteID);
     }
 
     /**
