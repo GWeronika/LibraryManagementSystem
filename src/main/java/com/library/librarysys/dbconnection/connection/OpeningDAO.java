@@ -27,7 +27,7 @@ public class OpeningDAO extends GenericDAO<Opening> {
      */
     public void addOpeningToDB(Opening opening) {
         String query = "INSERT INTO opening (day, open_hour, close_hour) VALUES (?, ?, ?)";
-        super.addObjectToDB(opening, query, opening.getDay().name(), opening.getOpenHour(), opening.getCloseHour());
+        super.addObjectToDB(opening, query, opening.getDay().name(), java.sql.Time.valueOf(opening.getOpenHour()), java.sql.Time.valueOf(opening.getCloseHour()));
     }
 
     /**

@@ -26,9 +26,9 @@ public class LoanDAO extends GenericDAO<Loan> {
      * @param loan Loan object to be added
      * @see GenericDAO
      */
-    public void addLoanToDB(Loan loan) {
-        String query = "INSERT INTO loan (loan_date, return_date, status, employee_id, copy_id, reader_id) VALUES (?, ?, ?, ?, ?, ?)";
-        super.addObjectToDB(loan, query, loan.getLoanDate(), loan.getReturnDate(), loan.getStatus().name(),
+    public boolean addLoanToDB(Loan loan) {
+        String query = "INSERT INTO loan (loan_date, return_date, loan.status, employee_id, copy_id, reader_id) VALUES (?, ?, ?, ?, ?, ?)";
+        return super.addObjectToDB(loan, query, java.sql.Date.valueOf(loan.getLoanDate()), java.sql.Date.valueOf(loan.getReturnDate()), loan.getStatus().name(),
                 loan.getEmployee().getEmployeeID(), loan.getCopy().getCopyID(), loan.getReader().getReaderID());
     }
 
@@ -79,7 +79,7 @@ public class LoanDAO extends GenericDAO<Loan> {
     /**
      * Selects all rows from the "loan" table with the given id and status.
      *
-     * @param id integer number, id of the loan to be found
+     * @param reader Reader object, reader whose loans will be shown
      * @param status Loan.Status object, status of the loan to be found
      * @see GenericDAO
      */

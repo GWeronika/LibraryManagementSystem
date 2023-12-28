@@ -12,7 +12,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-
 /**
  * A class representing an employee in the library system.
  * Extends the LoggedUser class and implements the IEmployee interface.
@@ -125,8 +124,12 @@ public class Employee extends LoggedUser implements IEmployee {
         LoanDAO loanDAO = new LoanDAO();
         Order order = orderDAO.getOrderByID(orderID);
         Loan loan = new Loan(order.getCopy(), order.getReader(), this);
-        loanDAO.addLoanToDB(loan);
-        orderDAO.deleteOrderFromDB(orderID);
+        System.out.println("W Employee 2");
+        if(loanDAO.addLoanToDB(loan)) {
+            orderDAO.deleteOrderFromDB(orderID);
+        } else {
+            System.out.println("Wystąpił błąd podczas dodawania wypożyczenia");
+        }
     }
 
     /**

@@ -4,6 +4,7 @@ import com.library.librarysys.account.Account;
 import com.library.librarysys.dbconnection.connection.*;
 import com.library.librarysys.libcollection.Library;
 import com.library.librarysys.libcollection.Opening;
+import com.library.librarysys.libcollection.libraryopening.LibraryOpening;
 import com.library.librarysys.users.interfaces.IAdministrator;
 import lombok.Getter;
 import lombok.ToString;
@@ -240,14 +241,28 @@ public class Administrator extends LoggedUser implements IAdministrator {
      */
     @Override
     public void changeLibraryOpenings(Library library, Opening opening) {
-        OpeningDAO dao = new OpeningDAO();
+        OpeningDAO openingDAO = new OpeningDAO();
+        LibraryOpeningDAO libOpDAO = new LibraryOpeningDAO();
         LibraryDAO libraryDAO = new LibraryDAO();
         Opening openingThisDay = libraryDAO.getLibraryByID(library.getLibraryID()).getOpeningsList().get(opening.getDay());  //gets the opening from the same day that is to be changed
-        System.out.println(openingThisDay);
-        if(openingThisDay == null || openingThisDay.getOpenHour() != opening.getOpenHour() || openingThisDay.getCloseHour() != opening.getCloseHour()) {
+
+        if(openingThisDay == null) {
+            LibraryOpening connection = new LibraryOpening(library, opening);
             Opening newOpening = new Opening(0, opening.getDay(), opening.getOpenHour(), opening.getCloseHour());
-            dao.addOpeningToDB(newOpening);
-        } else {
+            openingDAO.addOpeningToDB(newOpening);
+            libOpDAO.addLibraryOpeningToDB(connection);
+        }
+        else if(openingThisDay.getOpenHour() != opening.getOpenHour() || openingThisDay.getCloseHour() != opening.getCloseHour()) {
+            //add new connection
+            Opening newOpening = new Opening(0, opening.getDay(), opening.getOpenHour(), opening.getCloseHour());
+            openingDAO.addOpeningToDB(newOpening);
+            LibraryOpening connection = new LibraryOpening(library, newOpening);
+            libOpDAO.addLibraryOpeningToDB(connection);
+
+            //delete old connection on the same day
+            libOpDAO.deleteLibraryOpeningFromDB(library.getLibraryID(), openingThisDay.getOpeningID());
+        }
+        else {
             System.out.println("Istnieją już godziny (" + opening + ") dla " + library.getName());
         }
     }
