@@ -37,7 +37,7 @@ public class GenericDAO<T extends Identifiable> {
      * Can be used to dynamically adapt a query to specific object data.
      * Parameters are used in the order they appear in the SQL query.
      */
-    public void addObjectToDB(T object, String query, Object... parameters) {
+    public boolean addObjectToDB(T object, String query, Object... parameters) {
         try (Connection connection = DBConnection.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
                 setParameters(preparedStatement, parameters);
@@ -52,11 +52,13 @@ public class GenericDAO<T extends Identifiable> {
                     }
                 }
                 System.out.println(object.getClass().getSimpleName() + " dodane do bazy danych.");
+                return true;
             }
         } catch (SQLException e) {
             System.out.println("Brak połączenia z bazą danych");
             e.printStackTrace();
         }
+        return false;
     }
 
     /**

@@ -8,7 +8,7 @@ import lombok.ToString;
 import java.time.LocalTime;
 
 /**
- * A class representing a opening in the library system.
+ * A class representing an opening in the library system.
  * Implements the Identifiable interface.
  */
 @ToString

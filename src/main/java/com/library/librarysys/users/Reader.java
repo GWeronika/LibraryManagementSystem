@@ -103,6 +103,7 @@ public class Reader extends LoggedUser implements IReader {
                 Order order = new Order(copy, this);
                 orderDAO.addOrderToDB(order);
                 copy.setStatus(Copy.Status.UNAVAILABLE);
+                copyDAO.alterStatusCopyInDB(copy, Copy.Status.UNAVAILABLE);
             } else {
                 System.out.println("Ten egzemplarz jest wypożyczony.");
             }
