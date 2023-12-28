@@ -25,7 +25,7 @@ public class Opening implements Identifiable {
     }
 
     /**
-     * Constructor for the Opening class.
+     * First constructor for the Opening class.
      *
      * @param openingID integer number representing opening id
      * @param day Day object, a day which the opening refers to
@@ -34,6 +34,19 @@ public class Opening implements Identifiable {
      */
     public Opening(int openingID, Day day, LocalTime openHour, LocalTime closeHour) {
         this.openingID = openingID;
+        this.day = day;
+        this.openHour = openHour;
+        this.closeHour = closeHour;
+    }
+
+    /**
+     * Second constructor for the Opening class.
+     *
+     * @param day Day object, a day which the opening refers to
+     * @param openHour LocalTime object, time assigned to a specific day when the library opens
+     * @param closeHour LocalTime object, time assigned to a specific day when the library closes
+     */
+    public Opening(Day day, LocalTime openHour, LocalTime closeHour) {
         this.day = day;
         this.openHour = openHour;
         this.closeHour = closeHour;

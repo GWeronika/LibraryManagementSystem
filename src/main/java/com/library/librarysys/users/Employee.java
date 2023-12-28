@@ -51,6 +51,23 @@ public class Employee extends LoggedUser implements IEmployee {
         this.library = library;
     }
 
+    /**
+     * Constructor for the Employee class.
+     *
+     * @param firstname string value, employee first name
+     * @param lastname string value, employee last name
+     * @param address string value, employee address
+     * @param phoneNum string value, employee phone number
+     * @param account reference to an employee account
+     * @param position employee position
+     * @param library the library where the employee works
+     */
+    public Employee(String firstname, String lastname, String address, String phoneNum, Account account, Position position, Library library) {
+        super(firstname, lastname, address, phoneNum, account);
+        this.position = position;
+        this.library = library;
+    }
+
     @Override
     public void setID(int newID) {
         this.employeeID = newID;
@@ -240,11 +257,11 @@ public class Employee extends LoggedUser implements IEmployee {
 
         int duplicate = bookDAO.checkDuplicate(title, author);
         if(duplicate == 0) {
-            Book book = new Book(0, title, author);
-            copy = new Copy(0, book, publisher, isbn, format, releaseYear, language, blurb, Copy.Status.AVAILABLE, library);
+            Book book = new Book(title, author);
+            copy = new Copy(book, publisher, isbn, format, releaseYear, language, blurb, Copy.Status.AVAILABLE, library);
             bookDAO.addBookToDB(book);
         } else {
-            copy = new Copy(0, bookDAO.getBookByID(duplicate), publisher, isbn, format, releaseYear, language, blurb,
+            copy = new Copy(bookDAO.getBookByID(duplicate), publisher, isbn, format, releaseYear, language, blurb,
                     Copy.Status.AVAILABLE, library);
         }
         copyDAO.addCopyToDB(copy);

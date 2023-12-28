@@ -66,7 +66,32 @@ public class Copy implements Identifiable {
     /**
      * Second constructor for the Copy class.
      *
-     * @param copyID integer number representing copy id
+     * @param book Book object, which book is this a copy of
+     * @param publisher String value, publisher of the copy
+     * @param ISBN String value, ISBN of the copy
+     * @param format Format object, format of the copy
+     * @param releaseYear String value, release year of the copy
+     * @param language String value, language of the copy
+     * @param blurb String value, blurb of the copy
+     * @param status Status object, status of the loan
+     * @param library Library object, a library where the copy is
+     */
+    public Copy(Book book, String publisher, String ISBN, Format format, String releaseYear, String language,
+                String blurb, Status status, Library library) {
+        this.book = book;
+        this.publisher = publisher;
+        this.ISBN = ISBN;
+        this.format = format;
+        this.releaseYear = releaseYear;
+        this.language = language;
+        this.blurb = blurb;
+        this.status = status;
+        this.library = library;
+    }
+
+    /**
+     * Second constructor for the Copy class.
+     *
      * @param book Book object, which book is this a copy of
      * @param publisher String value, publisher of the copy
      * @param ISBN String value, ISBN of the copy
@@ -76,9 +101,8 @@ public class Copy implements Identifiable {
      * @param status Status object, status of the loan
      * @param library Library object, a library where the copy is
      */
-    public Copy(int copyID, Book book, String publisher, String ISBN, Format format, String releaseYear, String language,
+    public Copy(Book book, String publisher, String ISBN, Format format, String releaseYear, String language,
                 Status status, Library library) {     //without blurb
-        this.copyID = copyID;
         this.book = book;
         this.publisher = publisher;
         this.ISBN = ISBN;

@@ -248,13 +248,13 @@ public class Administrator extends LoggedUser implements IAdministrator {
 
         if(openingThisDay == null) {
             LibraryOpening connection = new LibraryOpening(library, opening);
-            Opening newOpening = new Opening(0, opening.getDay(), opening.getOpenHour(), opening.getCloseHour());
+            Opening newOpening = new Opening(opening.getDay(), opening.getOpenHour(), opening.getCloseHour());
             openingDAO.addOpeningToDB(newOpening);
             libOpDAO.addLibraryOpeningToDB(connection);
         }
         else if(openingThisDay.getOpenHour() != opening.getOpenHour() || openingThisDay.getCloseHour() != opening.getCloseHour()) {
             //add new connection
-            Opening newOpening = new Opening(0, opening.getDay(), opening.getOpenHour(), opening.getCloseHour());
+            Opening newOpening = new Opening(opening.getDay(), opening.getOpenHour(), opening.getCloseHour());
             openingDAO.addOpeningToDB(newOpening);
             LibraryOpening connection = new LibraryOpening(library, newOpening);
             libOpDAO.addLibraryOpeningToDB(connection);
