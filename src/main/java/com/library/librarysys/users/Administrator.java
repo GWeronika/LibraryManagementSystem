@@ -55,9 +55,10 @@ public class Administrator extends LoggedUser implements IAdministrator {
         Reader reader = readerDAO.getReaderByID(readerID);
 
         //trigger deletes loans and orders of the deleted reader
-        readerDAO.deleteReaderFromDB(readerID);
-        //delete account
-        accountDAO.deleteAccountFromDB(reader.getAccount().getAccountID());
+        if(readerDAO.deleteReaderFromDB(readerID)) {
+            //delete account
+            accountDAO.deleteAccountFromDB(reader.getAccount().getAccountID());
+        }
     }
     /**
      * Shows all readers from the database.
@@ -105,8 +106,9 @@ public class Administrator extends LoggedUser implements IAdministrator {
         AccountDAO accountDAO = new AccountDAO();
         Employee employee = dao.getEmployeeByID(employeeID);
 
-        dao.deleteEmployeeFromDB(employeeID);
-        accountDAO.deleteAccountFromDB(employee.getAccount().getAccountID());
+        if(dao.deleteEmployeeFromDB(employeeID)) {
+            accountDAO.deleteAccountFromDB(employee.getAccount().getAccountID());
+        }
     }
     /**
      * Shows all employees from the database.

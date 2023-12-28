@@ -37,8 +37,8 @@ public class ReaderDAO extends GenericDAO<Reader> {
      * @param deleteID integer number, describing the id of the reader to be deleted
      * @see GenericDAO
      */
-    public void deleteReaderFromDB(int deleteID) {
-        super.deleteObjectFromDB(deleteID);
+    public boolean deleteReaderFromDB(int deleteID) {
+        return super.deleteObjectFromDB(deleteID);
     }
 
     //SELECT functions

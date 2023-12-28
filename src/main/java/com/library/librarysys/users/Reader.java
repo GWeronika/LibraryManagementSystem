@@ -186,9 +186,10 @@ public class Reader extends LoggedUser implements IReader {
         Reader reader = readerDAO.getReaderByID(this.readerID);
 
         //trigger deletes loans and orders of the deleted reader
-        readerDAO.deleteReaderFromDB(this.readerID);
-        //delete account
-        accountDAO.deleteAccountFromDB(reader.getAccount().getAccountID());
+        if(readerDAO.deleteReaderFromDB(this.readerID)) {
+            //delete account
+            accountDAO.deleteAccountFromDB(reader.getAccount().getAccountID());
+        }
     }
 
     /**
