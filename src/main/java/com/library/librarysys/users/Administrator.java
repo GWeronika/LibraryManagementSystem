@@ -194,6 +194,16 @@ public class Administrator extends LoggedUser implements IAdministrator {
 
     //LIBRARY functions///////////////////////////////////////////////////
     /**
+     * Sets the penalty for each day the book is overdue.
+     *
+     * @param penalty double value, amount of the penalty per day
+     * @see Library
+     */
+    public void setPenalty(int penalty) {
+        Library.setPenalty(penalty);
+    }
+
+    /**
      * Changes the location of the library.
      *
      * @param library Library object, describing the specific library

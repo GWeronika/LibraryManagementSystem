@@ -5,10 +5,15 @@ import com.library.librarysys.account.Loan;
 import com.library.librarysys.account.Order;
 import com.library.librarysys.dbconnection.connection.*;
 import com.library.librarysys.libcollection.Copy;
+import com.library.librarysys.libcollection.Library;
 import com.library.librarysys.users.interfaces.IReader;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 
 /**
  * A class representing a reader in the library system.
@@ -238,5 +243,29 @@ public class Reader extends LoggedUser implements IReader {
         ReaderDAO dao = new ReaderDAO();
         dao.alterPhoneNumInDB(this, number);
         this.setPhoneNum(number);
+    }
+
+    /**
+     * Calculates the reader's total penalties.
+     *
+     * @see LoanDAO
+     */
+    @Override
+    public double calculatePenalty() {
+        LoanDAO dao = new LoanDAO();
+        ArrayList<Loan> loans = dao.getLoanByReaderID(this.readerID);
+        double penalty = 0;
+        if(loans != null && !loans.isEmpty()) {
+            for (Loan loan : loans) {
+                if(loan.getStatus() == Loan.Status.OVERDUE) {
+                    penalty = ChronoUnit.DAYS.between(loan.getReturnDate(), LocalDate.now()) * Library.getPenalty();
+                    if(penalty <= 0)
+                        penalty = 0;
+                }
+            }
+        } else {
+            System.out.println("Nie posiadasz aktualnych wypożyczeń");
+        }
+        return penalty;
     }
 }
