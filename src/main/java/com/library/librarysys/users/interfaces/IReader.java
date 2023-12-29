@@ -12,4 +12,5 @@ public interface IReader extends Identifiable, PersonalData, IUser {
     void prolong(int loanID);
     void deleteReader();
     void changeEmail(String email);
+    double calculatePenalty();
 }

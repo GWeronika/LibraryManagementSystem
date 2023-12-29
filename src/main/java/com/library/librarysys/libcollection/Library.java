@@ -24,6 +24,7 @@ public class Library implements Identifiable {
     @Setter private String phoneNum;
     @Setter private String email;
     @Setter private HashMap<Opening.Day, Opening> openingsList;
+    @Getter @Setter private static double penalty = 0.1;
 
     /**
      * Constructor for the Library class.

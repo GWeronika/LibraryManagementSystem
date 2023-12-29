@@ -6,6 +6,7 @@ import com.library.librarysys.openingformat.Result;
 import com.library.librarysys.users.Reader;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -104,7 +105,7 @@ public class LoanDAO extends GenericDAO<Loan> {
      * @see GenericDAO
      */
     public Loan getLoanByID(int loanID) {
-        List<Result> resultList = extractFromDB(loanID);
+        List<Result> resultList = extractFromDB("loan_id", loanID);
         EmployeeDAO employeeDAO = new EmployeeDAO();
         CopyDAO copyDAO = new CopyDAO();
         ReaderDAO readerDAO = new ReaderDAO();
@@ -124,6 +125,37 @@ public class LoanDAO extends GenericDAO<Loan> {
             }
         }
         return null;
+    }
+    /**
+     * Gets the Loan object with a specific reader id from the database.
+     *
+     * @param readerID integer number, id of the reader
+     * @return ArrayList loans extracted from the database
+     * @see GenericDAO
+     */
+    public ArrayList<Loan> getLoanByReaderID(int readerID) {
+        List<Result> resultList = extractFromDB("reader_id", readerID);
+        EmployeeDAO employeeDAO = new EmployeeDAO();
+        CopyDAO copyDAO = new CopyDAO();
+        ReaderDAO readerDAO = new ReaderDAO();
+        ArrayList<Loan> loansList = new ArrayList<>();
+        for (Result result : resultList) {
+            int resultLoanReaderID = Integer.parseInt(result.getColumnValues().get("reader_id"));
+
+            if (resultLoanReaderID == readerID) {
+                int loan_id = Integer.parseInt(result.getColumnValues().get("loan_id"));
+                LocalDate loanDate = LocalDate.parse(result.getColumnValues().get("loan_date"));
+                LocalDate returnDate = LocalDate.parse(result.getColumnValues().get("return_date"));
+                Loan.Status status = Loan.Status.valueOf(result.getColumnValues().get("loan.status"));
+                int employeeID = Integer.parseInt(result.getColumnValues().get("employee_id"));
+                int copyID = Integer.parseInt(result.getColumnValues().get("copy_id"));
+
+                Loan loan = new Loan(loan_id, loanDate, returnDate, status, copyDAO.getCopyByID(copyID), readerDAO.getReaderByID(readerID),
+                        employeeDAO.getEmployeeByID(employeeID));
+                loansList.add(loan);
+            }
+        }
+        return loansList;
     }
 
     /**
@@ -152,13 +184,14 @@ public class LoanDAO extends GenericDAO<Loan> {
     /**
      * Extracts the loan data with the specific id from the database.
      *
-     * @param id integer number, id of the loan
+     * @param columnName name of the column in the condition
+     * @param idValue integer number, searched id
      * @return the list with the loan data
      * @see GenericDAO
      */
-    private List<Result> extractFromDB(int id) {
+    private List<Result> extractFromDB(String columnName, int idValue) {
         String[] columns = {"loan_id", "loan_date", "return_date", "loan.status", "employee_id", "copy_id", "reader_id"};
-        String condition = "loan_id = ?";
-        return super.extractObjectFromDB(getTableName(), columns, condition, null, id);
+        String condition = columnName + " = ?";
+        return super.extractObjectFromDB(getTableName(), columns, condition, null, idValue);
     }
 }
