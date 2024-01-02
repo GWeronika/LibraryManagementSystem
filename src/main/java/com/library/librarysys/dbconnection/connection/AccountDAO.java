@@ -32,8 +32,8 @@ public class AccountDAO extends GenericDAO<Account> {
         System.out.println(account.getPassword());
         if (passVerification(account.getPassword())) {
             if(emailVerification(account.getEmail())) {
-                String query = "INSERT INTO account (email, password) VALUES (?, ?)";
-                super.addObjectToDB(account, query, account.getEmail(), account.getPassword());
+                String query = "INSERT INTO account (email, password, salt) VALUES (?, ?, ?)";
+                super.addObjectToDB(account, query, account.getEmail(), account.getPassword(), account.getSalt());
             } else {
                 System.out.println("Niepoprawny adres email");
             }
@@ -68,8 +68,9 @@ public class AccountDAO extends GenericDAO<Account> {
             if (resultAccountID == accountID) {
                 String email = result.getColumnValues().get("email");
                 String password = result.getColumnValues().get("password");
+                String salt = result.getColumnValues().get("salt");
 
-                return new Account(resultAccountID, email, password);
+                return new Account(resultAccountID, email, password, salt);
             }
         }
         return null;
@@ -157,7 +158,7 @@ public class AccountDAO extends GenericDAO<Account> {
      * @see GenericDAO
      */
     private List<Result> extractFromDB(int id) {
-        String[] columns = {"account_id", "email", "password"};
+        String[] columns = {"account_id", "email", "password", "salt"};
         String condition = "account_id = ?";
         return super.extractObjectFromDB(getTableName(), columns, condition, null, id);
     }

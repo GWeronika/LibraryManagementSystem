@@ -17,6 +17,7 @@ public class Account implements Identifiable {
     private int accountID;
     private String email;
     private String password;
+    private String salt;
 
     /**
      * First constructor for the Account class.
@@ -24,11 +25,13 @@ public class Account implements Identifiable {
      * @param accountID integer number representing account id
      * @param email string value, email assigned to the account
      * @param password string value, password assigned to the account
+     * @param salt a string of data that is added to the password before the hash function is applied
      */
-    public Account(int accountID, String email, String password) {
+    public Account(int accountID, String email, String password, String salt) {
         this.accountID = accountID;
         this.email = email;
         this.password = password;
+        this.salt = salt;
     }
 
     /**
@@ -36,10 +39,12 @@ public class Account implements Identifiable {
      *
      * @param email string value, email assigned to the account
      * @param password string value, password assigned to the account
+     * @param salt a string of data that is added to the password before the hash function is applied
      */
-    public Account(String email, String password) {
+    public Account(String email, String password, String salt) {
         this.email = email;
         this.password = password;
+        this.salt = salt;
     }
 
     @Override
