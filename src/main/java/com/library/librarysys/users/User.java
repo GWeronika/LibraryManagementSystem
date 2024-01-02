@@ -5,6 +5,9 @@ import com.library.librarysys.dbconnection.connection.AccountDAO;
 import com.library.librarysys.dbconnection.connection.CopyDAO;
 import com.library.librarysys.dbconnection.connection.LibraryDAO;
 import com.library.librarysys.libcollection.Copy;
+import com.library.password.*;
+
+import java.security.NoSuchAlgorithmException;
 
 /**
  * A class representing a user in the library system.
@@ -20,14 +23,20 @@ public class User {
      * @see     AccountDAO
      */
     public void createAccount(String email, String password) {
-        AccountDAO dao = new AccountDAO();
+        try {
+            AccountDAO dao = new AccountDAO();
+            String salt = SaltGenerator.generateSalt();
+            String hashedPassword = PasswordEncoder.hashPassword(password, salt);
 
-        int duplicate = dao.checkDuplicate(email);
-        if(duplicate == 0) {
-            Account account = new Account(email, password);
-            dao.addAccountToDB(account);
-        } else {
-            System.out.println("Konto o takim adresie email już istnieje.");
+            int duplicate = dao.checkDuplicate(email);
+            if(duplicate == 0) {
+                Account account = new Account(email, hashedPassword, salt);
+                dao.addAccountToDB(account);
+            } else {
+                System.out.println("Konto o takim adresie email już istnieje.");
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
         }
     }
 
