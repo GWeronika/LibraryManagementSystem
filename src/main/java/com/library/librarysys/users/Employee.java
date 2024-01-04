@@ -12,6 +12,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.ArrayList;
+
 /**
  * A class representing an employee in the library system.
  * Extends the LoggedUser class and implements the IEmployee interface.
@@ -164,6 +166,22 @@ public class Employee extends LoggedUser implements IEmployee {
     }
 
     //COPY functions//////////////////////////////////////////////////////
+    public void handleReturn(Copy copy) {
+        CopyDAO copyDAO = new CopyDAO();
+        LoanDAO loanDAO = new LoanDAO();
+
+        ArrayList<Loan> loans = loanDAO.getLoanByCopyID(copy.getCopyID());
+        Loan activeLoan = null;
+        for(Loan loan : loans) {
+            if(loan.getStatus() == Loan.Status.ACTIVE) {
+                activeLoan = loan;
+            }
+        }
+        if(activeLoan != null) {
+            loanDAO.alterStatusInDB(activeLoan, Loan.Status.RETURNED);
+            copyDAO.alterStatusCopyInDB(copy, Copy.Status.AVAILABLE);
+        }
+    }
     /**
      * Replaces the id of the library in which the book is located with the id
      * of another library.

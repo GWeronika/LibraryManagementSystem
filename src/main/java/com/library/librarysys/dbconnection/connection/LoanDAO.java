@@ -150,7 +150,38 @@ public class LoanDAO extends GenericDAO<Loan> {
                 int employeeID = Integer.parseInt(result.getColumnValues().get("employee_id"));
                 int copyID = Integer.parseInt(result.getColumnValues().get("copy_id"));
 
-                Loan loan = new Loan(loan_id, loanDate, returnDate, status, copyDAO.getCopyByID(copyID), readerDAO.getReaderByID(readerID),
+                Loan loan = new Loan(loan_id, loanDate, returnDate, status, copyDAO.getCopyByID(copyID), readerDAO.getReaderByID(resultLoanReaderID),
+                        employeeDAO.getEmployeeByID(employeeID));
+                loansList.add(loan);
+            }
+        }
+        return loansList;
+    }
+    /**
+     * Gets the Loan object with a copy id from the database.
+     *
+     * @param copyID integer number, id of the copy
+     * @return ArrayList loans extracted from the database
+     * @see GenericDAO
+     */
+    public ArrayList<Loan> getLoanByCopyID(int copyID) {
+        List<Result> resultList = extractFromDB("copy_id", copyID);
+        EmployeeDAO employeeDAO = new EmployeeDAO();
+        CopyDAO copyDAO = new CopyDAO();
+        ReaderDAO readerDAO = new ReaderDAO();
+        ArrayList<Loan> loansList = new ArrayList<>();
+        for (Result result : resultList) {
+            int resultLoanCopyID = Integer.parseInt(result.getColumnValues().get("copy_id"));
+
+            if (resultLoanCopyID == copyID) {
+                int loan_id = Integer.parseInt(result.getColumnValues().get("loan_id"));
+                LocalDate loanDate = LocalDate.parse(result.getColumnValues().get("loan_date"));
+                LocalDate returnDate = LocalDate.parse(result.getColumnValues().get("return_date"));
+                Loan.Status status = Loan.Status.valueOf(result.getColumnValues().get("loan.status"));
+                int employeeID = Integer.parseInt(result.getColumnValues().get("employee_id"));
+                int readerID = Integer.parseInt(result.getColumnValues().get("reader_id"));
+
+                Loan loan = new Loan(loan_id, loanDate, returnDate, status, copyDAO.getCopyByID(resultLoanCopyID), readerDAO.getReaderByID(readerID),
                         employeeDAO.getEmployeeByID(employeeID));
                 loansList.add(loan);
             }
