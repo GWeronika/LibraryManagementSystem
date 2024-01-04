@@ -55,6 +55,14 @@ public abstract class LoggedUser extends User implements Identifiable {
         this.account.setPassword(password);
     }
 
+    /**
+     * Checks whether the user has entered the correct email and password
+     * and then recognizes the user
+     *
+     * @param email of the user to log in
+     * @param password password to log in
+     * @see     AccountDAO EmployeeDAO ReaderDAO
+     */
     public LoggedUser logIn(String email, String password) {
         try {
             AccountDAO dao = new AccountDAO();
@@ -87,6 +95,11 @@ public abstract class LoggedUser extends User implements Identifiable {
         return null;
     }
 
+    /**
+     * Recognizes the user by his email address.
+     *
+     * @param email of the user to log in
+     */
     private static String getEmailUsername(String email) {
         int atIndex = email.indexOf('@');
         int dotIndex = email.indexOf('.', atIndex);
