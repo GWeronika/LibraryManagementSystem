@@ -6,7 +6,9 @@ import com.library.librarysys.openingformat.Result;
 import com.library.librarysys.users.LoggedUser;
 import com.library.librarysys.users.Reader;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -61,7 +63,7 @@ public class AccountDAO extends GenericDAO<Account> {
      * @see GenericDAO
      */
     public Account getAccountByID(int accountID) {
-        List<Result> resultList = extractFromDB(accountID);
+        List<Result> resultList = extractFromDB("account_id", accountID);
         for (Result result : resultList) {
             int resultAccountID = Integer.parseInt(result.getColumnValues().get("account_id"));
 
@@ -71,6 +73,29 @@ public class AccountDAO extends GenericDAO<Account> {
                 String salt = result.getColumnValues().get("salt");
 
                 return new Account(resultAccountID, email, password, salt);
+            }
+        }
+        return null;
+    }
+    /**
+     * Gets the Account object with a specific email from the database.
+     *
+     * @param email String value, email of the account
+     * @return Account object extracted from the database
+     * @see GenericDAO
+     */
+    public Account getAccountByEmail(String email) {
+        List<Result> resultList = extractFromDB("email", email);
+        ArrayList<Account> accountsList = new ArrayList<>();
+        for (Result result : resultList) {
+            String resultAccountEmail = result.getColumnValues().get("email");
+
+            if (Objects.equals(resultAccountEmail, email)) {
+                int accountID = Integer.parseInt(result.getColumnValues().get("account_id"));
+                String password = result.getColumnValues().get("password");
+                String salt = result.getColumnValues().get("salt");
+
+                return new Account(accountID, resultAccountEmail, password, salt);
             }
         }
         return null;
@@ -154,12 +179,26 @@ public class AccountDAO extends GenericDAO<Account> {
      * Extracts the account data with the specific id from the database.
      *
      * @param id integer number, id of the account
+     * @param columnName name of the column in the condition
      * @return the list with the account data
      * @see GenericDAO
      */
-    private List<Result> extractFromDB(int id) {
+    private List<Result> extractFromDB(String columnName, int id) {
         String[] columns = {"account_id", "email", "password", "salt"};
-        String condition = "account_id = ?";
+        String condition = columnName + " = ?";
         return super.extractObjectFromDB(getTableName(), columns, condition, null, id);
+    }
+    /**
+     * Extracts the account data with the specific id from the database.
+     *
+     * @param name String value, email of the account
+     * @param columnName name of the column in the condition
+     * @return the list with the account data
+     * @see GenericDAO
+     */
+    private List<Result> extractFromDB(String columnName, String name) {
+        String[] columns = {"account_id", "email", "password", "salt"};
+        String condition = columnName + " = ?";
+        return super.extractObjectFromDB(getTableName(), columns, condition, null, name);
     }
 }

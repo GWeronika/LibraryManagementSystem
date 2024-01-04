@@ -2,10 +2,15 @@ package com.library.librarysys.users;
 import com.library.librarysys.account.Account;
 
 import com.library.librarysys.dbconnection.connection.AccountDAO;
+import com.library.librarysys.dbconnection.connection.EmployeeDAO;
+import com.library.librarysys.dbconnection.connection.ReaderDAO;
 import com.library.librarysys.interfaces.Identifiable;
+import com.library.password.PasswordEncoder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.security.NoSuchAlgorithmException;
 
 /**
  * A class representing a logged user in the library system.
@@ -49,4 +54,47 @@ public abstract class LoggedUser extends User implements Identifiable {
         dao.alterPasswordAccountInDB(this, password);
         this.account.setPassword(password);
     }
+
+    public LoggedUser logIn(String email, String password) {
+        try {
+            AccountDAO dao = new AccountDAO();
+            Account account = dao.getAccountByEmail(email);
+
+            if (account != null) {
+                String salt = account.getSalt();
+                String hashedPassword = PasswordEncoder.hashPassword(password, salt);
+
+                if (hashedPassword.equals(account.getPassword())) {
+                    System.out.println("Zalogowano pomyślnie.");
+                    if(getEmailUsername(email).equals("employee")) {
+                        EmployeeDAO DAO = new EmployeeDAO();
+                        return DAO.getEmployeeByAccountID(account.getAccountID());
+                    } else if(getEmailUsername(email).equals("admin")) {
+                        System.out.println("Jesteś adminem");
+                    } else {
+                        ReaderDAO DAO = new ReaderDAO();
+                        return DAO.getReaderByAccountID(account.getAccountID());
+                    }
+                } else {
+                    System.out.println("Błędne hasło.");
+                }
+            } else {
+                System.out.println("Nie znaleziono konta o podanym adresie email.");
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private static String getEmailUsername(String email) {
+        int atIndex = email.indexOf('@');
+        int dotIndex = email.indexOf('.', atIndex);
+        if (atIndex != -1 && dotIndex != -1) {
+            return email.substring(atIndex + 1, dotIndex);
+        } else {
+            return "";
+        }
+    }
+
 }

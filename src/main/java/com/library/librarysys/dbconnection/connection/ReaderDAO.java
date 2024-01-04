@@ -82,7 +82,7 @@ public class ReaderDAO extends GenericDAO<Reader> {
      * @see GenericDAO
      */
     public Reader getReaderByID(int readerID) {
-        List<Result> resultList = extractFromDB(readerID);
+        List<Result> resultList = extractFromDB("reader_id", readerID);
         AccountDAO accountDAO = new AccountDAO();
         for (Result result : resultList) {
             int resultReaderID = Integer.parseInt(result.getColumnValues().get("reader_id"));
@@ -98,6 +98,33 @@ public class ReaderDAO extends GenericDAO<Reader> {
 
                 return new Reader(resultReaderID, firstName, lastName, address, phoneNumber,
                         accountDAO.getAccountByID(accountID), number);
+            }
+        }
+        return null;
+    }
+    /**
+     * Gets the Reader object with a specific account id from the database.
+     *
+     * @param accountID integer number, id of the account
+     * @return Reader object extracted from the database
+     * @see GenericDAO
+     */
+    public Reader getReaderByAccountID(int accountID) {
+        List<Result> resultList = extractFromDB("account_id", accountID);
+        AccountDAO accountDAO = new AccountDAO();
+        for (Result result : resultList) {
+            int resultAccountID = Integer.parseInt(result.getColumnValues().get("account_id"));
+
+            if (resultAccountID == accountID) {
+                int readerID = Integer.parseInt(result.getColumnValues().get("reader_id"));
+                String firstName = result.getColumnValues().get("first_name");
+                String lastName = result.getColumnValues().get("last_name");
+                String address = result.getColumnValues().get("address");
+                String phoneNumber = result.getColumnValues().get("phone_number");
+                Reader.LibraryCard number = new Reader.LibraryCard(result.getColumnValues().get("library_card_number"));
+
+                return new Reader(readerID, firstName, lastName, address, phoneNumber,
+                        accountDAO.getAccountByID(resultAccountID), number);
             }
         }
         return null;
@@ -141,12 +168,13 @@ public class ReaderDAO extends GenericDAO<Reader> {
      * Extracts the reader data with the specific id from the database.
      *
      * @param id integer number, id of the reader
+     * @param columnName name of the column in the condition
      * @return the list with the reader data
      * @see GenericDAO
      */
-    private List<Result> extractFromDB(int id) {
+    private List<Result> extractFromDB(String columnName, int id) {
         String[] columns = {"reader_id", "first_name", "last_name", "address", "phone_number", "library_card_number", "account_id"};
-        String condition = "reader_id = ?";
+        String condition = columnName + " = ?";
         return super.extractObjectFromDB(getTableName(), columns, condition, null, id);
     }
 }

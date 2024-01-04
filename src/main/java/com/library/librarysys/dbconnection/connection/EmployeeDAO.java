@@ -98,7 +98,7 @@ public class EmployeeDAO extends GenericDAO<Employee> {
      * @see GenericDAO
      */
     public Employee getEmployeeByID(int employeeID) {
-        List<Result> resultList = extractFromDB(employeeID);
+        List<Result> resultList = extractFromDB("employee_id", employeeID);
         AccountDAO accountDAO = new AccountDAO();
         LibraryDAO libraryDAO = new LibraryDAO();
         for (Result result : resultList) {
@@ -114,6 +114,35 @@ public class EmployeeDAO extends GenericDAO<Employee> {
                 int accountID = Integer.parseInt(result.getColumnValues().get("account_id"));
 
                 return new Employee(resultEmployeeID, firstName, lastName, address, phoneNumber, accountDAO.getAccountByID(accountID),
+                        position, libraryDAO.getLibraryByID(libraryID));
+            }
+        }
+        return null;
+    }
+    /**
+     * Gets the Employee object with a specific account id from the database.
+     *
+     * @param accountID integer number, id of the account
+     * @return Employee object extracted from the database
+     * @see GenericDAO
+     */
+    public Employee getEmployeeByAccountID(int accountID) {
+        List<Result> resultList = extractFromDB("account_id", accountID);
+        AccountDAO accountDAO = new AccountDAO();
+        LibraryDAO libraryDAO = new LibraryDAO();
+        for (Result result : resultList) {
+            int resultAccountID = Integer.parseInt(result.getColumnValues().get("account_id"));
+
+            if (resultAccountID == accountID) {
+                int employeeID = Integer.parseInt(result.getColumnValues().get("employee_id"));
+                String firstName = result.getColumnValues().get("first_name");
+                String lastName = result.getColumnValues().get("last_name");
+                String address = result.getColumnValues().get("address");
+                String phoneNumber = result.getColumnValues().get("employee.phone_number");
+                Employee.Position position = Employee.Position.valueOf(result.getColumnValues().get("position"));
+                int libraryID = Integer.parseInt(result.getColumnValues().get("library_id"));
+
+                return new Employee(employeeID, firstName, lastName, address, phoneNumber, accountDAO.getAccountByID(resultAccountID),
                         position, libraryDAO.getLibraryByID(libraryID));
             }
         }
@@ -179,13 +208,14 @@ public class EmployeeDAO extends GenericDAO<Employee> {
      * Extracts the employee data with the specific id from the database.
      *
      * @param id integer number, id of the employee
+     * @param columnName name of the column in the condition
      * @return the list with the employee data
      * @see GenericDAO
      */
-    private List<Result> extractFromDB(int id) {
+    private List<Result> extractFromDB(String columnName, int id) {
         String[] columns = {"employee_id", "first_name", "last_name", "address", "employee.phone_number", "position",
                 "library_id", "account_id"};
-        String condition = "employee_id = ?";
+        String condition = columnName + " = ?";
         return super.extractObjectFromDB(getTableName(), columns, condition, null, id);
     }
 }
