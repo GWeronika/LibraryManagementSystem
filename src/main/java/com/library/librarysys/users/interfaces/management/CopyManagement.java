@@ -9,5 +9,5 @@ public interface CopyManagement {
     void changeCopyStatus(Copy copy, Copy.Status status);
     void orderNewBook(String title, String author, String publisher, String isbn, String releaseYear,
                       Copy.Format format, String language, String blurb, Library library);
-
-    }
+    void handleReturn(Copy copy);
+}

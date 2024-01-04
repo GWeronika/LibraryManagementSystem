@@ -166,6 +166,13 @@ public class Employee extends LoggedUser implements IEmployee {
     }
 
     //COPY functions//////////////////////////////////////////////////////
+    /**
+     * Supports the mechanism for returning a book to the library.
+     * Changes the rental status to RETURNED and the book status to AVAILABLE
+     *
+     * @param copy returned copy of the book
+     * @see CopyDAO loanDAO
+     */
     public void handleReturn(Copy copy) {
         CopyDAO copyDAO = new CopyDAO();
         LoanDAO loanDAO = new LoanDAO();
