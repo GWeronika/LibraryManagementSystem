@@ -1,0 +1,387 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
+
+body {
+	font-family: 'Montserrat', sans-serif;
+	margin: 0;
+	padding: 0;
+	height: 100vh;
+	overflow: hidden;
+}
+
+.logo{
+	color: white;
+	cursor: pointer;
+}
+
+.container {
+	width: 100%;
+	height: 12vh;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: black;
+}
+
+
+/* Common styles for dropdown content */
+.dropdown-content {
+	display: none;
+	position: absolute;
+	background-color: black;
+	z-index: 1;
+	width: 200px; /* Set the width as needed */
+	color: white;
+}
+
+/* Pierwszy div (menu) */
+.menu {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	max-height: 80%;
+	position: relative;
+	flex: 1;
+	background-color: black;
+	color: white;
+	padding-left: 10px; /* Odstęp po lewej */
+	cursor: pointer;
+	height: 100%;
+}
+
+.menu .dropdown-content {
+	position: absolute;
+	top: 100%; /* Adjusted positioning to appear below the menu */
+	left: 0;
+}
+
+.menu:hover .dropdown-content {
+	display: block;
+}
+
+.search {
+	max-height: 80%;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	position: relative;
+	flex: 1;
+	background-color: black;
+	color: white;
+	cursor: pointer;
+	padding-right: 10px; /* Odstęp po prawej */
+}
+.s-icon{
+	font-size: 15px;
+}
+
+.search-field{
+	width: 35%;
+	display: none;
+}
+
+
+.dropdown-content div {
+	padding: 12px 16px;
+	display: block;
+	text-decoration: none;
+	color: white;
+	border-bottom: 1px solid #ddd; /* Add a border between items */
+
+}
+
+.dropdown-content div:last-child {
+	border-bottom: none; /* Remove the border on the last item */
+}
+
+.dropdown-content div:hover {
+	background-color: black;
+}
+
+
+/* Dodatkowy styl dla .additional-div1 */
+.additional-div1 {
+	width: 100%;
+	height: 70%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+}
+
+.additional-div1 .slider-container {
+	position: relative;
+	width: 80%;
+	height: 75%;
+	max-width: 100%;
+	max-height: 100%;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	margin-top: 5%;
+}
+
+.additional-div1 .prev, .additional-div1 .next {
+	font-size: 24px;
+	color: white;
+	background: none;
+	border: none;
+	cursor: pointer;
+}
+
+.additional-div1 .prev {
+	width: 10%;
+	color: grey;
+}
+
+.additional-div1 .slides {
+	width: 80%;
+	height: 100%;
+	object-fit: cover; /* Maintain aspect ratio while covering the container */
+}
+
+.additional-div1 .next {
+	width: 10%;
+	color: grey;
+}
+
+.additional-div1 .prev {
+	margin-right: auto; /* Push the previous arrow to the left */
+}
+
+.additional-div1 .next {
+	margin-left: auto; /* Push the next arrow to the right */
+}
+
+.slides {
+	max-width: 100%;
+	height: auto;
+	display: block;
+	margin: 0 auto;
+}
+/* Dodatkowy styl dla .additional-div2 */
+.additional-div2 {
+	width: 100%;
+	height: 20%;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+/* Styl dla przycisku */
+.login-button {
+	background-color: #000;
+	color: #fff;
+	border: none;
+	width: 40px; /* Początkowa szerokość - okrągły przycisk */
+	height: 40px; /* Wysokość - okrągły przycisk */
+	border-radius: 50%; /* Okrągły przycisk */
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	transition: width 0.3s ease; /* Animacja dla płynnego przejścia */
+	overflow: hidden; /* Ukrycie tekstu, który wystaje poza przyciskiem */
+	margin-right: 20px;
+}
+
+.login-button .button-text {
+	margin-left: 5px; /* Odstęp między ikoną a tekstem */
+	white-space: nowrap; /* Zapobiega łamaniu tekstu na nową linię */
+	opacity: 0; /* Ukryj tekst na początku */
+	transition: opacity 0.5s ease; /* Animacja dla płynnego przejścia */
+}
+
+.login-button:hover {
+	width: 120px; /* Rozszerzenie przycisku po najechaniu kursorem */
+	border-radius: 40px;
+	font-size: 16px;
+}
+
+.login-button:hover .button-text {
+	opacity: 1; /* Pokaż tekst po najechaniu kursorem */
+}
+
+/* Add this style to your existing CSS */
+.flex-container-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+
+/* Add a vertical line between login form and link container */
+.line {
+	margin-left: -10%;
+	margin-right: -10%;
+	width: 3px;
+	height: 80%;
+	background-color: black;
+	opacity: 0.5;
+	margin-top: 5%;
+	border-radius: 1px;
+}
+
+.login-form-container h2{
+	text-align: center;
+}
+
+.login-form-container{
+	text-align: left;
+}
+
+.link-container {
+	height: 55%;
+	margin-top: 20px;
+	padding-left: 40px;
+	padding-right: 20px;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	background-color: black;
+	border-radius: 5px;
+	opacity: 0.9;
+}
+
+.login-form label {
+	display: block;
+	margin-bottom: 5px;
+}
+
+.login-form input {
+	width: 100%;
+	margin-bottom: 10px;
+	padding: 8px;
+}
+
+.login-form button {
+	background-color: #000;
+	color: #fff;
+	border: none;
+	border-radius: 3px;
+	cursor: pointer;
+	width: 108%;
+	padding: 8px;
+	height: 30px;
+}
+
+/* Add any additional styles for login-mode if needed */
+i{
+	margin-left: 7px;
+	margin-right: 10px;
+}
+
+.link-container a {
+	color: white; /* Default link color */
+	transition: color 0.3s ease; /* Smooth transition for color change */
+	margin-right: 14px;
+	margin-bottom: 20px;
+
+}
+
+.link-container a:hover {
+	color: gainsboro; /* Darker color when hovering */
+}
+
+.overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.5); /* Przyciemnienie tła */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 999; /* Z-index, aby pojawił się nad resztą treści */
+}
+
+.overlay-content {
+	display: flex;
+	flex-direction: row; /* Zmiana na kierunek wiersza */
+	align-items: center;
+	justify-content: space-around;
+	width: 40%;
+	height: 10%;
+	background-color: white;
+	padding: 10px;
+	border-radius: 5px;
+	text-align: center;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Cień dla efektu warstwy */
+}
+
+.all-locations {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	cursor: pointer;
+	text-align: left;
+	background-color: white;
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+	z-index: 1;
+	width: 12%;
+	font-size: 18px;
+	padding: 8px;
+}
+
+.selected-location {
+	cursor: pointer;
+	font-size: 18px;
+	padding: 8px;
+}
+
+.fa-caret-down {
+	margin-left: 5px;
+}
+
+/* Additional CSS styles for the registration form */
+.registration-form{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 5%;
+}
+
+.section{
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	margin-left: 10%;
+	margin-right: 10%;
+	text-align: left; /* Align labels to the left */
+}
+
+.section2{
+
+}
+
+.sections{
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	justify-content: space-around;
+}
+
+.registration-form h2 {
+	margin-bottom: 15px;
+}
+
+.registration-form label {
+	text-align: left; /* Align labels to the left */
+	margin-bottom: 5px;
+}
+
+.registration-form input {
+
+	padding: 8px;
+	margin-bottom: 15px;
+}
+
+.registration-form button {
+	background-color: #000;
+	color: #fff;
+	border: none;
+	border-radius: 3px;
+	cursor: pointer;
+	width: 50%; /* Adjust the width as needed */
+	padding: 8px;
+	height: 30px;
+	margin-top: 10%;
+}

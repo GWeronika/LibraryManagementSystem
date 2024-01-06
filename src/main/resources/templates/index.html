@@ -1,239 +1,63 @@
 <!DOCTYPE html>
-<html lang = "pl">
-
+<html lang="en">
 <head>
-    <meta charset = "utf-8">
-    <title>Library Network - Start</title>
-    <meta name = "description" content = "Searching for books and e-books in the library. Find, reserve and borrow a book at the library. Discover the library."/>			      <!-- opis pojawiający się przed włączeniem strony -->
-    <meta name = "keywords" content = "library, books, ebooks,librarian, cataloguing, online catalog, online catalog search, book loan,
-                                        reader, reading promotion, ordering a book, bestsellers"/>
-    <meta name = "author" content = "Weronika Gaweł, Hanna Harkusha"/>
-
-    <link rel = "stylesheet" href = "/css/styles.css"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prosta Strona HTML</title>
+    <link rel="stylesheet" href="css/main.css">
 </head>
-
 <body>
-<div id = "wholepage">
-    <header id = "header" class = "" role = "banner">
-        <div id = "topbar" class = "">
-            <img class = "topbar-image" src="/images/blueSuede-long.png" alt = "logo">
-        </div>
-        <div id = "logobar" class = "head">
-            <div id = "logobar-left" class = "headLeft">
-                <a href = "">
-                    <img class = "logo" src="/images/round_logo.png" alt = "logo">
-                </a>
-            </div>
-            <div id = "logobar-center" class = "headCenter">
-                <h2>Sieć bibliotek</h2>
-            </div>
-            <div id = "logobar-right" class = "headRight">
-                    <div>
-                        <button>Zaloguj się</button>
-                    </div>
-                    <div>
-                        <button>Zarejestruj się</button>
-                    </div>
-            </div>
-        </div>
-        <div id = "navibar" class = "">
-            <div id = "naviImg" class = "navibar-img">
-                <div id = "naviText" class = "navibar-text">
-                    <ol>
-                        <li><a href = "" class = "option">Start</a></li>
-                        <li><a class = "option">Aktualności</a>
-                            <ul>
-                                <li><a href = "">Nadchodzące wydarzenia</a></li>    <!-- add reference to the option -->
-                                <li><a href = "">Wszystkie wydarzenia</a></li>      <!-- add reference to the option -->
-                                <li><a href = "">Komunikaty</a></li>                <!-- add reference to the option -->
-                            </ul>
-                        </li>
-                        <li><a class = "option">Filie Biblioteczne</a>
-                            <ul>
-                                <li><a href = "">Filia Wierzba</a></li>             <!-- add reference to the option -->
-                                <li><a href = "">Filia Dąb</a></li>                 <!-- add reference to the option -->
-                                <li><a href = "">Filia Sosna</a></li>               <!-- add reference to the option -->
-                                <li><a href = "">Filia Jesion</a></li>              <!-- add reference to the option -->
-                                <li><a href = "">Filia Topola</a></li>              <!-- add reference to the option -->
-                            </ul>
-                        </li>
-                        <li><a class = "option">Katalog</a>
-                            <ul>
-                                <li><a href = "">Katalog</a></li>                   <!-- add reference to the option -->
-                                <li><a href = "">Nowości</a></li>                   <!-- add reference to the option -->
-                            </ul>
-                        </li>
-                        <li><a class = "option">Kontakt</a>
-                            <a href = ""></a>                                       <!-- add reference to the option -->
-                        </li>
-                        <li>
-                            <form id="myForm">
-                                <label for="search"></label>
-                                <input class = "lg-input" type = "text" id = "search" name = "search" placeholder="Wyszukaj pozycję">
-                                <button type = "button" onclick = "searchData()">&#128269</button>
-                            </form>
-                        </li>
-                    </ol>
-                </div>
-            </div>
-            <div style = "clear:both;"></div>
-        </div>
-    </header>
-    <section id = "inset" class = "">
-        <div id = "backgroundImg" class = "backImg">
-            <div id = "inset-text" class = "inText">
-                <h1 style="font-size:50px">Czytaj, marz, odkrywaj </h1>
-                <h3>Biblioteka Twoich wspomnień</h3>
-                <button class="button">Wypożycz książkę</button>
-            </div>
-        </div>
-    </section>
-    <section id = "content" class = "">
-        <div class = "head">
-            <main id = "maincontent" class = "maincontent" role = "main">
-                <div class = "page-header">
-                    <h1>
-                        <span>Ważne informacje</span>
-                    </h1>
-                </div>
-                <div class = "infos">
-                    <div class = "info">
-                        <div class = 'info-image'>
-                            <img src = "/images/plakat1.png" alt = "plakat">                       <!-- add reference to the image -->
-                        </div>
-                        <div class = "info-content">
-                            <h2 class = "info-title">
-                                <a href = "">Tytuł 1</a>                            <!-- add reference to the option -->
-                            </h2>
-                            <dl class = "info-creator">
-                                <dd class = "createdby">
-                                    <span>Imię i Nazwisko</span>
-                                </dd>
-                                <dd class = "published">
-                                    <time datetime = "">Opublikowano: </time>
-                                </dd>
-                            </dl>
-                            <p class = "info-description">    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                                ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-                                ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                        </div>
-                    </div>
-                    <div class = "info">
-                        <div class = 'info-image'>
-                            <img src = "/images/plakat1.png" alt = "plakat">                       <!-- add reference to the image -->
-                        </div>
-                        <div class = "info-content">
-                            <h2 class = "info-title">
-                                <a href = "">Tytuł 2</a>                            <!-- add reference to the option -->
-                            </h2>
-                            <dl class = "info-creator">
-                                <dd class = "createdby">
-                                    <span>Imię i Nazwisko</span>
-                                </dd>
-                                <dd class = "published">
-                                    <time datetime = "">Opublikowano: </time>
-                                </dd>
-                            </dl>
-                            <p class = "info-description">    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                                ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-                                ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                        </div>
-                    </div>
-                    <div class = "info">
-                        <div class = 'info-image'>
-                            <a href=""><img src = "/images/plakat1.png" alt = "plakat"></a>         <!-- add reference to the option -->
-                        </div>
-                        <div class = "info-content">
-                            <h2 class = "info-title">
-                                <a href = "">Tytuł 3</a>                                            <!-- add reference to the option -->
-                            </h2>
-                            <dl class = "info-creator">
-                                <dd class = "createdby">
-                                    <span>Imię i Nazwisko</span>
-                                </dd>
-                                <dd class = "published">
-                                    <time datetime = "">Opublikowano: </time>
-                                </dd>
-                            </dl>
-                            <p class = "info-description">    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                                ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-                                ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                        </div>
-                    </div>
-<!--                        <div class = "pagination">-->
-<!--                            <ul class = "list">-->
-<!--                                <li class = "scroll-more">-->
-<!--                                    <a>-->
-<!--                                        <span-->
-<!--                                    </a>-->
-<!--                                </li>-->
-<!--                            </ul>-->
-<!--                        </div>-->
 
-                </div>
-            </main>
+<div class="container">
+    <!-- Pierwszy div (menu) -->
+    <div class="menu" id="menu">
+        <h2>&#9776;</h2>
+        <!-- Menu rozwijane -->
+        <div class="dropdown-content" id="dropdownContentMenu">
+
+            <div>Katalog</div>
+            <div class = "kontakt">Kontakt</div>
         </div>
-    </section>
-    <footer id = "footer" role = "contentinfo">
-        <div id = "bottombar" class = "">
-            <div id = "bottombar-top">
-                <div id = "bottom-header" class="text">Nasze filie</div>
+    </div>
 
-                <div class="bottom-image"><a href=""><img src="/images/branches_logo/wierzba.png" alt="Filia Wierzba"></a></div>
-                <div class="bottom-text"><a href="">Filia Wierzba</a></div>                                         <!--add reference-->
+    <div class="logo" id="reloadButton">
+        Sieć bibliotek
+    </div>
 
-                <div class="bottom-image"><a href=""><img src="/images/branches_logo/dab.png" alt="Filia Dąb"></a></div>
-                <div class="bottom-text"><a href="">Filia Dąb</a></div>                                         <!--add reference-->
-
-                <div class="bottom-image"><a href=""><img src="/images/branches_logo/sosna.png" alt="Filia Sosna"></a></div>
-                <div class="bottom-text"><a href="">Filia Sosna</a></div>                                         <!--add reference-->
-
-                <div class="bottom-image"><a href=""><img src="/images/branches_logo/jesion.png" alt="Filia Jesion"></a></div>
-                <div class="bottom-text"><a href="">Filia Jesion</a></div>                                         <!--add reference-->
-
-                <div class="bottom-image"><a href=""><img src="/images/branches_logo/topola.png" alt="Filia Topola"></a></div>
-                <div class="bottom-text"><a href="">Filia Topola</a></div>                                         <!--add reference-->
-            </div>
-            <div id = "bottombar-bottom">
-                <div id = "bottombar-left" class = "headLeft">
-                    <p>
-                        © 2023 Biblioteka za Lasem
-                    </p>
-                </div>
-                <div id = "bottombar-right" class = "headRight">
-                    <a href = "#wholepage">
-                        <p>Do góry strony</p>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <!-- Trzeci div (location) -->
+    <div class="search">
+        <i class="fa-solid fa-search fa-lg s-icon"></i>
+        <label>
+            <input type="text" placeholder="..." class = "search-field">
+        </label>
+    </div>
 </div>
 
+<!-- Pierwszy dodatkowy div -->
+<div class="additional-div1">
+    <div id="slideshow" class="slider-container">
+        <button class="prev">&#10094;</button>
+        <img class="slides" src="" alt="Slide 1">
+        <img class="slides" src="" alt="Slide 2">
+        <img class="slides" src="" alt="Slide 3">
+        <img class="slides" src="" alt="Slide 4">
+        <img class="slides" src="" alt="Slide 5">
+        <button class="next">&#10095;</button>
+    </div>
+</div>
 
-    <script>
-        function searchData() {   //JavaScript
-            var search = document.getElementById("search").value;
+<!-- Drugi dodatkowy div -->
+<div class="additional-div2">
+    <button class="login-button" id="loginButton">
+        <i class="fa-regular fa-user fa-lg"></i>
+        <span class="button-text">Log in</span>
 
-            var req = new XMLHttpRequest();
+    </button>
+</div>
 
-            req.open("POST", "http://localhost:8081/receiveData", true);
-            req.setRequestHeader("Content-Type", "application/json");
-
-            var data = JSON.stringify({ "name": search });
-
-            req.onreadystatechange = function() {
-                if (req.readyState === 4 && req.status === 200) {
-                    console.log("Szukane: " + search);
-                }
-            };
-
-            req.send(data);
-        }
-    </script>
+<script src="js/main.js"></script>
+<script src="https://kit.fontawesome.com/4349d29944.js" crossorigin="anonymous"></script>
+<script src="js/server.js"></script>
 </body>
-
 </html>
+
