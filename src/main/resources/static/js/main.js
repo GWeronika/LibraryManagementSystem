@@ -130,7 +130,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-
     function initializeSubmitButton() {
         let submitButton = document.getElementById("submitButton");
         submitButton.addEventListener("click", function (event) {
