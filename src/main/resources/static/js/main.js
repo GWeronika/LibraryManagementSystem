@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required>
 
-                <button type="submit">Log in</button>
+                <button type="submit" id="submitButton">Log in</button>
             </div>
         `;
             additionalDiv1.appendChild(loginFormDiv);
@@ -118,6 +118,8 @@ document.addEventListener("DOMContentLoaded", function () {
             linkContainer.appendChild(link2);
             additionalDiv1.appendChild(linkContainer);
 
+            initializeSubmitButton();
+
             // Clear content of additional-div2
             let additionalDiv2 = document.querySelector(".additional-div2");
             additionalDiv2.innerHTML = '';
@@ -126,6 +128,42 @@ document.addEventListener("DOMContentLoaded", function () {
             initializeSlideshow();
             initializeLoginButton();
         });
+    }
+
+    function initializeSubmitButton() {
+        let submitButton = document.getElementById("submitButton");
+        submitButton.addEventListener("click", function (event) {
+            event.preventDefault();
+            let email = document.getElementById("login").value;
+            let password = document.getElementById("password").value;
+
+            logInSubmission(email, password);
+            callLogInFunction(email, password);
+        });
+    }
+
+    function logInSubmission() {
+        let email = document.getElementById("login").value;
+        let password = document.getElementById("password").value;
+
+        callLogInFunction(email, password);
+    }
+
+    function callLogInFunction(email, password) {
+        fetch('/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `email=${email}&password=${password}`,
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     }
 
 // Call the function to initialize login button

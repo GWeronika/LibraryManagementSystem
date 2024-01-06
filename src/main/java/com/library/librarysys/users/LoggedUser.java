@@ -61,6 +61,7 @@ public abstract class LoggedUser extends User implements Identifiable {
      *
      * @param email of the user to log in
      * @param password password to log in
+     * @return LoggedUser whose account is logged in
      * @see     AccountDAO EmployeeDAO ReaderDAO
      */
     public LoggedUser logIn(String email, String password) {
