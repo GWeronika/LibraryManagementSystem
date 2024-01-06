@@ -74,6 +74,15 @@ public class Reader extends LoggedUser implements IReader {
         this.libraryCard = libraryCard;
     }
 
+    /**
+     * Default constructor for the Reader class.
+     */
+    public Reader() {
+        super("", "", "", "", null);
+        this.readerID = 0;
+        this.libraryCard = null;
+    }
+
     @Override
     public void setID(int newID) {
         this.readerID = newID;
